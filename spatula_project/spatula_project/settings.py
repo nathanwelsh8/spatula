@@ -25,7 +25,7 @@ SECRET_KEY = 'jqgx(=a6iw+2hwtu4(!4yg!y=)3_x7=p@tp_y9=n%h8(o=bez-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['nathanwelsh8.pythonanywhere.com',]
 
 
 # Application definition
