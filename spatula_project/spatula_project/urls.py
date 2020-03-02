@@ -15,7 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from spatula_project.spatulaApp import views
+from django.urls import path 
+from django.urls import include 
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    path(r'^admin/', admin.site.urls),
+    path('', include('spatula_project.spatulaApp.urls')) # try spatulaApp.urls if not work
 ]
