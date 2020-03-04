@@ -39,8 +39,7 @@ class Recipe(models.Model):
     cost            = models.PositiveSmallIntegerField(choices=COST_CHOICES, max_digits=1)
     diettype        = models.PositiveSmallIntegerField(choices=DIET_CHOICES ,max_digits=1)
    
-    #image           = 
-    #postedby        = 
+    postedby        = models.ForeignKey(UserProfile)
 
     # Following fields are hidden when creating a new recipe
     #ratings are out of 5, to 1 decimal place
@@ -48,37 +47,73 @@ class Recipe(models.Model):
     slug            = models.Slugfield(unique=True)
     category        = models.ForeignKey(Recipe,to_field="name", on_delete=models.CASCADE)
 
+    # recipes rating is calculated when the recipe is requested
+
     def __str__(self):
         return self.name
     
+    # used for recipe mappings
     def save(self,*args, **kwargs):
         self.slug = slugify(str(self.name)+str(self.id))
         super(Category,self).save(*args, **kwargs)
 
 
 class Category(models.Model):
-    name = models.CharField(primary_key=True, unique=True, max_length=25)
 
+    # In a 1:N with Recipe. Recipe table points to here.
+
+    name = models.CharField(primary_key=True, unique=True, max_length=25)
+    
 
 class UserProfile(models.Model):
-    pass
+    # This is the same implementation as the TWDjango, 
+    # so look there when building the login forms
+    # Default usermodel has name, username, and password 
+    # fields. We can just use what we need. 
+
+    
+    user      = models.OneToOneField(User, on_delete=models.CASCADE)
+    
+    bio  = models.TextField(required=False, default="")   
+    slug            = models.Slugfield(unique=True)
+    
+
+    def __str__(self):
+        return self.user.username
+    
+    # username slug is used for the URL name mappings
+    def save(self, *args, **kwargs):
+        self.slug = slugify(str(self.__str__()))
+        super(Category,self).save(*args,**kwargs)
+
 
 
 class Image(models.Model):
 
+    # this might work?
     def images_path():
         return os.path.join(settings.IMAGES_DIR, 'images')
+    
+    #image      = models.FilePathField(path=images_path)
+    # Django docs are using image 
+    # field instead of FilePathField
+    # so try this first
 
-    image = models.FilePathField(path=images_path)
+    image      = models.ImageField(upload_to=images_path)
 
+
+class UserImage(Image):
+    belongsto = models.ForeignKey(UserProfile)
+
+class RecipeImage(Image):
+    belongsto = models.ForeignKey(Recipe)
+    
 class Rating(models.Model):
 
     #auto filled by form so not shown to user 
     recipe     = models.ForeignKey(Recipe)
-    #user   = models.ForeignKey(Recipe, to_field="poastedBy")
     
-    # editable by user
+    ### editable by user ###
     rating     = models.PositiveSmallIntegerField(decimal_places=2, max_digits=3, default=0)
-    
     # comments are optional
     comment    = models.TextField(max_length=MAX_TEXT_LENGTH, required=False)
