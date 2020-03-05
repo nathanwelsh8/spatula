@@ -7,5 +7,6 @@ from django.conf.urls.static import static
  #add url patterns hereg
 app_name = 'spatulaApp'
 urlpatterns = [
-     path('', views.index, name='index')
+     path('', views.index, name='index'),
+     path('Register', views.register, name='register'),
  ]

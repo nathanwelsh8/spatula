@@ -19,7 +19,7 @@ class UserProfile(models.Model):
     user      = models.OneToOneField(User, on_delete=models.CASCADE)
     
     bio  = models.TextField(blank=True)   
-    slug            = models.SlugField(unique=True)
+    slug            = models.SlugField(unique=True, blank=True)
     
     # users rating is calculated live when userinfo requested.
     # no user rating to be stored

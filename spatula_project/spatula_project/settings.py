@@ -25,7 +25,9 @@ SECRET_KEY = 'jqgx(=a6iw+2hwtu4(!4yg!y=)3_x7=p@tp_y9=n%h8(o=bez-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['nathanwelsh8.pythonanywhere.com',]
+# Will need to remove http://127.0.0.1:8000/ before production, but necessary for testing
+ALLOWED_HOSTS = ['nathanwelsh8.pythonanywhere.com',
+                 '127.0.0.1']
 
 
 # Application definition
