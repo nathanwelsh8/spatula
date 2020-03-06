@@ -9,4 +9,5 @@ app_name = 'spatulaApp'
 urlpatterns = [
      path('', views.index, name='index'),
      path('Register', views.register, name='register'),
+     path('add_recipe/', views.add_recipe, name='add_recipe'),
  ]

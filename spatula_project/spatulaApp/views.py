@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from spatulaApp.forms import UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
+from spatulaApp.models import Recipe
 
 # Create your views here.
 # here so the database can be migrated without errors
@@ -58,5 +59,19 @@ def register(request):
     # Render the template depending on the context.
     return render(request, 'spatula/register.html',
                   context={'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+    
+
+def add_recipe(request): 
+    form = RecipeForm()
+    
+    if request.method == 'POST': 
+        form = RecipeForm(request.POST)
+        
+        if form.is_valid(): 
+            form.save(commit=True)
+            return redirect(reverse('spatulaApp:add_recipe'))
+        else: 
+            print(form.errors)
+    return render(request, 'spatulaApp/add_recipe.html', {'form': form})
 
 
