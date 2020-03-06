@@ -27,7 +27,8 @@ DEBUG = True
 
 # Will need to remove http://127.0.0.1:8000/ before production, but necessary for testing
 ALLOWED_HOSTS = ['nathanwelsh8.pythonanywhere.com',
-                 '127.0.0.1']
+                 '127.0.0.1',
+                 'localhost']
 
 
 # Application definition

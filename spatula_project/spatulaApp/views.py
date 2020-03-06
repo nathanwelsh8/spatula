@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from spatulaApp.forms import UserForm, UserProfileForm
+from spatulaApp.forms import UserForm, UserProfileForm, RecipeForm
 from django.contrib.auth import authenticate, login, logout
 from spatulaApp.models import Recipe
 
@@ -69,9 +69,9 @@ def add_recipe(request):
         
         if form.is_valid(): 
             form.save(commit=True)
-            return redirect(reverse('spatulaApp:add_recipe'))
+            return redirect(reverse('spatula:add_recipe'))
         else: 
             print(form.errors)
-    return render(request, 'spatulaApp/add_recipe.html', {'form': form})
+    return render(request, 'spatula/add_recipe.html', {'form': form})
 
 

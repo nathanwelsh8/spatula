@@ -1,6 +1,6 @@
 from django import forms
-from django.contrib.auth.models import User, Recipe
-from spatulaApp.models import UserProfile
+from django.contrib.auth.models import User
+from spatulaApp.models import UserProfile, Recipe
 
 
 DIET_CHOICES = [(1,'Meat'), (2,'Vegan'), (3, 'Vegetarian'),]
