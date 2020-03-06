@@ -11,7 +11,11 @@ class RecipeForm(forms.ModelForm):
     method = forms.CharField(max_length=512, widget=forms.Textarea(attrs={'placeholder':'Method'}))
     name = forms.CharField(max_length=128, widget=forms.TextInput(attrs={'placeholder':'Recipe Name'}))
     ingredients = forms.CharField(max_length=512, widget=forms.Textarea(attrs={'placeholder':'Ingredients'}))
+    
+    # See below url for how to load the categories as options in the form
+    #https://www.programcreek.com/python/example/54393/django.forms.widgets.Select
     Category = forms.CharField(widget=forms.Select(attrs={'placeholder':'Category'}))
+    
     toolsreq = forms.CharField(max_length=512, widget=forms.TextInput(attrs={'placeholder':'Tools Required'}))
     difficulty = forms.IntegerField(widget=forms.NumberInput(attrs={'type':'range', 'step':'1', 'min':'1','max':'3'}), help_text = 'Difficulty: ')
     cost = forms.IntegerField(widget=forms.NumberInput(attrs={'type':'range', 'step':'1', 'min':'1','max':'3'}), help_text = 'Cost: ')

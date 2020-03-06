@@ -7,7 +7,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE',
 import django
 django.setup()
 
-from ramgo.models import Category
+from spatulaApp.models import Category
 
 def populate():
 
@@ -36,5 +36,18 @@ def populate():
         }
     ]
 
+    for cat in categories:
+        c = add_category(cat)
+        print("\t Added",c)
+    
+
+
 def add_category(category_dict):
-    pass
+    c = Category.objects.get_or_create(name=category_dict)[0]
+    c.save()
+    return c
+
+if __name__ == '__main__':
+    print("Populating database...")
+    populate()
+    print("Population complete")

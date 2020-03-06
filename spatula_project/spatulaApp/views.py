@@ -4,6 +4,7 @@ from django.shortcuts import redirect
 from spatulaApp.forms import UserForm, UserProfileForm, RecipeForm
 from django.contrib.auth import authenticate, login, logout
 from spatulaApp.models import Recipe
+from django.urls import reverse 
 
 # Create your views here.
 # here so the database can be migrated without errors
