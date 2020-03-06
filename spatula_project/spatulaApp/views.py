@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from spatulaApp.forms import UserForm, UserProfileForm, RecipeForm
 from django.contrib.auth import authenticate, login, logout
-from spatulaApp.models import Recipe
+from spatulaApp.models import Recipe, Category
 from django.urls import reverse 
 
 # Create your views here.
@@ -64,7 +64,7 @@ def register(request):
 
 def add_recipe(request): 
     form = RecipeForm()
-    
+    context_dict = {} 
     if request.method == 'POST': 
         form = RecipeForm(request.POST)
         
@@ -73,6 +73,7 @@ def add_recipe(request):
             return redirect(reverse('spatula:add_recipe'))
         else: 
             print(form.errors)
-    return render(request, 'spatula/add_recipe.html', {'form': form})
+    context_dict['form'] = form
+    return render(request, 'spatula/add_recipe.html', context=context_dict)
 
 

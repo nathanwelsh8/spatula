@@ -77,7 +77,7 @@ class Recipe(models.Model):
     #       a new rating for the recipe is posted.
     rating                 = models.DecimalField(decimal_places=1,max_digits=3, default=0)
     slug                   = models.SlugField(unique=True)
-    Category               = models.ForeignKey(Category,to_field="name", on_delete=models.CASCADE)
+    category               = models.ForeignKey(Category,to_field="name", on_delete=models.CASCADE)
 
     # recipes rating is calculated when the recipe is requested, no value to be stored
 

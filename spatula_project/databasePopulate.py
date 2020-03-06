@@ -43,7 +43,7 @@ def populate():
 
 
 def add_category(category_dict):
-    c = Category.objects.get_or_create(name=category_dict)[0]
+    c = Category.objects.get_or_create(name=category_dict['name'])[0]
     c.save()
     return c
 
