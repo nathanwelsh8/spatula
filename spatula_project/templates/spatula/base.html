@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html>
+    <head lang="en">
+        <link rel="stylesheet" href="base.css">
+        <meta charset="UTF-8" />
+		<title>
+			Base
+		</title>
+	</head>
+    <body>
+        <div id="top">
+            <img src="spatula.png" id="logo">
+            <input type="text" id="searchbar" name="searchbar" placeholder="Search">
+            <button type="button" id="signin" onclick="showSignin()">Sign In / Register</button>
+        </div>
+        <div id="container">
+            <input type="text" id="username" name="username" placeholder="Username"><br>
+            <input type="text" id="password" name="password" placeholder="Password"><br>
+            <button type="button" id="containerregister">Register</button>
+            <button type="button" id="containersignin">Sign In</button>
+            <!--<img src="profile.png" id="profilepic">-->
+        </div>
+        
+        <script>
+            function showSignin(){
+                var x = document.getElementById("container");
+                if(x.style.display=="none"){
+                    x.style.display="block";
+                }else{
+                    x.style.display="none";
+                }
+            }
+        </script>
+    </body>
+</html>
