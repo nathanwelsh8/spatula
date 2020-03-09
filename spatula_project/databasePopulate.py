@@ -18,7 +18,7 @@ def populate():
 
         },
         {
-            'name':'Chineese'
+            'name':'Chinese'
         },
         {
             'name':'Thai'

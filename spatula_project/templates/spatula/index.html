@@ -1,125 +1,119 @@
-<!DOCTYPE html>
+{% extends 'spatula/base.html' %}
+{% load staticfiles %}
 
-<html>
-    <head lang="en">
-        <link rel="stylesheet" href="index.css">
-        <meta charset="UTF-8" />
-		<title>
-			Spatula
-		</title>
-	</head>
-    <body>
-        <div id="sidebar">
-            <div id="categories">
-                <input type="checkbox" name="category1" checked>
-                <label for="category1"> Category 1</label><br>
+{% block css_block %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+{% block title_block %}
+    Spatula
+{% endblock %}
+
+{% block body_block %}
+    <div id="sidebar">
+        {% if categories %}
+        <div id="categories">
+            {% for category in categories %}
+                <input type="checkbox" name="{{ category }}" checked>
+                <label for="{{ category }}"> {{ category }}</label><br>
+            {% endfor %}
+        </div>
+        {% endif  %}
+        
+        <br>
+        {% if diet_choices %}
+        <div id="meat">
+            {% for type in diet_choices %}
                 
-                <input type="checkbox" name="category1" checked>
-                <label for="category2"> Category 2</label><br>
-                
-                <input type="checkbox" name="category1" checked>
-                <label for="category3"> Category 3</label><br>
-                
-                <input type="checkbox" name="category1" checked>
-                <label for="category4"> Category 4</label><br>
+                <input type="checkbox" name="{{ type }}" checked>
+                <!--<img src="{{MEDIA_URL}}images/{{type}}.png" class="sidebarmeat"> -->
+                <img src="{{ MEDIA_URL }}images/{{type}}.png" class="sidebarmeat">
+                <label for="{{ type }}">{{type}}</label><br>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <br>
+        <div id="sort">
+            <input type="radio" name="sort" checked>
+            <label for="category1"> Rating</label><br>
+            
+            <input type="radio" name="sort">
+            <label for="category2"> Popularity</label><br>
+            
+            <input type="radio" name="sort">
+            <label for="category3"> Difficulty</label><br>
+            
+            <input type="radio" name="sort">
+            <label for="category4"> Cost</label><br>
+        </div>
+    </div>
+
+    <img src="{% static 'images/newrecipe.png' %}" class="newrecipe">
+
+    <div id="recipies">
+        <div class="recipe">
+            <img src="{% static 'images/samplerecipe1.jpg' %}" class="recipeimg">
+            <div class="recipename">
+                <p>Recipe Name</p>
             </div>
-            <br>
-            <div id="meat">
-                <input type="checkbox" name="meat" checked>
-                <img src="images/meat.png" class="sidebarmeat">
-                <label for="meat"> Meat</label><br>
-                
-                <input type="checkbox" name="vegetarian" checked>
-                <img src="images/vegetarian.png" class="sidebarmeat">
-                <label for="vegetarian"> Vegetarian</label><br>
-                
-                <input type="checkbox" name="vegan" checked>
-                <img src="images/vegan.png" class="sidebarmeat">
-                <label for="vegan"> Vegan</label><br>
-            </div>
-            <br>
-            <div id="sort">
-                <input type="radio" name="sort" checked>
-                <label for="category1"> Rating</label><br>
-                
-                <input type="radio" name="sort">
-                <label for="category2"> Popularity</label><br>
-                
-                <input type="radio" name="sort">
-                <label for="category3"> Difficulty</label><br>
-                
-                <input type="radio" name="sort">
-                <label for="category4"> Cost</label><br>
+            <p class="reciperatingtotal">(128)</p>
+            <img src="{% static 'images/stars/9.png' %}" class="reciperating">
+            <img src="{{MEDIA_URL}}images/vegan.png " class="recipemeat">
+            <div class="recipecategory">
+                <p>Category</p>
             </div>
         </div>
         
-        <img src=images/newrecipe.png class="newrecipe">
-        
-        <div id="recipies">
-            <div class="recipe">
-                <img src="images/samplerecipe1.jpg" class="recipeimg">
-                <div class="recipename">
-                    <p>Recipe Name</p>
-                </div>
-                <p class="reciperatingtotal">(128)</p>
-                <img src="images/stars/9.png" class="reciperating">
-                <img src="images/vegan.png" class="recipemeat">
-                <div class="recipecategory">
-                    <p>Category</p>
-                </div>
+        <div class="recipe">
+            <img src="{% static 'images/samplerecipe2.jpg' %}" class="recipeimg">
+            <div class="recipename">
+                <p>Recipe Name</p>
             </div>
-            
-            <div class="recipe">
-                <img src="images/samplerecipe2.jpg" class="recipeimg">
-                <div class="recipename">
-                    <p>Recipe Name</p>
-                </div>
-                <p class="reciperatingtotal">(128)</p>
-                <img src="images/stars/3.png" class="reciperating">
-                <img src="images/meat.png" class="recipemeat">
-                <div class="recipecategory">
-                    <p>Category</p>
-                </div>
-            </div>
-            
-            <div class="recipe">
-                <img src="images/samplerecipe3.jpg" class="recipeimg">
-                <div class="recipename">
-                    <p>Recipe Name</p>
-                </div>
-                <p class="reciperatingtotal">(128)</p>
-                <img src="images/stars/5.png" class="reciperating">
-                <img src="images/vegetarian.png" class="recipemeat">
-                <div class="recipecategory">
-                    <p>Category</p>
-                </div>
-            </div>
-            
-            <div class="recipe">
-                <img src="images/samplerecipe4.jpg" class="recipeimg">
-                <div class="recipename">
-                    <p>Recipe Name</p>
-                </div>
-                <p class="reciperatingtotal">(128)</p>
-                <img src="images/stars/8.png" class="reciperating">
-                <img src="images/meat.png" class="recipemeat">
-                <div class="recipecategory">
-                    <p>Category</p>
-                </div>
-            </div>
-            
-            <div class="recipe">
-                <img src="images/samplerecipe5.jpg" class="recipeimg">
-                <div class="recipename">
-                    <p>Recipe Name</p>
-                </div>
-                <p class="reciperatingtotal">(128)</p>
-                <img src="images/stars/10.png" class="reciperating">
-                <img src="images/meat.png" class="recipemeat">
-                <div class="recipecategory">
-                    <p>Category</p>
-                </div>
+            <p class="reciperatingtotal">(128)</p>
+            <img src="{% static 'images/stars/3.png' %}" class="reciperating">
+            <img src="{{MEDIA_URL}}images/meat.png" class="recipemeat">
+            <div class="recipecategory">
+                <p>Category</p>
             </div>
         </div>
-    </body>
-</html>
+        
+        <div class="recipe">
+            <img src="{% static 'images/samplerecipe3.jpg' %}" class="recipeimg">
+            <div class="recipename">
+                <p>Recipe Name</p>
+            </div>
+            <p class="reciperatingtotal">(128)</p>
+            <img src="{% static 'images/stars/5.png' %}" class="reciperating">
+            <img src="{{MEDIA_URL}}images/vegetarian.png" class="recipemeat">
+            <div class="recipecategory">
+                <p>Category</p>
+            </div>
+        </div>
+        
+        <div class="recipe">
+            <img src="{% static 'images/samplerecipe4.jpg' %}" class="recipeimg">
+            <div class="recipename">
+                <p>Recipe Name</p>
+            </div>
+            <p class="reciperatingtotal">(128)</p>
+            <img src="{% static 'images/stars/8.png' %}" class="reciperating">
+            <img src="{{MEDIA_URL}}images/meat.png" class="recipemeat">
+            <div class="recipecategory">
+                <p>Category</p>
+            </div>
+        </div>
+        
+        <div class="recipe">
+            <img src="{% static 'images/samplerecipe5.jpg' %}" class="recipeimg">
+            <div class="recipename">
+                <p>Recipe Name</p>
+            </div>
+            <p class="reciperatingtotal">(128)</p>
+            <img src="{% static 'images/stars/10.png' %}" class="reciperating">
+            <img src="{{MEDIA_URL}}images/meat.png" class="recipemeat">
+            <div class="recipecategory">
+                <p>Category</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

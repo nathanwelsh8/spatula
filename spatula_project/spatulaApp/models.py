@@ -38,6 +38,9 @@ class Category(models.Model):
 
     name = models.CharField(primary_key=True, unique=True, max_length=25)
 
+    def getModelsAsList():
+        return Category.objects.values_list('name',flat=True)
+
 class Recipe(models.Model):
 
     
@@ -83,7 +86,12 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.name
-    
+
+    def getChoicesAsList():
+        l = []
+        for c in Recipe.DIET_CHOICES:
+            l.append(c[1])
+        return l    
     
     # used for recipe mappings
     def save(self,*args, **kwargs):

@@ -30,6 +30,11 @@ ALLOWED_HOSTS = ['nathanwelsh8.pythonanywhere.com',
                  '127.0.0.1',
                  'localhost']
 
+# DIRS
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+MEDIA_DIR = os.path.join(BASE_DIR, 'media')
+
 
 # Application definition
 
@@ -55,8 +60,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'spatula_project.urls'
 
-# Template Dirs
-TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
 
 TEMPLATES = [
@@ -71,6 +74,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media', 
             ],
         },
     },
@@ -123,12 +127,16 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
+# Static files (CSS, JavaScript, static Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_DIR = os.path.join(BASE_DIR, 'static')
+
+
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [STATIC_DIR, ]
 
 IMAGES_DIR = os.path.join(STATIC_DIR,"images")
 
+# Media
+MEDIA_ROOT = MEDIA_DIR 
+MEDIA_URL = '/media/'

@@ -1,16 +1,24 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 
 <html>
     <head lang="en">
-        <link rel="stylesheet" href="base.css">
+        
+        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+        {% block css_block %}
+        {% endblock %}
+
         <meta charset="UTF-8" />
 		<title>
-			Base
+            {% block title_block %}
+            Spatula
+            {% endblock %}
 		</title>
 	</head>
     <body>
+        {% block header_block %}
         <div id="top">
-            <img src="spatula.png" id="logo">
+            <img src="{% static 'images/spatula.png' %}" id="logo">
             <input type="text" id="searchbar" name="searchbar" placeholder="Search">
             <button type="button" id="signin" onclick="showSignin()">Sign In / Register</button>
         </div>
@@ -32,5 +40,9 @@
                 }
             }
         </script>
+        {% endblock %}
+        {% block body_block %}
+        Webpage bodty is overridden here
+        {% endblock %}
     </body>
 </html>

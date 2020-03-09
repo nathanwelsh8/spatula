@@ -10,4 +10,4 @@ urlpatterns = [
      path('', views.index, name='index'),
      path('Register', views.register, name='register'),
      path('add_recipe/', views.add_recipe, name='add_recipe'),
- ]
+ ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

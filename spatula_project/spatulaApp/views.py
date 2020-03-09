@@ -9,7 +9,11 @@ from django.urls import reverse
 # Create your views here.
 # here so the database can be migrated without errors
 def index(request):
-    return HttpResponse("Hello World")
+    context_dict ={
+        'categories':Category.getModelsAsList,
+        'diet_choices':Recipe.getChoicesAsList
+        }
+    return render(request,'spatula/index.html', context_dict)
 
 
 def register(request):
