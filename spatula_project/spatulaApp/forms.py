@@ -9,8 +9,7 @@ DIET_CHOICES = [(1,'Meat'), (2,'Vegan'), (3, 'Vegetarian'),]
 category_query = Category.objects.values()
 category_list = []
 for c in category_query: 
-    category_list.append((c['name'], c['name']))
-
+    category_list.append((c['name'],c['name']))
 
 class RecipeForm(forms.ModelForm):
     

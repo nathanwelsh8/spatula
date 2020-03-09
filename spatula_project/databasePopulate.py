@@ -9,7 +9,8 @@ django.setup()
 
 from spatulaApp.models import Category
 
-def populate():
+
+def populate():    
 
     categories = [
         {
@@ -29,7 +30,7 @@ def populate():
             'name':'Indian'
         },
         {
-            'name':'mexican'
+            'name':'Mexican'
         },
         {
             'name':'Other'
