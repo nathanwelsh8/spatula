@@ -35,6 +35,7 @@ input{
     margin-right: auto;
     width: 900px;
     height: 100vh;
+    border: 8px solid #ffffff;
     background-color: #ffffff;
 }
 
