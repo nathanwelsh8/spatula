@@ -1,0 +1,55 @@
+body {
+    margin: 0px;
+}
+#top {
+    margin: 0px;
+    padding: 0px;
+    height: 40px;
+    border-bottom: 2px solid #d1d4e0;
+}
+#logo {
+    height: 100%;
+}
+#searchbar {
+    position: absolute;
+    width: 50%;
+    margin: 5px;
+    margin-left: 10%;
+    height: 24px;
+    border: 2px solid #d1d4e0;
+    border-radius: 8px;
+}
+#profilepic {
+    float: right;
+    height: 40px;
+}
+#signin {
+    float: right;
+    height: 100%;
+    border: none;
+    background-color: white;
+}
+#username, #password {
+    margin: 2px;
+    width: 96%;
+    height: 24px;
+    border: 2px solid #d1d4e0;
+    border-radius: 4px;
+}
+#containerregister, #containersignin {
+    margin: 2px;
+    height: 24px;
+    background-color: #000000;
+    color: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 4px;
+    width: 47.5%;
+}
+#container{
+    display: none;
+    position: relative;
+    float: right;
+    width: 240px;
+    border: 2px solid #d1d4e0;
+    border-radius: 4px;
+}
