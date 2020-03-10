@@ -10,9 +10,12 @@ from django.urls import reverse
 # here so the database can be migrated without errors
 def index(request):
     context_dict ={
+        'recipies':Recipe.objects.order_by('rating'),
         'categories':Category.getModelsAsList,
-        'diet_choices':Recipe.getChoicesAsList
+        'diet_choices':Recipe.getChoicesAsList,
         }
+    for r in context_dict['recipies']: 
+        r.rating = str(int(r.rating * 2))
     return render(request,'spatula/index.html', context_dict)
 
 

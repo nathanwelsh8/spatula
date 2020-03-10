@@ -49,21 +49,28 @@
     </div>
 
     <img src="{% static 'images/newrecipe.png' %}" class="newrecipe">
-
+	{% if recipies %}
     <div id="recipies">
+		{% for recipe in recipies %}
         <div class="recipe">
             <img src="{% static 'images/samplerecipe1.jpg' %}" class="recipeimg">
             <div class="recipename">
-                <p>Recipe Name</p>
+                <p>{{ recipe.name }}</p>
             </div>
             <p class="reciperatingtotal">(128)</p>
-            <img src="{% static 'images/stars/9.png' %}" class="reciperating">
-            <img src="{{MEDIA_URL}}images/vegan.png " class="recipemeat">
+			{% with 'images/stars/'|add:recipe.rating|add:'.png' as image_static %}
+            <img src="{% static image_static %}" class="reciperating">
+			{%endwith%}
+            <img src="{{MEDIA_URL}}images/{{ recipe.diettype }}.png " class="recipemeat">
             <div class="recipecategory">
-                <p>Category</p>
+			{% with recipe.category|cut:"Category object (" as cut_cat %}
+                <p>{{cut_cat|cut:")"}}</p>
+			{% endwith %}
             </div>
         </div>
-        
+        {% endfor %}
+	{% endif %}
+		<!--
         <div class="recipe">
             <img src="{% static 'images/samplerecipe2.jpg' %}" class="recipeimg">
             <div class="recipename">
@@ -116,4 +123,5 @@
             </div>
         </div>
     </div>
+	-->
 {% endblock %}

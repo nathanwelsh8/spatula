@@ -6,10 +6,6 @@ from spatulaApp.models import UserProfile, Recipe, Category
 DIET_CHOICES = [(1,'Meat'), (2,'Vegan'), (3, 'Vegetarian'),]
 
 #query Category table, add objects to tuple (ChoiceField requires tuple for choice perameter) 
-category_query = Category.objects.values()
-category_list = []
-for c in category_query: 
-    category_list.append((c['name'],c['name']))
 
 class RecipeForm(forms.ModelForm):
     
@@ -17,7 +13,7 @@ class RecipeForm(forms.ModelForm):
     method = forms.CharField(max_length=512, widget=forms.Textarea(attrs={'placeholder':'Method'}))
     name = forms.CharField(max_length=128, widget=forms.TextInput(attrs={'placeholder':'Recipe Name'}))
     ingredients = forms.CharField(max_length=512, widget=forms.Textarea(attrs={'placeholder':'Ingredients'}))
-    category = forms.ChoiceField(widget=forms.Select(), choices = category_list)
+    category = forms.ChoiceField(widget=forms.Select(), choices = "")
     toolsreq = forms.CharField(max_length=512, widget=forms.TextInput(attrs={'placeholder':'Tools Required'}))
     difficulty = forms.IntegerField(widget=forms.NumberInput(attrs={'type':'range', 'step':'1', 'min':'1','max':'3'}), help_text = 'Difficulty: ')
     cost = forms.IntegerField(widget=forms.NumberInput(attrs={'type':'range', 'step':'1', 'min':'1','max':'3'}), help_text = 'Cost: ')
