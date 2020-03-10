@@ -1,0 +1,52 @@
+
+input[type = text]{ 
+    width: 100%;
+    padding:3px;
+    margin: 2px 0;
+}
+
+textarea{ 
+    width: 100%;
+    padding:3px;
+    margin: 2px 0;
+}
+
+
+select{ 
+    width: 101%;
+    padding:3px;
+    margin: 2px 0;
+}
+
+input[type = submit] { 
+    float:right;
+}
+
+div{
+    font-size:14px;
+}
+
+input#id_difficulty{
+    font-size:18px;
+}
+
+.recipe_form{ 
+    margin-left: 18%;
+    margin-right: 18%;
+}
+
+ul#id_diettype{ 
+    border: 2px solid #ccc;
+    width:39%;
+    font-size:13px;
+    padding-left:5px;
+    display: inline-block;
+}
+
+ul#id_diettype li{ 
+    display: inline-block;
+    margin-right:15px;
+}
+			
+			
+	

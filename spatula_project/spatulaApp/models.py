@@ -109,9 +109,9 @@ class Recipe(models.Model):
 class Image(models.Model):
 
     # this might work?
-<<<<<<< HEAD
     def images_path():
         return os.path.join(settings.IMAGES_DIR, 'usruploads')
+        
     def resize(self):
         im = PIL.Image.open(self.image)
         size=(200,200)
@@ -122,11 +122,6 @@ class Image(models.Model):
         super(Image, self).save(*args, **kwargs)
         self.resize()
 
-=======
-    def images_path(self):
-        return os.path.join(settings.IMAGES_DIR, 'images')
-    
->>>>>>> 96569d1d4794a94e62947c69884a3e532836f658
     #image      = models.FilePathField(path=images_path)
     # Django docs are using image 
     # field instead of FilePathField

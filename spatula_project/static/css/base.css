@@ -1,6 +1,14 @@
-body {
+
+p,label {
     margin: 0px;
+    font-family: sans-serif;
+    color: #3e3c52;
 }
+body{
+    margin: 0px;
+    background-color: #f5efeb;
+}
+
 #top {
     margin: 0px;
     padding: 0px;
