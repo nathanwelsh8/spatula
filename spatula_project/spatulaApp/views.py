@@ -78,7 +78,7 @@ def add_recipe(request):
         
         if form.is_valid(): 
             form.save(commit=True)
-            return redirect(reverse('spatula:add_recipe'))
+            return redirect(reverse('spatula:index'))
         else: 
             print(form.errors)
     context_dict['form'] = form

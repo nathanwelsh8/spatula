@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    <img src="{% static 'images/newrecipe.png' %}" class="newrecipe">
+    <a href="{% url 'spatulaApp:add_recipe' %}"><img src="{% static 'images/newrecipe.png' %}" class="newrecipe"></a>
 	{% if recipies %}
     <div id="recipies">
 		{% for recipe in recipies %}
