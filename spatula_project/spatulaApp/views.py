@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from spatulaApp.forms import UserForm, UserProfileForm, RecipeForm
 from django.contrib.auth import authenticate, login, logout
-from spatulaApp.models import Recipe, Category
+from spatulaApp.models import Recipe, Category, RecipeImage
 from django.urls import reverse 
 
 # Create your views here.
@@ -13,8 +13,9 @@ def index(request):
         'recipies':Recipe.objects.order_by('rating'),
         'categories':Category.getModelsAsList,
         'diet_choices':Recipe.getChoicesAsList,
-        
+        'recipe_images': RecipeImage.objects.all(),
         }
+    print(context_dict['recipe_images'])
     for r in context_dict['recipies']: 
         r.rating = str(int(r.rating * 2))
     return render(request,'spatula/index.html', context_dict)

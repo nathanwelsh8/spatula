@@ -3,6 +3,7 @@ from django.template.defaultfilters import slugify
 from django.conf import settings
 from django.contrib.auth.models import User
 import os
+import PIL.Image
 # Create your models here.
 
 NAME_MAX_LENGTH = 128
@@ -42,8 +43,7 @@ class Category(models.Model):
         return Category.objects.values_list('name',flat=True)
 
 class Recipe(models.Model):
-
-    
+  
     DIET_CHOICES = (
                 (1,"Meat"),
                 (2,"Vegetarian"),
@@ -108,21 +108,32 @@ class Image(models.Model):
 
     # this might work?
     def images_path():
-        return os.path.join(settings.IMAGES_DIR, 'images')
-    
+        return os.path.join(settings.IMAGES_DIR, 'usruploads')
+    def resize(self):
+        im = PIL.Image.open(self.image)
+        size=(200,200)
+        out = im.resize(size)
+        out.save(self.image.__str__())
+
+    def save(self, *args, **kwargs):
+        super(Image, self).save(*args, **kwargs)
+        self.resize()
+
     #image      = models.FilePathField(path=images_path)
     # Django docs are using image 
     # field instead of FilePathField
     # so try this first
 
-    image      = models.ImageField(upload_to=images_path)
-
+    image      = models.ImageField(upload_to=images_path()[1:], max_length=255)
 
 class UserImage(Image):
     belongsto = models.ForeignKey(UserProfile,  on_delete=models.CASCADE)
 
+    
+
 class RecipeImage(Image):
     belongsto = models.ForeignKey(Recipe,  on_delete=models.CASCADE)
+
     
 class Rating(models.Model):
 

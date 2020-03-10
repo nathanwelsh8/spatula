@@ -1,5 +1,6 @@
 {% extends 'spatula/base.html' %}
 {% load staticfiles %}
+{% load spatulaApp_template_tags %} 
 
 {% block css_block %}
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
@@ -53,7 +54,9 @@
     <div id="recipies">
 		{% for recipe in recipies %}
         <div class="recipe">
-            <img src="{% static 'images/samplerecipe1.jpg' %}" class="recipeimg">
+            {% with recipe_images|getKeyImg:recipe.name as image %}
+                        <img src="{{image}}" class="recipeimg">
+            {% endwith %} 
             <div class="recipename">
                 <p>{{ recipe.name }}</p>
             </div>
