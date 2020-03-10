@@ -85,3 +85,7 @@ def add_recipe(request):
     return render(request, 'spatula/add_recipe.html', context=context_dict)
 
 
+def profile(request):
+    return render(request, 'spatula/profile.html')
+
+
