@@ -1,29 +1,25 @@
-<!DOCTYPE html>
+{% extends 'spatula/base.html' %}
+{% load staticfiles %}
 
-<html>
-	<head lang="en">
-		<meta charset="UTF-8" />
-		<title>
-			Registration
-		</title>
-	</head>
-	<body>
-		<h1>Register for Spatula</h1>
+{% block title_block %}
+	Register
+{% endblock %}
 
-		<form id="user_form" method="post" action="{% url 'spatulaApp:register' %}" enctype="multipart/form-data">
+{% block body_block %}
+<h1>Register for Spatula</h1>
 
-			{% csrf_token %}
+	<form id="user_form" method="post" action="{% url 'spatulaApp:register' %}" enctype="multipart/form-data">
 
-			<!-- Display each form -->
+		{% csrf_token %}
 
-			{{ user_form.as_p }}
+		<!-- Display each form -->
 
-			<!-- Don't know if the next line is necessary since the user is not adding any data to the profile form when they register -->
-			{{ profile_form.as_p }}
+		{{ user_form.as_p }}
+
+		<!-- Don't know if the next line is necessary since the user is not adding any data to the profile form when they register -->
+		{{ profile_form.as_p }}
 			
-			<!-- Provide a button to click to submit the form. -->
-			<input type="submit" name="submit" value="Register" />
-		</form>
-
-	</body>
-</html>
+		<!-- Provide a button to click to submit the form. -->
+		<input type="submit" name="submit" value="Register" />
+	</form>
+{% endblock %}
