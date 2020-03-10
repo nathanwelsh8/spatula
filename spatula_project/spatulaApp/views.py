@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from spatulaApp.forms import UserForm, UserProfileForm, RecipeForm
 from django.contrib.auth import authenticate, login, logout
-from spatulaApp.models import Recipe, Category, RecipeImage
+from spatulaApp.models import Recipe, Category, RecipeImage, UserProfile
 from django.urls import reverse 
 
 # Create your views here.
@@ -79,10 +79,31 @@ def add_recipe(request):
         
         if form.is_valid(): 
             form.save(commit=True)
-            return redirect(reverse('spatula:add_recipe'))
+            return redirect(reverse('spatula:index'))
         else: 
             print(form.errors)
     context_dict['form'] = form
     return render(request, 'spatula/add_recipe.html', context=context_dict)
+
+
+def show_profile(request, account_name_slug):
+    context_dict = {}
+
+    try:
+        # The .get() method returns one model instance or raises an exception.
+        profile = UserProfile.objects.get(slug=account_name_slug)
+
+        # Retrieve all of the associated recipes for this account.
+        # recipes = Recipe.objects.filter(postedby=)
+
+        # Add recipes to context dictionary
+        # context_dict['recipes'] = recipes
+
+        # Add profile object to context dictionary
+        context_dict['profile'] = profile
+    except UserProfile.DoesNotExist:
+        return redirect(reverse('spatulaApp:index'))
+    # Render response
+    return render(request, 'spatula/profile.html', context=context_dict)
 
 

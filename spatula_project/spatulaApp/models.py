@@ -21,7 +21,9 @@ class UserProfile(models.Model):
     
     bio  = models.TextField(blank=True)   
     slug            = models.SlugField(unique=True, blank=True)
-    
+
+    # profile_pic = models.OneToOneField(Image)
+
     # users rating is calculated live when userinfo requested.
     # no user rating to be stored
 
@@ -31,7 +33,7 @@ class UserProfile(models.Model):
     # username slug is used for the URL name mappings
     def save(self, *args, **kwargs):
         self.slug = slugify(str(self.__str__()))
-        super(Category,self).save(*args,**kwargs)
+        super(UserProfile,self).save(*args,**kwargs)
 
 class Category(models.Model):
     
@@ -107,6 +109,7 @@ class Recipe(models.Model):
 class Image(models.Model):
 
     # this might work?
+<<<<<<< HEAD
     def images_path():
         return os.path.join(settings.IMAGES_DIR, 'usruploads')
     def resize(self):
@@ -119,6 +122,11 @@ class Image(models.Model):
         super(Image, self).save(*args, **kwargs)
         self.resize()
 
+=======
+    def images_path(self):
+        return os.path.join(settings.IMAGES_DIR, 'images')
+    
+>>>>>>> 96569d1d4794a94e62947c69884a3e532836f658
     #image      = models.FilePathField(path=images_path)
     # Django docs are using image 
     # field instead of FilePathField

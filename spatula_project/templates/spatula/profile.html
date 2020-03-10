@@ -1,0 +1,41 @@
+{% extends 'spatula/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	User - {{ profile.user }}
+{% endblock %}
+
+{% block body_block %}
+<style>
+		
+		#profile_section{
+			width: 70%;
+			margin: 20px;
+			margin-left: 15%;
+			border: 2px solid #d1d4e0;
+			border-radius: 8px;	
+		}
+
+		#recipe_list{
+			width: 70%;
+			margin: 20px;
+			margin-left: 15%;
+			border: 2px solid #d1d4e0;
+			border-radius: 8px;	
+		}
+</style>
+
+<div id="profile_section">
+	<h1>{{ profile.user }}</h1>
+	{{profile.bio}}
+</div>
+
+
+<div id="recipe_list">
+	<h2>Recipes by {{ profile.user }}</h2>
+
+</div>
+
+
+	
+{% endblock %}
