@@ -90,7 +90,7 @@ class Recipe(models.Model):
     def getChoicesAsList():
         l = []
         for c in Recipe.DIET_CHOICES:
-            l.append(c[1])
+            l.append([c[0],c[1]])
         return l 
     
     def getRecipiesAsDict():

@@ -13,6 +13,7 @@ def index(request):
         'recipies':Recipe.objects.order_by('rating'),
         'categories':Category.getModelsAsList,
         'diet_choices':Recipe.getChoicesAsList,
+        
         }
     for r in context_dict['recipies']: 
         r.rating = str(int(r.rating * 2))
