@@ -10,6 +10,5 @@ urlpatterns = [
      path('', views.index, name='index'),
      path('register', views.register, name='register'),
      path('add_recipe/', views.add_recipe, name='add_recipe'),
-     # will change profile path to  '<slug:account_name_slug>/'
-     path('profile', views.profile, name='profile'),
+     path('<slug:account_name_slug>/', views.show_profile, name='show_profile'),
  ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

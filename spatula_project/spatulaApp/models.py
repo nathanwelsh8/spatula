@@ -20,7 +20,9 @@ class UserProfile(models.Model):
     
     bio  = models.TextField(blank=True)   
     slug            = models.SlugField(unique=True, blank=True)
-    
+
+    # profile_pic = models.OneToOneField(Image)
+
     # users rating is calculated live when userinfo requested.
     # no user rating to be stored
 
@@ -30,7 +32,7 @@ class UserProfile(models.Model):
     # username slug is used for the URL name mappings
     def save(self, *args, **kwargs):
         self.slug = slugify(str(self.__str__()))
-        super(Category,self).save(*args,**kwargs)
+        super(UserProfile,self).save(*args,**kwargs)
 
 class Category(models.Model):
     
@@ -107,7 +109,7 @@ class Recipe(models.Model):
 class Image(models.Model):
 
     # this might work?
-    def images_path():
+    def images_path(self):
         return os.path.join(settings.IMAGES_DIR, 'images')
     
     #image      = models.FilePathField(path=images_path)
