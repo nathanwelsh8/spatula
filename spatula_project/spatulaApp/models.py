@@ -74,14 +74,13 @@ class Recipe(models.Model):
     cost                   = models.PositiveSmallIntegerField(choices=COST_CHOICES)
     diettype               = models.PositiveSmallIntegerField(choices=DIET_CHOICES)
    
-    #postedby               = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    postedby               = models.ForeignKey(UserProfile, on_delete=models.CASCADE, default=0)
 
     #  - Following fields are hidden when creating a new recipe
     #       ratings are out of 5, to 1 decimal place.
     #  - Need a script to update rating everytime
     #       a new rating for the recipe is posted.
     rating                 = models.DecimalField(decimal_places=1,max_digits=3, default=0)
-    #slug                   = models.SlugField(unique=True)
     category               = models.ForeignKey(Category,to_field="name", on_delete=models.CASCADE)
 
     # recipes rating is calculated when the recipe is requested, no value to be stored
@@ -98,11 +97,11 @@ class Recipe(models.Model):
     def getRecipiesAsDict():
         recipe_query = Category.objects.values()
         repice_dict = {} 
-        
+   
     
     # used for recipe mappings
     def save(self,*args, **kwargs):
-        self.slug = slugify(str(self.name)+str(self.id))
+        self.slug = slugify(str(self.name)+str(self.postedby))
         super(Recipe,self).save(*args, **kwargs)
 
 
@@ -111,7 +110,7 @@ class Image(models.Model):
     # this might work?
     def images_path():
         return os.path.join(settings.IMAGES_DIR, 'usruploads')
-        
+
     def resize(self):
         im = PIL.Image.open(self.image)
         size=(200,200)

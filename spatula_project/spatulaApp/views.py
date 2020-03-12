@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from spatulaApp.forms import UserForm, UserProfileForm, RecipeForm
 from django.contrib.auth import authenticate, login, logout
 from spatulaApp.models import Recipe, Category, RecipeImage, UserProfile
@@ -15,7 +17,7 @@ def index(request):
         'diet_choices':Recipe.getChoicesAsList,
         'recipe_images': RecipeImage.objects.all(),
         }
-    print(context_dict['recipe_images'])
+    
     for r in context_dict['recipies']: 
         r.rating = str(int(r.rating * 2))
     return render(request,'spatula/index.html', context_dict)
@@ -70,19 +72,25 @@ def register(request):
     return render(request, 'spatula/register.html',
                   context={'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
     
-
+@login_required
 def add_recipe(request): 
     form = RecipeForm()
-    context_dict = {} 
+    context_dict = {}
+    
+    #form.fields['postedby'] = UserProfile.objects.get(user=User.objects.get(username=request.user.__str__()))
+    #print(form.fields['postedby'].queryset)
+
     if request.method == 'POST': 
-        form = RecipeForm(request.POST)
-        
+        form = RecipeForm(request.POST)        
         if form.is_valid(): 
-            form.save(commit=True)
-            return redirect(reverse('spatula:index'))
+            recipe = form.save(commit=False)
+            recipe.postedby = UserProfile.objects.get(user=request.user)
+            recipe.save()
+            return redirect(reverse('spatulaApp:index'))
         else: 
             print(form.errors)
     context_dict['form'] = form
+    
     return render(request, 'spatula/add_recipe.html', context=context_dict)
 
 

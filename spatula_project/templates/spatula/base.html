@@ -20,7 +20,7 @@
     <body>
         {% block header_block %}
         <div id="top">
-            <img src="{% static 'images/spatula.png' %}" id="logo">
+            <a href="{% url 'spatulaApp:index' %}"><img src="{% static 'images/spatula.png' %}" id="logo"></a>
             <input type="text" id="searchbar" name="searchbar" placeholder="Search">
             <button type="button" id="signin" onclick="showSignin()">Sign In / Register</button>
         </div>
