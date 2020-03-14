@@ -42,7 +42,7 @@ def register(request):
         user_form = UserForm(request.POST)
         profile_form = UserProfileForm(request.POST)
 
-        if user_form.is_valid():
+        if user_form.is_valid()and profile_form.is_valid():
             # Save the user's form data to the database.
             user = user_form.save()
 
@@ -58,9 +58,11 @@ def register(request):
             profile = profile_form.save(commit=False)
             profile.user = user
 
+            profile.save()
             # Update our variable to indicate that the template
             # registration was successful.
             registered = True
+            return redirect(reverse('spatulaApp:index'))
         else:
             # Invalid form or forms - mistakes or something else?
             # Print problems to the terminal.
@@ -74,6 +76,7 @@ def register(request):
     # Render the template depending on the context.
     return render(request, 'spatula/register.html',
                   context={'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+    
     
 @login_required
 def add_recipe(request): 
