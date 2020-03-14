@@ -6,7 +6,6 @@ from spatulaApp.customFormTypes import NameChoiceField
 #choices for diettype field
 DIET_CHOICES = Recipe.DIET_CHOICES # better to get from source than make a copy [(1,'Meat'), (2,'Vegan'), (3, 'Vegetarian'),]
 CATEGORY_CHOICES = [(choice.name,choice.name) for choice in Category.objects.all()]
-print([(choice.name,choice.name) for choice in Category.objects.all()])
 #query Category table, add objects to tuple (ChoiceField requires tuple for choice perameter) 
 class RecipeForm(forms.ModelForm):
     

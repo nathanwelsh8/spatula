@@ -84,9 +84,26 @@ def add_recipe(request):
         form = RecipeForm(request.POST)        
         if form.is_valid(): 
             recipe = form.save(commit=False)
-            recipe.postedby = UserProfile.objects.get(user=request.user)
-            recipe.save()
-            return redirect(reverse('spatulaApp:index'))
+            
+            existingRecipe = Recipe.objects.filter(name=recipe.name)
+            user = UserProfile.objects.get(user=request.user)
+
+            # if the recipe exists, was it posed by our user?
+            # if so do not allow them to resubmit the recipe
+            if existingRecipe:
+                canPost = True
+                for r in existingRecipe:
+                    if r.postedby == user:
+                        canPost = False 
+                        # will be displayed custom error message 
+                        form._errors['name'] = form.error_class(['You have already poasted a recipe with this name.'])
+                        break
+
+            # only add if the recipe does not exist under our user
+            if not existingRecipe or canPost:
+                recipe.postedby = user
+                recipe.save()
+                return redirect(reverse('spatulaApp:index'))
         else: 
             print(form.errors)
     context_dict['form'] = form
