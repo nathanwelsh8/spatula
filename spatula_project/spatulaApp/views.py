@@ -77,6 +77,7 @@ def register(request):
     return render(request, 'spatula/register.html',
                   context={'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
     
+    
 @login_required
 def add_recipe(request): 
     form = RecipeForm()
