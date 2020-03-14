@@ -6,20 +6,43 @@
 {% endblock %}
 
 {% block body_block %}
-<h1>Register for Spatula</h1>
 
-	<form id="user_form" method="post" action="{% url 'spatulaApp:register' %}" enctype="multipart/form-data">
+<style>
+		
+		#forms{
+			width: 70%;
+			margin: 20px;
+			margin-left: 15%;
+			border: 2px solid #d1d4e0;
+			border-radius: 8px;	
+			text-align: center;
+		}
+</style>
 
-		{% csrf_token %}
 
-		<!-- Display each form -->
 
-		{{ user_form.as_p }}
+{% if not registered %}
+	<div id = 'forms'>
+		<h1>Register for Spatula</h1>
+			<form id="user_form" method="post" action="{% url 'spatulaApp:register' %}" enctype="multipart/form-data">
 
-		<!-- Don't know if the next line is necessary since the user is not adding any data to the profile form when they register -->
-		{{ profile_form.as_p }}
+				{% csrf_token %}
+
+				<!-- Display each form -->
+
+				{{ user_form.as_p }}
+				{{ profile_form.as_p }}
+		
 			
-		<!-- Provide a button to click to submit the form. -->
-		<input type="submit" name="submit" value="Register" />
-	</form>
+				<!-- Provide a button to click to submit the form. -->
+				<input type="submit" name="submit" value="Register" />
+			</form>
+	</div>
+{% else %}
+	<strong>Thank you for registering!</strong>
+	<a href="{% url 'spatulaApp:index' %}">Return to the homepage.</a><br />
+{% endif %}
+
+
+
 {% endblock %}
