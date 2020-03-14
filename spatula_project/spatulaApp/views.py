@@ -36,7 +36,7 @@ def register(request):
         user_form = UserForm(request.POST)
         profile_form = UserProfileForm(request.POST)
 
-        if user_form.is_valid():
+        if user_form.is_valid()and profile_form.is_valid():
             # Save the user's form data to the database.
             user = user_form.save()
 
@@ -52,6 +52,7 @@ def register(request):
             profile = profile_form.save(commit=False)
             profile.user = user
 
+            profile.save()
             # Update our variable to indicate that the template
             # registration was successful.
             registered = True

@@ -8,7 +8,7 @@ from django.conf.urls.static import static
 app_name = 'spatulaApp'
 urlpatterns = [
      path('', views.index, name='index'),
-     path('register', views.register, name='register'),
+     path('register/', views.register, name='register'),
      path('add_recipe/', views.add_recipe, name='add_recipe'),
      path('<slug:account_name_slug>/', views.show_profile, name='show_profile'),
  ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -34,9 +34,9 @@ class RecipeForm(forms.ModelForm):
         exclude = ('id',)
 
 
-
 class UserForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput())
+    username = forms.CharField(max_length=150, widget=forms.TextInput(attrs={'placeholder':'Username'}), label='')
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Password'}), label='')
 
     class Meta:
         model = User
@@ -44,7 +44,9 @@ class UserForm(forms.ModelForm):
 
 
 class UserProfileForm(forms.ModelForm):
+    bio = forms.CharField(widget=forms.Textarea(attrs={'placeholder':'Your bio - tell us about yourself...'}), label ='')
+
     class Meta:
         model = UserProfile
         # Fields list empty since we don't want the profile fields to appear during registration
-        fields = ()
+        exclude = ('user', 'slug')
