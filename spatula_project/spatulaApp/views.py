@@ -3,10 +3,13 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from spatulaApp.forms import UserForm, UserProfileForm, RecipeForm
+from spatulaApp.forms import UserForm, UserProfileForm, RecipeForm, RecipeImageUploadForm
 from django.contrib.auth import authenticate, login, logout
 from spatulaApp.models import Recipe, Category, RecipeImage, UserProfile
 from django.urls import reverse 
+
+# funky import that allows users to upload multiple images at once
+from django.forms import modelformset_factory
 
 # Create your views here.
 # here so the database can be migrated without errors
@@ -76,13 +79,14 @@ def register(request):
 def add_recipe(request): 
     form = RecipeForm()
     context_dict = {}
-    
-    #form.fields['postedby'] = UserProfile.objects.get(user=User.objects.get(username=request.user.__str__()))
-    #print(form.fields['postedby'].queryset)
+    ImageFormSet = modelformset_factory(RecipeImage, form=RecipeImageUploadForm, extra=2, min_num=1, max_num=3) # extra =3 --> user can upload 3 images of recipe
 
     if request.method == 'POST': 
-        form = RecipeForm(request.POST)        
-        if form.is_valid(): 
+        form = RecipeForm(request.POST)   
+        formset = ImageFormSet(request.POST, request.FILES,
+        queryset = RecipeImage.objects.none()
+        )     
+        if form.is_valid() and formset.is_valid(): 
             recipe = form.save(commit=False)
             
             existingRecipe = Recipe.objects.filter(name=recipe.name)
@@ -103,11 +107,18 @@ def add_recipe(request):
             if not existingRecipe or canPost:
                 recipe.postedby = user
                 recipe.save()
+
+                for form in formset.cleaned_data:
+                    if form:
+                        image = form['image']
+                        photo = RecipeImage(belongsto=Recipe.objects.get(name=recipe.name, postedby=user), image=image)
+                        photo.save()
+
                 return redirect(reverse('spatulaApp:index'))
         else: 
-            print(form.errors)
+            print(form.errors, formset.errors)
     context_dict['form'] = form
-    
+    context_dict['formset'] = ImageFormSet(queryset=RecipeImage.objects.none())
     return render(request, 'spatula/add_recipe.html', context=context_dict)
 
 

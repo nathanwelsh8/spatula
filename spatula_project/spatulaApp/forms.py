@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from spatulaApp.models import UserProfile, Recipe, Category
+from spatulaApp.models import UserProfile, Recipe, Category, RecipeImage
 from spatulaApp.customFormTypes import NameChoiceField
 
 #choices for diettype field
@@ -58,3 +58,11 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         # Fields list empty since we don't want the profile fields to appear during registration
         fields = ()
+
+class RecipeImageUploadForm(forms.ModelForm):
+    
+    image = forms.ImageField(required = False, label='Image')
+    belongsto = forms.IntegerField(widget=forms.HiddenInput(), required=False)
+    class Meta:
+        model = RecipeImage
+        fields = ('image',)
