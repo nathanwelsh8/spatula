@@ -23,7 +23,7 @@
 			<div id="top">
 				<a href="{% url 'spatulaApp:index' %}"><img src="{% static 'images/spatula.png' %}" id="logo"></a>
 				<input type="text" id="searchbar" name="searchbar" placeholder="Search">
-				<button type="button" id="signin"><a href="{% url 'spatulaApp:logout' %}">Logout</a></button>
+				<a href="{% url 'spatulaApp:logout' %}">Logout</a>
 			</div>
 		{% else %}
 			<div id="top">
@@ -32,7 +32,7 @@
 				<button type="button" id="signin" onclick="showSignin()">Sign In / Register</button>
 			</div>
 			<div id="container">
-				<form id="sign_in" method = "post" action = "{% url 'spatulaApp:login' %}">
+				<form id="sign_in" method = "post" action = "{% url 'spatulaApp:index' %}">
 						{% csrf_token %}
 						<input type="text" id="username" name="username" placeholder="Username"><br>
 						<input type="text" id="password" name="password" placeholder="Password"><br>

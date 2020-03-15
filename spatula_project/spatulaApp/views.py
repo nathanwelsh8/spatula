@@ -20,35 +20,30 @@ def index(request):
         'diet_choices':Recipe.getChoicesAsList,
         'recipe_images': RecipeImage.objects.all(),
         }
+        
+    if request.method == 'POST': 
+         username = request.POST.get('username')
+         password = request.POST.get('password')
+         user = authenticate(username=username, password=password)
+         if user: 
+              if user.is_active:
+                   login(request, user)
+                   return redirect(reverse('spatulaApp:index'))
+              else: 
+                   return HttpResponse("Your Rango account is disabled.")
+         else:
+              print(f"Invalid login details: {username}, {password}")
+              return HttpResponse("Invalid login details supplied.")
+    else:       
+        for r in context_dict['recipies']: 
+            r.rating = str(int(r.rating * 2))
+        return render(request,'spatula/index.html', context_dict)
     
-    for r in context_dict['recipies']: 
-        r.rating = str(int(r.rating * 2))
-    return render(request,'spatula/index.html', context_dict)
-    
-def user_login(request): 
-     if request.method == 'POST': 
-          username = request.POST.get('username')
-          password = request.POST.get('password')
-          print(f"Test: {username}, {password}")
-          user = authenticate(username=username, password=password)
-          if user: 
-
-               if user.is_active:
-                    login(request, user)
-                    return redirect(reverse('spatulaApp:index'))
-               else: 
-                    return HttpResponse("Your Rango account is disabled.")
-          else:
-               print(f"Invalid login details: {username}, {password}")
-               return HttpResponse("Invalid login details supplied.")
-     else: 
-          print(f"Test: Method is get")
-          return render(request, 'spatulaApp:index')
-
+@login_required
 def user_logout(request): 
-    logout(request) 
+    logout(request)
     # Take the user back to the homepage. 
-    return redirect(reverse('spatulaApp:add_recipe'))
+    return redirect(reverse('spatulaApp:index'))
 
 def register(request):
     # Using the same implementation as TWDjango
