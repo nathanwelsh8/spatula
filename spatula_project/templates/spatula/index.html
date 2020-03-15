@@ -48,8 +48,9 @@
             <label for="category4"> Cost</label><br>
         </div>
     </div>
-
+	{% if user.is_authenticated %}
     <a href="{% url 'spatulaApp:add_recipe' %}"><img src="{% static 'images/newrecipe.png' %}" class="newrecipe"></a>
+	{% endif %}
 	{% if recipies %}
     <div id="recipies">
 		{% for recipe in recipies %}

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from spatulaApp.models import UserProfile, Recipe, Category, RecipeImage
+from spatulaApp.models import UserProfile, Recipe, RecipeImage, Category
 from spatulaApp.customFormTypes import NameChoiceField
 
 #choices for diettype field

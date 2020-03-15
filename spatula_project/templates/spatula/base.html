@@ -19,29 +19,40 @@
 	</head>
     <body>
         {% block header_block %}
-        <div id="top">
-            <a href="{% url 'spatulaApp:index' %}"><img src="{% static 'images/spatula.png' %}" id="logo"></a>
-            <input type="text" id="searchbar" name="searchbar" placeholder="Search">
-            <button type="button" id="signin" onclick="showSignin()">Sign In / Register</button>
-        </div>
-        <div id="container">
-            <input type="text" id="username" name="username" placeholder="Username"><br>
-            <input type="text" id="password" name="password" placeholder="Password"><br>
-            <button type="button" id="containerregister">Register</button>
-            <button type="button" id="containersignin">Sign In</button>
-            <!--<img src="profile.png" id="profilepic">-->
-        </div>
-        
-        <script>
-            function showSignin(){
-                var x = document.getElementById("container");
-                if(x.style.display=="none"){
-                    x.style.display="block";
-                }else{
-                    x.style.display="none";
-                }
-            }
-        </script>
+		{% if user.is_authenticated %}	
+			<div id="top">
+				<a href="{% url 'spatulaApp:index' %}"><img src="{% static 'images/spatula.png' %}" id="logo"></a>
+				<input type="text" id="searchbar" name="searchbar" placeholder="Search">
+				<button type="button" id="signin"><a href="{% url 'spatulaApp:logout' %}">Logout</a></button>
+			</div>
+		{% else %}
+			<div id="top">
+				<a href="{% url 'spatulaApp:index' %}"><img src="{% static 'images/spatula.png' %}" id="logo"></a>
+				<input type="text" id="searchbar" name="searchbar" placeholder="Search">
+				<button type="button" id="signin" onclick="showSignin()">Sign In / Register</button>
+			</div>
+			<div id="container">
+				<form id="sign_in" method = "post" action = "{% url 'spatulaApp:login' %}">
+						{% csrf_token %}
+						<input type="text" id="username" name="username" placeholder="Username"><br>
+						<input type="text" id="password" name="password" placeholder="Password"><br>
+						<button type="button" id="containerregister">Register</button>
+						<input type="submit" name ="submit" id="containersignin" value = "Sign in"/>
+				</form>
+				<!--<img src="profile.png" id="profilepic">-->
+			</div>
+				
+			<script>
+				function showSignin(){
+					var x = document.getElementById("container");
+					if(x.style.display=="none"){
+						x.style.display="block";
+					}else{
+						x.style.display="none";
+					}
+				}
+			</script>
+		{% endif %}
         {% endblock %}
         {% block body_block %}
         Webpage bodty is overridden here

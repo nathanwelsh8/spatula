@@ -13,4 +13,6 @@ urlpatterns = [
      path('register/', views.register, name='register'),
      path('add_recipe/', views.add_recipe, name='add_recipe'),
      path('<slug:account_name_slug>/', views.show_profile, name='show_profile'),
+     path('login/', views.user_login, name='login'),
+     path('logout/', views.user_logout, name='logout'),
  ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

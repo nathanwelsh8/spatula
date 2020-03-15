@@ -74,7 +74,7 @@ class Recipe(models.Model):
     cost                   = models.PositiveSmallIntegerField(choices=COST_CHOICES)
     diettype               = models.PositiveSmallIntegerField(choices=DIET_CHOICES)
    
-    postedby               = models.ForeignKey(UserProfile, on_delete=models.CASCADE, default=0)
+    postedby               = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null = True)
 
     #  - Following fields are hidden when creating a new recipe
     #       ratings are out of 5, to 1 decimal place.
