@@ -28,7 +28,7 @@
             {% for type in diet_choices %}
                 
              <!-- Type is now a list and 0=int type, 1=name -->
-                <input type="checkbox" name="{{ type.1 }}" checked>
+                <input type="checkbox" name="{{ type.0 }}" checked>
                 <img src="{{ MEDIA_URL }}images/{{type.0}}.png" class="sidebarmeat">
                 <label for="{{ type.1 }}">{{type.1}}</label><br>
             {% endfor %}

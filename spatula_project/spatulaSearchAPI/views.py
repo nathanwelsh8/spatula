@@ -23,10 +23,10 @@ def search(request):
     
     dietTypeList = request.GET.getlist('diettype[]')  # jquery adds [] when sending through ajax
     categoryList = request.GET.getlist('categories[]')
+    print(dietTypeList)
+    recipes = Recipe.objects.filter(Q(name__contains=recipeName) & Q(category__in=categoryList) & Q(diettype__in=dietTypeList))
     
-    recipes = Recipe.objects.filter(name__contains=recipeName)
     
-    #order after we have trun
     recipes = sortTypeDict.get(sortType,sortTypeDict['rating'])(recipes)
     # stops too many recipes being displayed on page
     if (len(recipes) >9 ):
