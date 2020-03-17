@@ -1,5 +1,5 @@
 from django import template 
-from spatulaApp.models import Category
+from spatulaApp.models import Category, Recipe, Rating
 
 register = template.Library() 
 
@@ -19,3 +19,17 @@ def getKeyImgList(h,key):
             images.append(item.image)
     return images
     
+@register.simple_tag
+def double(a):
+    return a*2
+
+@register.filter
+def getRating(redcipeID):
+    ratings = Rating.objects.filter(recipe=redcipeID)
+    rating = 0
+    no_entries = 0
+    for r in ratings:
+        rating += r.rating
+        no_entries +=1 
+   
+    return str(round((rating*2)/no_entries,0))

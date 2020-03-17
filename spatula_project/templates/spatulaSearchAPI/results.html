@@ -1,0 +1,34 @@
+
+{% load staticfiles %}
+{% load spatulaApp_template_tags %} 
+
+{% block results %}
+   
+    {% if recipies %}
+        {% for recipe in recipies %}
+            <div class="recipe">
+                {% with recipe_images|getKeyImg:recipe.name as image %}
+                            <img src="{{image}}" class="recipeimg">
+                {% endwith %} 
+                <div class="recipename">
+                    <p>{{ recipe.name }}</p>
+                </div>
+                <p class="reciperatingtotal">(128)</p>
+                {% with recipe.id|getRating  as recipeRating %}
+                {% with 'images/stars/'|add:recipeRating|add:'.png' as image_static %}
+                <img src="{% static image_static %}" class="reciperating">
+                {%endwith%}
+                <img src="{{MEDIA_URL}}images/{{ recipe.diettype }}.png " class="recipemeat">
+                <div class="recipecategory">
+                {% with recipe.category|cut:"Category object (" as cut_cat %}
+                    <p>{{cut_cat|cut:")"}}</p>
+                {% endwith %}{% endwith %}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Hmm we dont seem to have that recipie. <br/>
+        Why not tell us how to make it!</p>
+    {% endif %}
+       
+{% endblock %}

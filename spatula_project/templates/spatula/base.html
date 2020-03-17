@@ -5,7 +5,14 @@
 <html>
     <head lang="en">
         
-        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+        <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+        
+        <script src = "{% static 'js/jquery-1.11.1.min.js' %}"
+        type = "text/javascript" charset = "utf-8"></script>
+        
+        <script src="{% static 'js/ajax.js' %}"
+         type="text/javascript" charset="utf-8"></script>
+        
         {% block css_block %}
         {% endblock %}
 
@@ -21,7 +28,10 @@
         {% block header_block %}
         <div id="top">
             <a href="{% url 'spatulaApp:index' %}"><img src="{% static 'images/spatula.png' %}" id="logo"></a>
-            <input type="text" id="searchbar" name="searchbar" placeholder="Search">
+            {% csrf_token %}   
+            
+                <!-- will try hide this button after search is working so user can just hit enter to search--->
+                <input id="searchbar" type="text" placeholder="Search">
             <button type="button" id="signin" onclick="showSignin()">Sign In / Register</button>
         </div>
         <div id="container">
@@ -31,20 +41,14 @@
             <button type="button" id="containersignin">Sign In</button>
             <!--<img src="profile.png" id="profilepic">-->
         </div>
-        
-        <script>
-            function showSignin(){
-                var x = document.getElementById("container");
-                if(x.style.display=="none"){
-                    x.style.display="block";
-                }else{
-                    x.style.display="none";
-                }
-            }
-        </script>
+
         {% endblock %}
         {% block body_block %}
-        Webpage bodty is overridden here
+            Webpage bodty is overridden here
         {% endblock %}
+        
+        {% block javascript %}
+        {% endblock %}
+
     </body>
 </html>

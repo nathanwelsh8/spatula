@@ -1,29 +1,64 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, render_to_response
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from spatulaApp.forms import UserForm, UserProfileForm, RecipeForm, RecipeImageUploadForm
 from django.contrib.auth import authenticate, login, logout
+
+from spatulaSearchAPI.forms import SearchForm
 from spatulaApp.models import Recipe, Category, RecipeImage, UserProfile
 from django.urls import reverse 
+from spatulaSearchAPI.views import search as API_Search
+from django.views import View
 
 # funky import that allows users to upload multiple images at once
 from django.forms import modelformset_factory
 
 # Create your views here.
 # here so the database can be migrated without errors
-def index(request):
+
+
+class Index(View):
+
+    def search(self, request):
+        return API_Search(request)
+    def fix_ratings(self):
+
+        # map ratings to integer values and sanitise edge cases
+        for r in self.context_dict['recipies']: 
+            r.rating = str(round(int(r.rating * 2)))
+            if int(r.rating) >5:
+                r.rating= str(5)
+            elif int(r.rating) <0:
+                r.rating = str(0)
+                
+
+    # Data to be passed into page
     context_dict ={
+
         'recipies':Recipe.objects.order_by('rating'),
         'categories':Category.getModelsAsList,
         'diet_choices':Recipe.getChoicesAsList,
         'recipe_images': RecipeImage.objects.all(),
         }
-    
-    for r in context_dict['recipies']: 
-        r.rating = str(int(r.rating * 2))
-    return render(request,'spatula/index.html', context_dict)
+    def get(self, request):
+        
+        if 'search' in request.GET:
+            # get users live search criteria
+
+            self.context_dict['recipies'] = self.search(request)
+
+            self.fix_ratings()
+            return render(request, 'spatulaSearchAPI/results.html',self.context_dict)
+
+        self.fix_ratings() # multiply by 2 so they are mapped to a stars rating
+        return render(request, 'spatula/index.html', self.context_dict)
+
+    def post(self, request):
+        # do nothing for bogus post request
+            return render(request, 'spatula/index.html',self.context_dict)
+
 
 
 def register(request):
