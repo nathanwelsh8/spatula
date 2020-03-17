@@ -42,7 +42,7 @@ def index(request):
 @login_required
 def user_logout(request): 
     logout(request)
-    # Take the user back to the homepage. 
+    # Take the user back to the homepage.
     return redirect(reverse('spatulaApp:index'))
 
 def register(request):
