@@ -33,7 +33,7 @@ class UserProfile(models.Model):
     # username slug is used for the URL name mappings
     def save(self, *args, **kwargs):
         self.slug = slugify(str(self.__str__()))
-        super(UserProfile,self).save(*args,**kwargs)
+        super(UserProfile,self).save(*args, **kwargs)
 
 class Category(models.Model):
     

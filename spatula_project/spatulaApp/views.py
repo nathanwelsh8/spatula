@@ -61,6 +61,11 @@ class Index(View):
          
         username = request.POST.get('username')
         password = request.POST.get('password')
+
+        # If they clicked the register button they are redirected to register page.
+        if 'register' in request.POST:
+            return redirect(reverse('spatulaApp:register'))
+
         user = authenticate(username=username, password=password)
         if user: 
             if user.is_active:
