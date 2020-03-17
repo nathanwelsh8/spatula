@@ -37,7 +37,7 @@ class Index(View):
     # Data to be passed into page
     context_dict ={
 
-        'recipies':Recipe.objects.order_by('rating'),
+        'recipies':"",# ajax will get the recipies when document is ready.
         'categories':Category.getModelsAsList,
         'diet_choices':Recipe.getChoicesAsList,
         'recipe_images': RecipeImage.objects.all(),
@@ -181,6 +181,62 @@ def add_recipe(request):
     return render(request, 'spatula/add_recipe.html', context=context_dict)
 
 
+class ShowProfile(View):
+    context_dict = {}
+    user_cache = None
+
+    def get(self, request,account_name_slug=None):
+
+        if self.user_cache is None:
+            self.user_cache = UserProfile.objects.get(user=User.objects.get(username=account_name_slug).id)
+
+        if request.GET.get('get_recipes',None) == "getUser":
+            self.context_dict['recipe_images'] = []
+            for recipe in self.context_dict['recipies']:
+                self.context_dict['recipe_images'].append(RecipeImage.objects.filter(belongsto=recipe.id))
+            print(self.context_dict['recipe_images'])
+            #recipies already present in context dict
+            return render(request,'spatulaSearchAPI/results.html',self.context_dict)
+
+        try:
+            # The .get() method returns one model instance or raises an exception.
+            profile = UserProfile.objects.get(slug=account_name_slug)
+            # Retrieve all of the associated recipes for this account.
+            recipes = Recipe.objects.filter(postedby=self.user_cache.id)
+            # Add recipes to context dictionary
+            self.context_dict['recipies'] = recipes
+
+            # Add profile object to context dictionary
+            self.context_dict['profile'] = profile
+
+        except UserProfile.DoesNotExist:
+            
+            return redirect(reverse('spatulaApp:index'))
+        
+        # Render response
+        return render(request, 'spatula/profile.html', context=self.context_dict)
+
+
+        def post(self,request, account_name_slug=None):
+            if self.user_cache is None:
+                self.user_cache = UserProfile.objects.get(user=User.objects.get(username=account_name_slug).id)
+            try:
+                # The .get() method returns one model instance or raises an exception.
+                profile = UserProfile.objects.get(slug=account_name_slug)
+
+                # Retrieve all of the associated recipes for this account.
+                recipes = Recipe.objects.filter(postedby=UserProfile.objects.get(user=self.user_cache.id))
+                print(recipes)
+                # Add recipes to context dictionary
+                self.context_dict['recipies'] = recipes
+
+                # Add profile object to context dictionary
+                self.context_dict['profile'] = profile
+
+            except UserProfile.DoesNotExist:
+                return redirect(reverse('spatulaApp:index'))
+
+
 def show_profile(request, account_name_slug):
     context_dict = {}
 
@@ -189,10 +245,11 @@ def show_profile(request, account_name_slug):
         profile = UserProfile.objects.get(slug=account_name_slug)
 
         # Retrieve all of the associated recipes for this account.
-        # recipes = Recipe.objects.filter(postedby=)
-
+        
+        recipes = Recipe.objects.filter(postedby=UserProfile.objects.get(user=User.objects.get(username=account_name_slug).id))
+        print(recipes)
         # Add recipes to context dictionary
-        # context_dict['recipes'] = recipes
+        context_dict['recipies'] = recipes
 
         # Add profile object to context dictionary
         context_dict['profile'] = profile

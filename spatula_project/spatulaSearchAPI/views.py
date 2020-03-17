@@ -18,19 +18,18 @@ def sortCost(recipes):
 sortTypeDict = {'rating':sortRating,'cost':sortCost,'difficulty':sortDifficulty,'popularity':sortPopularity}
 def search(request):
     
-    recipeName = request.GET.get('search')
-    sortType = request.GET.get('sorttype')
-    
-    dietTypeList = request.GET.getlist('diettype[]')  # jquery adds [] when sending through ajax
-    categoryList = request.GET.getlist('categories[]')
-    print(dietTypeList)
+    # provide alternative value incase the user 
+    # attempts to submit bogus data to server
+    recipeName = request.GET.get('search','chicken')
+    sortType = request.GET.get('sorttype','popularity')
+    dietTypeList = request.GET.getlist('diettype[]',[1])  # jquery adds [] when sending lists through ajax
+    categoryList = request.GET.getlist('categories[]','Italian')
+   
     recipes = Recipe.objects.filter(Q(name__contains=recipeName) & Q(category__in=categoryList) & Q(diettype__in=dietTypeList))
     
-    
+    # sort the results as per users request
     recipes = sortTypeDict.get(sortType,sortTypeDict['rating'])(recipes)
     # stops too many recipes being displayed on page
     if (len(recipes) >9 ):
         recipes =  recipes[:9]
-    print(recipes)
     return recipes
-

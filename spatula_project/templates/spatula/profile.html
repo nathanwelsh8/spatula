@@ -1,41 +1,27 @@
 {% extends 'spatula/base.html' %}
 {% load staticfiles %}
-
 {% block title_block %}
 	Spatula! User - {{ profile.user }}
 {% endblock %}
+{% block css_block %}
+	<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+{% block js_block %}
+	<!--- load this js last--->>
+    <script src="{% static 'js/profile.js' %}"
+    type="text/javascript" charset="utf-8"></script>
+{% endblock %}
 
 {% block body_block %}
-<style>
-		
-		#profile_section{
-			width: 70%;
-			margin: 20px;
-			margin-left: 15%;
-			border: 2px solid #d1d4e0;
-			border-radius: 8px;	
-		}
-
-		#recipe_list{
-			width: 70%;
-			margin: 20px;
-			margin-left: 15%;
-			border: 2px solid #d1d4e0;
-			border-radius: 8px;	
-		}
-</style>
 
 <div id="profile_section">
 	<h1>{{ profile.user }}</h1>
 	{{profile.bio}}
 </div>
-
-
-<div id="recipe_list">
 	<h2>Recipes by {{ profile.user }}</h2>
-
-</div>
-
-
+	<div id="recipies"><!-- id recipies has deliberate spelling mistake-->>
+		{% include 'spatulaSearchAPI/results.html' %}
+	</div>
 	
 {% endblock %}
+

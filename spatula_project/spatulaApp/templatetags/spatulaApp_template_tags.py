@@ -5,16 +5,30 @@ register = template.Library()
 
 @register.filter
 def getKeyImg(h,key):
+    print("called")
     "Gets the image for display recipe on index page"
+    if type(h) == list:
+        
+        for i in h:
+            for j in i:
+                if j.belongsto.__str__() == key.__str__():
+                    return j.image
+        
     for item in h:
+        
         if item.belongsto.__str__() == key.__str__():
+            
             return item.image
+    
 
+        
 @register.filter
 def getKeyImgList(h,key):
     "Get all images belonging to recipe object"
     images = []
+    
     for item in h:
+        
         if item.belongsto.__str__() == key.__str__():
             images.append(item.image)
     return images
@@ -31,7 +45,11 @@ def getRating(recipeID):
     for r in ratings:
         rating += r.rating
         no_entries +=1 
-   
+
+
+    # bad idea to divide by zero    
+    if no_entries == 0:
+        no_entries = 1
     return str(round((rating*2)/no_entries))
 
 

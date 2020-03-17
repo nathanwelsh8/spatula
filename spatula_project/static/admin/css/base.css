@@ -13,6 +13,22 @@ body {
     background: #fff;
 }
 
+#profile_section{
+    width: 70%;
+    margin: 20px;
+    margin-left: 15%;
+    border: 2px solid #d1d4e0;
+    border-radius: 8px;	
+}
+
+#recipe_list{ 
+    width: 70%;
+    margin: 20px;
+    margin-left: 15%;
+    border: 2px solid #d1d4e0;
+    border-radius: 8px;	
+}
+
 /* LINKS */
 
 a:link, a:visited {

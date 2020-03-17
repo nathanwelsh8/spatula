@@ -1,14 +1,12 @@
 
 {% load staticfiles %}
 {% load spatulaApp_template_tags %} 
-
 {% block results %}
-   
     {% if recipies %}
         {% for recipe in recipies %}
             <div class="recipe">
                 {% with recipe_images|getKeyImg:recipe.name as image %}
-                            <img src="{{image}}" class="recipeimg">
+                            <img src="../{{image}}" class="recipeimg">
                 {% endwith %} 
                 <div class="recipename">
                     <p>{{ recipe.name }}</p>
@@ -27,8 +25,8 @@
             </div>
         {% endfor %}
     {% else %}
-        <p>Hmm we dont seem to have that recipie. <br/>
-        Why not tell us how to make it!</p>
+        <p>Hmm theres nothing to show. <br/>
+        Why not{% if not user.is_authenticated %} login to add {% else %} <a href="{% url 'spatulaApp:add_recipe' %}">add</a> {% endif %}a recipie!</p>
     {% endif %}
        
 {% endblock %}

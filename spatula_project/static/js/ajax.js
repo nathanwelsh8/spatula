@@ -1,4 +1,6 @@
 $(document).ready(function(){ 
+    // perform a quick load
+    sendRequest();
     console.log("Document ready");
 
     $("#searchbar").keyup(function() {
@@ -10,13 +12,12 @@ $(document).ready(function(){
     // add the filters now
 
     $('input[type="radio"]').click(function(){
-        console.log("Radio button pressed");
-    	var demovalue = $(this).val();
+       
         sendRequest();
     });
 
     $('input[type="checkbox"]').click(function(){
-        console.log("Checkbox pressed");
+        
         sendRequest();
     });
 

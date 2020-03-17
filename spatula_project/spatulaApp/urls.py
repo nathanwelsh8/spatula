@@ -18,5 +18,5 @@ urlpatterns = [
      path('logout/', views.user_logout, name='logout'),
 
      #make sure this url is at the bottom so it doesn't match the other urls
-     path('<slug:account_name_slug>/', views.show_profile, name='show_profile'),
+     path('<slug:account_name_slug>/', views.ShowProfile.as_view(), name='show_profile'),
  ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
