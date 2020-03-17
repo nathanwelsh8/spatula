@@ -45,8 +45,11 @@ class RecipeForm(forms.ModelForm):
 
 
 class UserForm(forms.ModelForm):
-    username = forms.CharField(max_length=150, widget=forms.TextInput(attrs={'placeholder':'Username'}), label='')
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Password'}), label='')
+    username = forms.CharField(max_length=150,
+                               widget=forms.TextInput(attrs={'placeholder': 'Username', 'id': 'register_username'}),
+                               label='')
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password', 'id': 'register_password'}),
+                               label='')
 
     class Meta:
         model = User
@@ -54,7 +57,8 @@ class UserForm(forms.ModelForm):
 
 
 class UserProfileForm(forms.ModelForm):
-    bio = forms.CharField(widget=forms.Textarea(attrs={'placeholder':'Your bio - tell us about yourself...'}), label ='')
+    bio = forms.CharField(
+        widget=forms.Textarea(attrs={'placeholder': 'Your bio - tell us about yourself...', 'id': 'bio'}), label='')
 
     class Meta:
         model = UserProfile

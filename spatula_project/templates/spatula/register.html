@@ -9,6 +9,10 @@
 
 <style>
 		
+		h1{
+			font-family:Calibri;
+		}
+
 		#forms{
 			width: 70%;
 			margin: 20px;
@@ -16,6 +20,33 @@
 			border: 2px solid #d1d4e0;
 			border-radius: 8px;	
 			text-align: center;
+		}
+
+		#register_username, #register_password {
+			margin: 2px;
+			width: 300px;
+			height: 24px;
+			border: 2px solid #d1d4e0;
+			border-radius: 4px;
+		}
+
+		#bio {
+			margin: 2px;
+			width: 300px;
+			height: 100px;
+			border: 2px solid #d1d4e0;
+			border-radius: 4px;
+		}
+		
+		#button{
+			margin: 4px;
+			height: 24px;
+			background-color: #000000;
+			color: #ffffff;
+			border: 2px solid #000000;
+			border-radius: 2px;
+			width: 200px;
+		}
 		}
 </style>
 
@@ -35,7 +66,7 @@
 		
 			
 				<!-- Provide a button to click to submit the form. -->
-				<input type="submit" name="submit" value="Register" />
+				<input id = "button" type="submit" name="submit" value="Register" />
 			</form>
 	</div>
 {% else %}
