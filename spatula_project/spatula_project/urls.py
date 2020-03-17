@@ -18,8 +18,13 @@ from django.contrib import admin
 from spatulaApp import urls
 from django.urls import path 
 from django.urls import include 
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf import settings
 
 urlpatterns = [
     path(r'admin/', admin.site.urls),
-    path('', include('spatulaApp.urls')) # try spatulaApp.urls if not work
+    path('', include('spatulaApp.urls')), # try spatulaApp.urls if not work,
+    path('search/',include("spatulaSearchAPI.urls"))
 ]
+
+urlpatterns += staticfiles_urlpatterns()

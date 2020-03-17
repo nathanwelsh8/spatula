@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['nathanwelsh8.pythonanywhere.com',
 # DIRS
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
+#STATIC_ROOT = STATIC_DIR
 MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 
 
@@ -75,6 +76,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media', 
+                
             ],
         },
     },
@@ -126,11 +128,22 @@ USE_L10N = True
 
 USE_TZ = True
 
+# DAJAX 
+TEMPLATE_LOADERS = (
+   'django.template.loaders.filesystem.Loader',
+   'django.template.loaders.app_directories.Loader',
+   'django.template.loaders.eggs.Loader',
+)
+
 
 # Static files (CSS, JavaScript, static Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-
+STATICFILES_FINDERS = (
+   'django.contrib.staticfiles.finders.FileSystemFinder',
+   'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+  
+)
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [STATIC_DIR, ]
