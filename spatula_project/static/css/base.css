@@ -1,14 +1,6 @@
-
-p,label {
+body {
     margin: 0px;
-    font-family: sans-serif;
-    color: #3e3c52;
 }
-body{
-    margin: 0px;
-    background-color: #f5efeb;
-}
-
 #top {
     margin: 0px;
     padding: 0px;
@@ -44,6 +36,7 @@ body{
     border: 2px solid #d1d4e0;
     border-radius: 4px;
 }
+
 #containerregister, #containersignin {
     margin: 2px;
     height: 24px;
@@ -60,4 +53,7 @@ body{
     width: 240px;
     border: 2px solid #d1d4e0;
     border-radius: 4px;
+}
+#logged_in{
+	float:right;
 }

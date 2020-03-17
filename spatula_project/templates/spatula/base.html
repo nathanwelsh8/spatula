@@ -18,31 +18,8 @@
 		</title>
 	</head>
     <body>
-        {% block header_block %}
-		{% if user.is_authenticated %}	
-			<div id="top">
-				<a href="{% url 'spatulaApp:index' %}"><img src="{% static 'images/spatula.png' %}" id="logo"></a>
-				<input type="text" id="searchbar" name="searchbar" placeholder="Search">
-				<a href="{% url 'spatulaApp:logout' %}">Logout</a>
-			</div>
-		{% else %}
-			<div id="top">
-				<a href="{% url 'spatulaApp:index' %}"><img src="{% static 'images/spatula.png' %}" id="logo"></a>
-				<input type="text" id="searchbar" name="searchbar" placeholder="Search">
-				<button type="button" id="signin" onclick="showSignin()">Sign In / Register</button>
-			</div>
-			<div id="container">
-				<form id="sign_in" method = "post" action = "{% url 'spatulaApp:index' %}">
-						{% csrf_token %}
-						<input type="text" id="username" name="username" placeholder="Username"><br>
-						<input type="text" id="password" name="password" placeholder="Password"><br>
-						<button type="button" id="containerregister">Register</button>
-						<input type="submit" name ="submit" id="containersignin" value = "Sign in"/>
-				</form>
-				<!--<img src="profile.png" id="profilepic">-->
-			</div>
-				
-			<script>
+
+		<script>
 				function showSignin(){
 					var x = document.getElementById("container");
 					if(x.style.display=="none"){
@@ -51,9 +28,42 @@
 						x.style.display="none";
 					}
 				}
-			</script>
-		{% endif %}
+		</script>
+
+        {% block header_block %}
+		
+		<div id="top">
+			<a href="{% url 'spatulaApp:index' %}"><img src="{% static 'images/spatula.png' %}" id="logo"></a>
+			<input type="text" id="searchbar" name="searchbar" placeholder="Search">
+			{% if user.is_authenticated %}	
+				<div id="logged_in">
+				<a href="{% url 'spatulaApp:show_profile' user.username %}">My Profile</a> |
+				<a href="{% url 'spatulaApp:logout' %}">Logout</a>
+				</div>
+			{% else %}
+				<button type="button" id="signin" onclick="showSignin()">Sign In / Register</button>
+			{% endif %}
+		</div>
+			
+		
+		<div id="container">
+			{% if not user.is_authenticated %}
+				<form id="sign_in" method = "post" action = "{% url 'spatulaApp:index' %}">
+						{% csrf_token %}
+						<input type="text" id="username" name="username" placeholder="Username"><br>
+						<input type="text" id="password" name="password" placeholder="Password"><br>
+						<button type="button" id="containerregister">Register</button>
+						<input type="submit" name ="submit" id="containersignin" value = "Sign in"/>
+				</form>
+			
+			<!--<img src="profile.png" id="profilepic">-->
+			{% endif %}
+		</div>
+				
+			
+		
         {% endblock %}
+
         {% block body_block %}
         Webpage bodty is overridden here
         {% endblock %}
