@@ -109,11 +109,13 @@ def add_category(category_dict):
 def add_recipe(name, recipe_data):
     postedby_user = User.objects.get_or_create(username=recipe_data['postedby'])[0]
     postedby_user_profile = UserProfile.objects.get_or_create(user=postedby_user)[0]
+    category = Category.objects.get_or_create(name=recipe_data['category'])[0]
+
     r = Recipe.objects.get_or_create(name=name, ingredients=recipe_data.get('ingredients'),
                                      toolsreq=recipe_data.get('toolsreq'), method=recipe_data.get('method'),
                                      difficulty=recipe_data.get('difficulty'), cost=recipe_data.get('cost'),
                                      diettype=recipe_data.get('diettype'), rating=recipe_data.get('rating'),
-                                     postedby=postedby_user_profile, category=Category.objects.all()[0])[0]
+                                     postedby=postedby_user_profile, category=category)[0]
     r.save()
     return r
 
