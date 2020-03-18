@@ -5,7 +5,6 @@ register = template.Library()
 
 @register.filter
 def getKeyImg(h,key):
-    print("called")
     "Gets the image for display recipe on index page"
     if type(h) == list:
         

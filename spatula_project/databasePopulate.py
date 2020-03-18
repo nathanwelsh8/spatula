@@ -25,53 +25,16 @@ def populate():
         {'name': 'Italian'},
         {'name': 'Chinese'},
         {'name': 'Thai'},
+        {'name':'Japanese'},
         {'name': 'Western'},
         {'name': 'Indian'},
         {'name': 'Mexican'},
         {'name': 'Other'}
     ]
 
-    recipies = {
-        'Vegetable Stir Fry':
-        {
-            'ingredients': '2 tbsp sunflower oil, 4 spring onions, 1 garlic clove, piece fresh root ginger, 1 carrot, 1 red pepper, 100g/3oz baby sweetcorn, 1 courgette, 150g/5oz sugar-snap peas, 2 tbsp hoisin sauce, 2 tbsp low-salt soy sauce',
-            'toolsreq': 'Wok, Spatula',
-            'method': 'Heat a wok on a high heat and add the sunflower oil. Add the spring onions, garlic, ginger and stir-fry for 1 minute, then reduce the heat. Take care to not brown the vegetables. /ES        Add the carrot, red pepper and baby sweetcorn and stir-fry for 2 minutes. Add the courgette and sugar snap peas and stir-fry for a further 3 minutes. Toss the ingredients from the centre to the side of the wok using a wooden spatula. Do not overcrowd the wok and keep the ingredients moving. /ES Add 1 tablespoon water, hoisin and soy sauce and cook over a high heat for a further 2 minutes or until all the vegetables are cooked but not too soft. Serve with noodles or rice. /ES',
-            'difficulty': 1,
-            'cost': 1,
-            'diettype': 3,
-            'rating': 3,
-            'category': 'Chinese',
-            'postedby': 'bob'
-        },
-        'American Style Burger':
-        {
-            'ingredients': 'Mince, Herbs, Buns, Eggs, Seasioning, Cheese',
-            'toolsreq': 'Frying pan',
-            'method': 'Fry burgers',
-            'difficulty': 3,
-            'cost': 2,
-            'diettype': 1,
-            'rating': 1,
-            'category': 'Other',
-            'postedby': 'bob'
-        }
-    }
-
-    ratings = [
-        {'recipe': 'Vegetable Stir Fry', 'rating': 5},
-        {'recipe': 'Vegetable Stir Fry', 'rating': 3},
-        {'recipe': 'American Style Burger', 'rating': 4},
-        {'recipe': 'American Style Burger', 'rating': 4},
-        {'recipe': 'American Style Burger', 'rating': 5},
-        {'recipe': 'American Style Burger', 'rating': 3},
-        {'recipe': 'American Style Burger', 'rating': 4},
-        {'recipe': 'American Style Burger', 'rating': 4},
-        {'recipe': 'American Style Burger', 'rating': 5},
-        {'recipe': 'American Style Burger', 'rating': 3},
-        {'recipe': 'American Style Burger', 'rating': 1},
-        {'recipe': 'American Style Burger', 'rating': 4},
-    ]
+     # you need to pass the user object to the model not the string name.
+     # otherwise bobs profile page wont be able to find his recipies 
+    
 
     print("Adding Users:")
     for user in users:
@@ -83,11 +46,56 @@ def populate():
         c = add_category(cat)
         print("\t Added", c)
 
+    bob = UserProfile.objects.get(user=User.objects.get(username='bob777'))
+    recipies = {
+        'Vegetable Stir Fry':
+        {
+            'ingredients': '2 tbsp sunflower oil, 4 spring onions, 1 garlic clove, piece fresh root ginger, 1 carrot, 1 red pepper, 100g/3oz baby sweetcorn, 1 courgette, 150g/5oz sugar-snap peas, 2 tbsp hoisin sauce, 2 tbsp low-salt soy sauce',
+            'toolsreq': 'Wok, Spatula',
+            'method': 'Heat a wok on a high heat and add the sunflower oil. Add the spring onions, garlic, ginger and stir-fry for 1 minute, then reduce the heat. Take care to not brown the vegetables. /ES        Add the carrot, red pepper and baby sweetcorn and stir-fry for 2 minutes. Add the courgette and sugar snap peas and stir-fry for a further 3 minutes. Toss the ingredients from the centre to the side of the wok using a wooden spatula. Do not overcrowd the wok and keep the ingredients moving. /ES Add 1 tablespoon water, hoisin and soy sauce and cook over a high heat for a further 2 minutes or until all the vegetables are cooked but not too soft. Serve with noodles or rice. /ES',
+            'difficulty': 1,
+            'cost': 1,
+            'diettype': 3,
+            'rating': 3,
+            'category': 'Chinese',
+            'postedby': bob
+        },
+        'American Style Burger':
+        {
+            'ingredients': 'Mince, Herbs, Buns, Eggs, Seasioning, Cheese',
+            'toolsreq': 'Frying pan',
+            'method': 'Fry burgers',
+            'difficulty': 3,
+            'cost': 2,
+            'diettype': 1,
+            'rating': 1,
+            'category': 'Western',
+            'postedby': bob
+        }
+    }
+
     print("Adding Recipes:")
     for recipe, recipe_data in recipies.items():
         r = add_recipe(recipe, recipe_data)
         print("\t Added", r)
 
+    # you need to pass the object to the model not the string name.
+    vsf = Recipe.objects.filter(name='Vegetable Stir Fry')[0]
+    asb = Recipe.objects.filter(name='American Style Burger')[0]
+    ratings = [
+        {'recipe': vsf, 'rating': 5},
+        {'recipe': vsf, 'rating': 3},
+        {'recipe': asb, 'rating': 4},
+        {'recipe': asb, 'rating': 4},
+        {'recipe': asb, 'rating': 5},
+        {'recipe': asb, 'rating': 3},
+        {'recipe': asb, 'rating': 4},
+        {'recipe': asb, 'rating': 4},
+        {'recipe': asb, 'rating': 5},
+        {'recipe': asb, 'rating': 3},
+        {'recipe': asb, 'rating': 1},
+        {'recipe': asb, 'rating': 4},
+    ]
     print("Adding Ratings")
     for rating in ratings:
         add_rating(rating)
@@ -121,7 +129,8 @@ def add_recipe(name, recipe_data):
 
 
 def add_rating(rating_info):
-    recipe = Recipe.objects.get_or_create(name=rating_info['recipe'])[0]
+    # careful we can have more than one recipe with this name, use filter
+    recipe = Recipe.objects.filter(name=rating_info['recipe'])[0]
     r = Rating(recipe=recipe, rating=rating_info['rating'])
     r.save()
 
