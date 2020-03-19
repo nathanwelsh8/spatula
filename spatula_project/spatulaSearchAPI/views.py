@@ -1,13 +1,57 @@
 
-from spatulaApp.models import Recipe, RecipeImage
+from spatulaApp.models import Recipe, RecipeImage, Rating
 from django.db.models import Q
 # Does not store actual views but instead stores 'queries'
 
+def getRating(recipe,cache=None):
+    'returns the rating for any given recipe if it exists'
+    if not cache:
+        cache = Rating.objects.all()
+    total = 0
+    num = 0
+    for rating in cache.filter(recipe=recipe.id):
+            total +=rating.rating
+            num +=1
+    if num <= 0:
+       num =1
+    #print(rating.recipe,num,total)
+    return round(total/num,1) 
+    
+
 def sortRating(recipes):
-    return recipes
+    'Get all recipies --> get reviews for recipes --> sort in descending order --> return ordered recipes'
+
+    rating_dict = {}
+    rating_cache = Rating.objects.all()
+    for recipe in recipes:
+        # map recipe to its review value
+        rating_dict[recipe] = getRating(recipe,rating_cache)
+    
+    # sorted() turns rating_dict into a tuple
+    rating_dict = sorted(rating_dict.items(), key=lambda item: item[1], reverse=True) # get recipies from high to low
+    
+    for i in range(len(rating_dict)):
+        x,r = rating_dict[i]
+        rating_dict[i] = x
+    return rating_dict
+    
 
 def sortPopularity(recipes):
-    return recipes
+    popularity_dict = {}
+    rating_cache = Rating.objects.all()
+    for recipe in recipes:
+        num = rating_cache.filter(recipe=recipe.id).count()
+        print("Num:",num)
+        ratingVal = getRating(recipe, rating_cache) * num
+        popularity_dict[recipe] = ratingVal 
+
+    popularity_dict = sorted(popularity_dict.items(), key=lambda item: item[1], reverse=True) # get recipies from high to low
+
+    for i in range(len(popularity_dict)):
+        x,r = popularity_dict[i]
+        print(x)
+        popularity_dict[i] = x
+    return popularity_dict
 
 def sortDifficulty(recipes):
     return recipes.order_by('difficulty')

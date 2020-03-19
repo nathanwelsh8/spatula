@@ -199,7 +199,7 @@ class ShowProfile(View):
             self.context_dict['recipe_images'] = []
             for recipe in self.context_dict['recipies']:
                 self.context_dict['recipe_images'].append(RecipeImage.objects.filter(belongsto=recipe.id))
-            print(self.context_dict['recipe_images'])
+            
             #recipies already present in context dict
             return render(request,'spatulaSearchAPI/results.html',self.context_dict)
 
@@ -231,7 +231,6 @@ class ShowProfile(View):
 
                 # Retrieve all of the associated recipes for this account.
                 recipes = Recipe.objects.filter(postedby=UserProfile.objects.get(user=self.user_cache.id))
-                print(recipes)
                 # Add recipes to context dictionary
                 self.context_dict['recipies'] = recipes
 
@@ -252,7 +251,7 @@ def show_profile(request, account_name_slug):
         # Retrieve all of the associated recipes for this account.
         
         recipes = Recipe.objects.filter(postedby=UserProfile.objects.get(user=User.objects.get(username=account_name_slug).id))
-        print(recipes)
+        
         # Add recipes to context dictionary
         context_dict['recipies'] = recipes
 

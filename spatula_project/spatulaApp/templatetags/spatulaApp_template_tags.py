@@ -54,7 +54,6 @@ def getRating(recipeID):
 
 @register.filter
 def getNoRatings(recipeID):
-    ratings = Rating.objects.filter(id=recipeID)
-    # ratings queryset object arrtibutes lengths 
-    # to start at 0 and not 1 so add 1 to fix
-    return len(ratings)+1
+    return Rating.objects.filter(recipe=recipeID).count()
+    
+    
