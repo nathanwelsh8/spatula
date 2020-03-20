@@ -164,7 +164,7 @@ def add_recipe(request):
                     if r.postedby == user:
                         canPost = False 
                         # will be displayed custom error message 
-                        form._errors['name'] = form.error_class(['You have already poasted a recipe with this name.'])
+                        form._errors['name'] = form.error_class(['You have already posted a recipe with this name.'])
                         break
 
             # only add if the recipe does not exist under our user
