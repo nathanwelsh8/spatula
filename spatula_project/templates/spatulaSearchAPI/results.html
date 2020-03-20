@@ -4,7 +4,7 @@
 {% block results %}
     {% if recipies %}
         {% for recipe in recipies %}
-            <div class="recipe">
+            <div class="recipe"><a href="{% url 'spatulaApp:show_recipe' recipe.slug %}" style="display: block">
                 {% with recipe_images|getKeyImg:recipe.name as image %}
                             <img src="../{{image}}" class="recipeimg">
                 {% endwith %} 
@@ -22,7 +22,7 @@
                     <p>{{cut_cat|cut:")"}}</p>
                 {% endwith %}{% endwith %}
                 </div>
-            </div>
+            </a></div>
         {% endfor %}
     {% else %}
         <p>Hmm theres nothing to show. <br/>

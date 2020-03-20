@@ -26,7 +26,7 @@ class RecipeForm(forms.ModelForm):
     diettype = forms.IntegerField(widget=forms.RadioSelect(choices=DIET_CHOICES))
 
     # not required as its not stored in DB
-    #description = forms.CharField(widget=forms.Textarea(attrs={'placeholder':'Description'})) 
+    #description = forms.CharField(widget=forms.Textarea(attrs={'placeholder':'Description'}))
     
     
     #hidden fields

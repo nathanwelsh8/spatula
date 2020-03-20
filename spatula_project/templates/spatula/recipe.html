@@ -1,0 +1,59 @@
+{% extends 'spatula/base.html' %}
+{% load staticfiles %}
+{% load spatulaApp_template_tags %} 
+{% block title_block %}
+	Spatula! Recipe - {{ recipe.name }}
+{% endblock %}
+{% block css_block %}
+    <link rel="stylesheet" href="{% static 'css/recipe.css' %}">
+{% endblock %}
+{% block js_block %}
+{% endblock %}
+
+{% block body_block %}
+
+<!-- ive moved this pages css to base.css -->
+
+<div id="recipe_body">
+
+	{% with images|getKeyImgList:recipe.name as image %}
+	{% for i in image %}
+		<img id="recipe_image" src="../{{i}}" class="recipeimg">
+	{% endfor %}
+	{% endwith %} 
+	<div id = "recipe_info">
+		<h1 id="recipe_name">{{ recipe.name }}</h1>
+        {% with recipe.category|cut:"Category object (" as cut_cat %}
+            <p id="recipecat" >{{cut_cat|cut:")"}}</p>
+        {% endwith %}
+		
+		<p id= "postedby"> {{ recipe.postedby }}</p>
+	</div>
+	<div id="recipe_stats">
+		<p id = "label">Difficulty</p>
+		<img id ="recipemeter" src="{{MEDIA_URL}}images/{{ recipe.difficulty }}_meter.png ">
+		<p id = "label">Cost</p>
+		<img id ="recipemeter" src="{{MEDIA_URL}}images/{{ recipe.cost }}_meter.png ">
+		
+		<img id ="recipemeat" src="{{MEDIA_URL}}images/{{ recipe.diettype }}_diet.png ">
+		{% with recipe.id|getRating  as recipeRating %}
+		{% with 'images/stars/'|add:recipeRating|add:'.png' as image_static %}
+		<img src="{% static image_static %}" class="reciperating">
+		{%endwith%}{%endwith%}
+	</div>
+	<div id = "main">
+		<hr/>
+		<h2>Tool Required</h2>
+		<p>{{ recipe.toolsreq }}</p>
+		<hr/>
+		<h2>Ingedients</h2>
+		<p>{{ recipe.ingredients }}</p>
+		<hr/>
+		<h2>Method</h2>
+		<p>{{ recipe.method }}</p>
+		<hr/>
+	</div>
+</div>
+
+	
+{% endblock %}

@@ -1,0 +1,80 @@
+#recipe_body {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    height: 100vh;
+    border-left: 8px solid #ffffff;
+    border-right: 8px solid #ffffff;
+    background-color: #ffffff;
+}
+
+#main{
+	width:80%;
+	position: relative;
+    margin-left: auto;
+    margin-right: auto;
+	
+}
+
+#recipe_image { 
+	width:400px;
+	height:400px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+} 
+
+
+#recipe_name{
+    margin: 4px;
+    margin-top: 0px;
+	margin-right: 5px;
+    float: left;
+    text-align: left;
+    font-size: 30px;
+    padding: 0px;
+}
+
+#recipe_info { 
+	margin-top:10px;
+	width:100%;
+	height:50px;
+}
+
+#recipe_stats { 
+	margin-top:10px;
+	width:100%;
+	height:50px;
+}
+
+#recipemeter{
+    height: 12px;
+    float: left;
+    margin-right: 4px;
+}
+
+#postedby{ 
+	float:right;
+}
+
+#recipecat{
+	float:left;
+}
+
+#recipemeat{
+    height: 28px;
+    float: right;
+    margin-right: 4px;
+}
+
+#label{
+	float:left;
+	margin-right:10px;
+	margin-top:0px;
+}
+.reciperating{
+    height: 12px;
+    float: right;
+    margin-right: 4px;
+}

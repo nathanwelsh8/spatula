@@ -16,7 +16,7 @@ urlpatterns = [
      path('register/', views.register, name='register'),
      path('add_recipe/', views.add_recipe, name='add_recipe'),
      path('logout/', views.user_logout, name='logout'),
-
+     path('<slug:recipe_slug_name>/', views.recipe_page, name='show_recipe'),
      #make sure this url is at the bottom so it doesn't match the other urls
      path('<slug:account_name_slug>/', views.ShowProfile.as_view(), name='show_profile'),
  ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

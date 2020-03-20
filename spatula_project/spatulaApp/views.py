@@ -262,4 +262,24 @@ def show_profile(request, account_name_slug):
     # Render response
     return render(request, 'spatula/profile.html', context=context_dict)
 
+def recipe_page(request, recipe_slug_name): 
+
+    def fix_ratings():
+        context_dict['recipe'].rating = str(round(int(context_dict['recipe'].rating * 2)))
+        if int(context_dict['recipe'].rating) >5:
+            context_dict['recipe'].rating= str(5)
+        elif int(context_dict['recipe'].rating) <0:
+            context_dict['recipe'].rating = str(0)
+                
+
+    context_dict = {}
+    recipe = Recipe.objects.get(slug = recipe_slug_name)
+    context_dict['recipe'] = recipe
+    context_dict['images'] = RecipeImage.objects.all()
+    fix_ratings()
+    return render(request, 'spatula/recipe.html', context = context_dict)
+    
+    
+    
+    
 
