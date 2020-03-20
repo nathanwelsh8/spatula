@@ -48,18 +48,78 @@ def populate():
 
     bob = UserProfile.objects.get(user=User.objects.get(username='bob777'))
     recipies = {
-        'Vegetable Stir Fry':
+        'Vegan Chilli':
         {
-            'ingredients': '2 tbsp sunflower oil, 4 spring onions, 1 garlic clove, piece fresh root ginger, 1 carrot, 1 red pepper, 100g/3oz baby sweetcorn, 1 courgette, 150g/5oz sugar-snap peas, 2 tbsp hoisin sauce, 2 tbsp low-salt soy sauce',
-            'toolsreq': 'Wok, Spatula',
-            'method': 'Heat a wok on a high heat and add the sunflower oil. Add the spring onions, garlic, ginger and stir-fry for 1 minute, then reduce the heat. Take care to not brown the vegetables. /ES        Add the carrot, red pepper and baby sweetcorn and stir-fry for 2 minutes. Add the courgette and sugar snap peas and stir-fry for a further 3 minutes. Toss the ingredients from the centre to the side of the wok using a wooden spatula. Do not overcrowd the wok and keep the ingredients moving. /ES Add 1 tablespoon water, hoisin and soy sauce and cook over a high heat for a further 2 minutes or until all the vegetables are cooked but not too soft. Serve with noodles or rice. /ES',
+            'ingredients': '3 tbsp olive oil, 2 sweet potatoes, 1 onion, 2 carrots, 2 celery sticks, 2 garlic cloves, 2tsp chilli powder, 2x400g chopped tomoatoes, 400g can black beans, 400g kidney beans',
+            'toolsreq': 'Saucepan',
+            'method': 'Heat oven to 200C/180C fan/gas 6. Put the sweet potato chunks in a roasting tin and drizzle over 1½ tbsp oil, 1 tsp smoked paprika and 1 tsp ground cumin. Give everything a good mix so that all the chunks are coated in spices, season with salt and pepper then roast for 25 mins until cooked. /ES  Meanwhile, heat the remaining oil in a large saucepan over a medium heat. Add the onion, carrot and celery. Cook for 8-10 mins, stirring occasionally until soft then crush in the garlic and cook for 1 min more. Add the remaining dried spices and tomato puree. Give everything a good mix and cook for 1 min more.  /ES Add the red pepper, chopped tomatoes and 200ml of water. Bring the chilli to a boil then simmer for 20 mins. Tip in the beans and cook for another 10 mins before adding the sweet potato. Season to taste then serve with lime wedges, guac, rice and coriander. Make ahead and freeze for up to 3 months. ',
             'difficulty': 1,
             'cost': 1,
             'diettype': 3,
             'rating': 3,
-            'category': 'Chinese',
+            'category': 'Mexican',
             'postedby': bob
         },
+        'Chilli Con Carne':
+            {
+                'ingredients': '3 tbsp olive oil, 500g mince, 1 onion, 2 carrots, 2 celery sticks, 2 garlic cloves, 2tsp chilli powder, 2x400g chopped tomoatoes, 400g can black beans, 400g kidney beans',
+                'toolsreq': 'Saucepan',
+                'method': 'Heat a wok on a high heat and add the sunflower oil. Add the spring onions, garlic, ginger and stir-fry for 1 minute, then reduce the heat. Take care to not brown the vegetables. /ES        Add the carrot, red pepper and baby sweetcorn and stir-fry for 2 minutes. Add the mince, courgette and sugar snap peas and stir-fry for a further 3 minutes. Toss the ingredients from the centre to the side of the wok using a wooden spatula. Do not overcrowd the wok and keep the ingredients moving. /ES Add 1 tablespoon water, hoisin and soy sauce and cook over a high heat for a further 2 minutes or until all the vegetables are cooked but not too soft. Serve with noodles or rice. /ES',
+                'difficulty': 1,
+                'cost': 1,
+                'diettype': 1,
+                'rating': 3,
+                'category': 'Mexican',
+                'postedby': bob
+            },
+        'Cheese Toastie':
+            {
+                'ingredients':'Bread, Cheese',
+                'toolsreq': 'None',
+                'method': 'Slice cheese and put between two slices of bread. Toast for 5 minutes in grill.',
+                'difficulty': 1,
+                'cost': 1,
+                'diettype': 2,
+                'rating': 3,
+                'category': 'Western',
+                'postedby': bob
+            },
+        'Scotch Broth':
+            {
+                'ingredients': '250g carrots, 250g turnip, 2 onions, 1 celery stalk, 1 leek, 125g dried peas, 4 pints lamb stock, 85g kale, 100g pearl barley',
+                'toolsreq': 'Wok, Spatula',
+                'method': 'Heat all of the ingredients, except the kale, in a large saucepan until boiling /ES Reduce the heat and simmer gently for a 2-3 hours, or until the peas and pearl barley are soft. /ES Stir in the kale and cook for a further 10-12 minutes, or until the kale is tender. Season, to taste, with salt and freshly ground black pepper.',
+                'difficulty': 1,
+                'cost': 1,
+                'diettype': 3,
+                'rating': 2,
+                'category': 'Other',
+                'postedby': bob
+            },
+        'Millionaire Shortbread':
+            {
+                'ingredients':'250g plain flour, 75g caster sugar, 300g butter, 100g muscovado sugar, 2x400g condensed milk, 200g milk chocolate.',
+                'toolsreq': 'Swiss Roll tin',
+                'method': 'Heat the oven to 180C/160C fan/gas 4. Lightly grease a 33 x 23cm Swiss roll tin with a lip of at least 3cm. /ES To make the shortbread, mix 250g plain flour and 75g caster sugar in a bowl. Rub in 175g softened butter until the mixture resembles fine breadcrumbs. /ES Knead the mixture together until it forms a dough, then press into the base of the prepared tin. /ES Prick the shortbread lightly with a fork and bake for 20 minutes or until firm to the touch and very lightly browned. Leave to cool in the tin. /ES To make the caramel, place 100g butter or margarine, 100g light muscovado sugar and two 397g cans condensed milk in a pan and heat gently until the sugar has dissolved. /ES To make the caramel, place 100g butter or margarine, 100g light muscovado sugar and two 397g cans condensed milk in a pan and heat gently until the sugar has dissolved. /ES Bring to the boil, stirring all the time, then reduce the heat and simmer very gently, stirring continuously, for about 5-10 minutes or until the mixture has thickened slightly. Pour over the shortbread and leave to cool. /ES For the topping, melt 200g plain or milk chocolate slowly in a bowl over a pan of hot water. Pour over the cold caramel and leave to set. Cut into squares or bars.  ',
+                'difficulty': 1,
+                'cost': 1,
+                'diettype': 3,
+                'rating': 3,
+                'category': 'Other',
+                'postedby': bob
+            },
+        'Vegetable Stir Fry':
+            {
+                'ingredients': '2 tbsp sunflower oil, 4 spring onions, 1 garlic clove, piece fresh root ginger, 1 carrot, 1 red pepper, 100g/3oz baby sweetcorn, 1 courgette, 150g/5oz sugar-snap peas, 2 tbsp hoisin sauce, 2 tbsp low-salt soy sauce',
+                'toolsreq': 'Wok, Spatula',
+                'method': 'Heat a wok on a high heat and add the sunflower oil. Add the spring onions, garlic, ginger and stir-fry for 1 minute, then reduce the heat. Take care to not brown the vegetables. /ES        Add the carrot, red pepper and baby sweetcorn and stir-fry for 2 minutes. Add the courgette and sugar snap peas and stir-fry for a further 3 minutes. Toss the ingredients from the centre to the side of the wok using a wooden spatula. Do not overcrowd the wok and keep the ingredients moving. /ES Add 1 tablespoon water, hoisin and soy sauce and cook over a high heat for a further 2 minutes or until all the vegetables are cooked but not too soft. Serve with noodles or rice. /ES',
+                'difficulty': 1,
+                'cost': 1,
+                'diettype': 3,
+                'rating': 3,
+                'category': 'Chinese',
+                'postedby': bob
+            },
         'American Style Burger':
         {
             'ingredients': 'Mince, Herbs, Buns, Eggs, Seasioning, Cheese',
