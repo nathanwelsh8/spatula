@@ -41,7 +41,6 @@ def sortPopularity(recipes):
     rating_cache = Rating.objects.all()
     for recipe in recipes:
         num = rating_cache.filter(recipe=recipe.id).count()
-        print("Num:",num)
         ratingVal = getRating(recipe, rating_cache) * num
         popularity_dict[recipe] = ratingVal 
 
@@ -49,7 +48,6 @@ def sortPopularity(recipes):
 
     for i in range(len(popularity_dict)):
         x,r = popularity_dict[i]
-        print(x)
         popularity_dict[i] = x
     return popularity_dict
 

@@ -16,7 +16,7 @@
                 {% with 'images/stars/'|add:recipeRating|add:'.png' as image_static %}
                 <img src="{% static image_static %}" class="reciperating">
                 {%endwith%}
-                <img src="{{MEDIA_URL}}images/{{ recipe.diettype }}.png " class="recipemeat">
+                <img src="{{MEDIA_URL}}images/{{ recipe.diettype }}_diet.png " class="recipemeat">
                 <div class="recipecategory">
                 {% with recipe.category|cut:"Category object (" as cut_cat %}
                     <p>{{cut_cat|cut:")"}}</p>
