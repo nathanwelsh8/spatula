@@ -141,7 +141,7 @@ class Rating(models.Model):
 
     #auto filled by form so not shown to user 
     recipe     = models.ForeignKey(Recipe, related_name="belongs_to", on_delete=models.CASCADE)
-    
+    postedby   = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null = True)
     ### editable by user ###
     rating     = models.DecimalField(decimal_places=2, max_digits=3, default=0)
     # comments are optional

@@ -31,6 +31,15 @@ def getKeyImgList(h,key):
         if item.belongsto.__str__() == key.__str__():
             images.append(item.image)
     return images
+
+@register.filter
+def getReviews(h, key): 
+    reviews = []
+    
+    for item in h: 
+        if item.recipe.__str__() ==key.__str__(): 
+            reviews.append(item)
+    return reviews
     
 @register.simple_tag
 def double(a):
