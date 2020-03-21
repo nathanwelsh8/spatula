@@ -1,9 +1,5 @@
-# Ignore everything 
-/*
-# Except spatula project
-!/spatula_project/
-
 # ignore database
 /spatula_project/db.sqlite3
 /spatula_project/spatula_project/__pycache__/*
+/spatula_project/spatulaApp/migrations/*
 *.pyc
