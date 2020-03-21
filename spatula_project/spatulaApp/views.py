@@ -208,7 +208,6 @@ class ShowProfile(View):
 
             # Add profile object to context dictionary
             self.context_dict['profile'] = profile
-            print("profile exists")
         except UserProfile.DoesNotExist:
             return redirect(reverse('spatulaApp:index'))
 
