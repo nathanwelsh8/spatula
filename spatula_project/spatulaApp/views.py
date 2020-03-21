@@ -192,18 +192,13 @@ class ShowProfile(View):
 
     def get(self, request,account_name_slug=None):
 
-        if self.user_cache is None:
-            self.user_cache = UserProfile.objects.get(user=User.objects.get(username=account_name_slug).id)
-
-        if request.GET.get('get_recipes',None) == "getUser":
-            self.context_dict['recipe_images'] = []
-            for recipe in self.context_dict['recipies']:
-                self.context_dict['recipe_images'].append(RecipeImage.objects.filter(belongsto=recipe.id))
-            
-            #recipies already present in context dict
-            return render(request,'spatulaSearchAPI/results.html',self.context_dict)
-
+        # If a user enters a bogus url which gets mapped to this view then 
+        # we want to redirect to the homepage and not search the db for the
+        # 'slug url'. 
         try:
+            if self.user_cache is None:
+                self.user_cache = UserProfile.objects.get(user=User.objects.get(username=account_name_slug).id)
+
             # The .get() method returns one model instance or raises an exception.
             profile = UserProfile.objects.get(slug=account_name_slug)
             # Retrieve all of the associated recipes for this account.
@@ -213,12 +208,18 @@ class ShowProfile(View):
 
             # Add profile object to context dictionary
             self.context_dict['profile'] = profile
-
+            print("profile exists")
         except UserProfile.DoesNotExist:
-            
             return redirect(reverse('spatulaApp:index'))
+
+        if request.GET.get('get_recipes',None) == "getUser":
+            self.context_dict['recipe_images'] = []
+            for recipe in self.context_dict['recipies']:
+                self.context_dict['recipe_images'].append(RecipeImage.objects.filter(belongsto=recipe.id))
+            
+            #recipies already present in context dict
+            return render(request,'spatulaSearchAPI/results.html',self.context_dict)
         
-        # Render response
         return render(request, 'spatula/profile.html', context=self.context_dict)
 
 
@@ -241,7 +242,7 @@ class ShowProfile(View):
                 return redirect(reverse('spatulaApp:index'))
 
 
-def show_profile(request, account_name_slug):
+''' def show_profile(request, account_name_slug):
     context_dict = {}
 
     try:
@@ -260,7 +261,8 @@ def show_profile(request, account_name_slug):
     except UserProfile.DoesNotExist:
         return redirect(reverse('spatulaApp:index'))
     # Render response
-    return render(request, 'spatula/profile.html', context=context_dict)
+    print("profile view")
+    return render(request, 'spatula/profile.html', context=context_dict)  '''
 
 def recipe_page(request, recipe_slug_name): 
 
@@ -271,12 +273,15 @@ def recipe_page(request, recipe_slug_name):
         elif int(context_dict['recipe'].rating) <0:
             context_dict['recipe'].rating = str(0)
                 
-
     context_dict = {}
-    recipe = Recipe.objects.get(slug = recipe_slug_name)
+    try:
+        recipe = Recipe.objects.get(slug = recipe_slug_name)
+    except Recipe.DoesNotExist:
+        return redirect(reverse('spatulaApp:index'))
     context_dict['recipe'] = recipe
     context_dict['images'] = RecipeImage.objects.all()
     fix_ratings()
+    
     return render(request, 'spatula/recipe.html', context = context_dict)
     
     
