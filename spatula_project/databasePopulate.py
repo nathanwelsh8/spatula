@@ -143,17 +143,17 @@ def populate():
     vsf = Recipe.objects.filter(name='Vegetable Stir Fry')[0]
     asb = Recipe.objects.filter(name='American Style Burger')[0]
     ratings = [
-        {'recipe': vsf, 'rating': 5},
-        {'recipe': vsf, 'rating': 3},
-        {'recipe': asb, 'rating': 4},
-        {'recipe': asb, 'rating': 4},
-        {'recipe': asb, 'rating': 5},
+        {'recipe': vsf, 'rating': 5,'comment':'Really tasty, quick dinner. would recommend!'},
+        {'recipe': vsf, 'rating': 3, 'comment':'Quick to make, even better when adding udon noodles!'},
+        {'recipe': asb, 'rating': 4, 'comment':'Made this for a vegan and it made them cry. 10/10 would recommend'},
+        {'recipe': asb, 'rating': 4, 'comment':'Best homemade burger ever!'},
+        {'recipe': asb, 'rating': 5, 'comment':'Fantastic recipe, perfect for summer bbq!'},
         {'recipe': asb, 'rating': 3},
         {'recipe': asb, 'rating': 4},
         {'recipe': asb, 'rating': 4},
         {'recipe': asb, 'rating': 5},
         {'recipe': asb, 'rating': 3},
-        {'recipe': asb, 'rating': 1},
+        {'recipe': asb, 'rating': 1, 'comment':'I followed the instructions and it burnt. not impressed!'},
         {'recipe': asb, 'rating': 4},
     ]
     print("Adding Ratings")
@@ -191,7 +191,8 @@ def add_recipe(name, recipe_data):
 def add_rating(rating_info):
     # careful we can have more than one recipe with this name, use filter
     recipe = Recipe.objects.filter(name=rating_info['recipe'])[0]
-    r = Rating(recipe=recipe, rating=rating_info['rating'])
+    r = Rating(recipe=recipe, rating=rating_info['rating'], comment=rating_info.get('comment',''))
+    
     r.save()
 
 if __name__ == '__main__':

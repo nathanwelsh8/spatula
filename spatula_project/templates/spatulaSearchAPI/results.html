@@ -6,7 +6,7 @@
         {% for recipe in recipies %}
             <div class="recipe"><a href="{% url 'spatulaApp:show_recipe' recipe.slug %}" style="display: block">
                 {% with recipe_images|getKeyImg:recipe.name as image %}
-                            <img src="../{{image}}" class="recipeimg">
+                            <img src="../../{{image}}" class="recipeimg">
                 {% endwith %} 
                 <div class="recipename">
                     <p>{{ recipe.name }}</p>
@@ -16,7 +16,7 @@
                 {% with 'images/stars/'|add:recipeRating|add:'.png' as image_static %}
                 <img src="{% static image_static %}" class="reciperating">
                 {%endwith%}
-                <img src="{{MEDIA_URL}}images/{{ recipe.diettype }}.png " class="recipemeat">
+                <img src="{{MEDIA_URL}}images/{{ recipe.diettype }}_diet.png " class="recipemeat">
                 <div class="recipecategory">
                 {% with recipe.category|cut:"Category object (" as cut_cat %}
                     <p>{{cut_cat|cut:")"}}</p>

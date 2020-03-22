@@ -32,7 +32,7 @@
             <p id="recipecat" >{{cut_cat|cut:")"}}</p>
         {% endwith %}
 		
-		<p id= "postedby"> {{ recipe.postedby }}</p>
+		<p id= "postedby"> <a href="{% url 'spatulaApp:show_profile' recipe.postedby %}" class="postedby_url">{{ recipe.postedby }}</a></p>
 	</div>
 	<div id="recipe_stats">
 		<p id = "label">Difficulty</p>

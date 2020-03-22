@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="{% static 'css/index.css' %}">
 {% endblock %}
 {% block js_block %}
-	<!--- load this js last--->>
+	<!--- load this js last--->
     <script src="{% static 'js/profile.js' %}"
     type="text/javascript" charset="utf-8"></script>
 {% endblock %}
@@ -21,7 +21,7 @@
 	{{profile.bio}}
 </div>
 	<h2>Recipes by {{ profile.user }}</h2>
-	<div id="recipies"><!-- id recipies has deliberate spelling mistake-->>
+	<div id="recipies"><!-- id recipies has deliberate spelling mistake-->
 		{% include 'spatulaSearchAPI/results.html' %}
 	</div>
 	
