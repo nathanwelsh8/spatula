@@ -9,21 +9,28 @@
 {% block js_block %}
 	<!--- load this js last--->
     <script src="{% static 'js/profile.js' %}"
-    type="text/javascript" charset="utf-8"></script>
+	type="text/javascript" charset="utf-8"></script>
 {% endblock %}
 
 {% block body_block %}
 
-<!-- ive moved this pages css to base.css -->
+<!-- i've moved this pages css to base.css -->
 
 <div id="profile_section">
 	<h1>{{ profile.user }}</h1>
-	{{profile.bio}}
+	{% if canEdit %}
+		{% csrf_token %}
+		<textarea id="edit_bio" form="user_form">{{ profile.bio }}</textarea>
+		<input type='submit' name='Update', value="Update" onclick="update_bio();"/>
+		<p class="sucessfull_update" id="bio_success_msg"></p>
+	{% else %}
+		{{profile.bio}}
+	{% endif %}
 </div>
 	<h2>Recipes by {{ profile.user }}</h2>
 	<div id="recipies"><!-- id recipies has deliberate spelling mistake-->
 		{% include 'spatulaSearchAPI/results.html' %}
 	</div>
-	
+
 {% endblock %}
 

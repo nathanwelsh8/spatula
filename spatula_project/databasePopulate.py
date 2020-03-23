@@ -8,12 +8,9 @@ import django
 
 django.setup()
 
-from spatulaApp.models import Category
-from spatulaApp.models import Recipe
-from django.contrib.auth.models import User
-from spatulaApp.models import UserProfile
-from spatulaApp.models import Rating
-
+from spatulaApp.models import Category, Rating, UserProfile, Recipe, Image, RecipeImage
+from django.contrib.auth.models import User 
+from spatula_project import settings
 
 def populate():
     users = [
@@ -160,6 +157,7 @@ def populate():
     for rating in ratings:
         add_rating(rating)
 
+
 def add_user(user_info):
     new_user = User.objects.get_or_create(username=user_info['username'], password=user_info['password'])[0]
     profile = UserProfile.objects.get_or_create(user=new_user, bio=user_info['bio'])[0]
@@ -199,3 +197,4 @@ if __name__ == '__main__':
     print("Populating database...")
     populate()
     print("Population complete")
+    

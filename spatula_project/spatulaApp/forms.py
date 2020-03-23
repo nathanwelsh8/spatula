@@ -57,6 +57,7 @@ class UserForm(forms.ModelForm):
 
 
 class UserProfileForm(forms.ModelForm):
+  
     bio = forms.CharField(
         widget=forms.Textarea(attrs={'placeholder': 'Your bio - tell us about yourself...', 'id': 'bio'}), label='')
 
@@ -64,6 +65,7 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         # Fields list empty since we don't want the profile fields to appear during registration
         fields = ()
+        
 
 class RecipeImageUploadForm(forms.ModelForm):
     
@@ -72,3 +74,14 @@ class RecipeImageUploadForm(forms.ModelForm):
     class Meta:
         model = RecipeImage
         fields = ('image',)
+
+
+
+class UserProfileUpdateForm(forms.ModelForm):
+    
+    bio = forms.CharField(
+        widget=forms.Textarea(attrs={'placeholder': 'You can update your bio if you please', 'id': 'bio'}), label='')
+    
+    class Meta:
+        model = UserProfile
+        fields = ('bio',)
