@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from spatulaApp.forms import UserForm, UserProfileForm, RecipeForm, RecipeImageUploadForm, CommentForm
+from spatulaApp.forms import UserForm, UserProfileForm, UserProfileUpdateForm, RecipeForm, RecipeImageUploadForm,CommentForm
 from django.contrib.auth import authenticate, login, logout
 
 from spatulaSearchAPI.forms import SearchForm
@@ -67,6 +67,7 @@ class Index(View):
             return redirect(reverse('spatulaApp:register'))
 
         user = authenticate(username=username, password=password)
+        #ajax this so we can display error messgaes on page
         if user: 
             if user.is_active:
                 login(request, user)
@@ -74,7 +75,7 @@ class Index(View):
             else: 
                 return HttpResponse("Your Rango account is disabled.")
         else:
-            print(f"Invalid login details: {username}, {password}")
+            #print(f"Invalid login details: {username}, {password}")
             return HttpResponse("Invalid login details supplied.")
     
     
@@ -208,60 +209,56 @@ class ShowProfile(View):
 
             # Add profile object to context dictionary
             self.context_dict['profile'] = profile
+
+
+            # if there is a logged in user who 'owns' the profile page
+            # let them edit it. if there is a logged in user who is admin
+            # let them make edits too ;)
+            self.context_dict['canEdit'] =  (request.user == profile.user) or request.user.is_superuser 
+
+        except User.DoesNotExist:
+            return redirect(reverse('spatulaApp:index'))
         except UserProfile.DoesNotExist:
             return redirect(reverse('spatulaApp:index'))
 
+        # get the recipes belonging to this user
         if request.GET.get('get_recipes',None) == "getUser":
             self.context_dict['recipe_images'] = []
             for recipe in self.context_dict['recipies']:
                 self.context_dict['recipe_images'].append(RecipeImage.objects.filter(belongsto=recipe.id))
             
-            #recipies already present in context dict
+            #recipies already present in context dict so just tell the template to update
             return render(request,'spatulaSearchAPI/results.html',self.context_dict)
-        
+
         return render(request, 'spatula/profile.html', context=self.context_dict)
 
 
-        def post(self,request, account_name_slug=None):
-            if self.user_cache is None:
-                self.user_cache = UserProfile.objects.get(user=User.objects.get(username=account_name_slug).id)
-            try:
-                # The .get() method returns one model instance or raises an exception.
-                profile = UserProfile.objects.get(slug=account_name_slug)
+    def post(self,request, account_name_slug=None):
 
-                # Retrieve all of the associated recipes for this account.
-                recipes = Recipe.objects.filter(postedby=UserProfile.objects.get(user=self.user_cache.id))
-                # Add recipes to context dictionary
-                self.context_dict['recipies'] = recipes
+        if self.user_cache is None:
+            self.user_cache = UserProfile.objects.get(user=User.objects.get(username=account_name_slug).id)
+        try:
+            # The .get() method returns one model instance or raises an exception.
+            profile = UserProfile.objects.get(slug=account_name_slug)
 
-                # Add profile object to context dictionary
-                self.context_dict['profile'] = profile
+            # Retrieve all of the associated recipes for this account.
+            recipes = Recipe.objects.filter(postedby=UserProfile.objects.get(user=self.user_cache.id))
+            # Add recipes to context dictionary
+            self.context_dict['recipies'] = recipes
 
-            except UserProfile.DoesNotExist:
-                return redirect(reverse('spatulaApp:index'))
+            # Add profile object to context dictionary
+            self.context_dict['profile'] = profile
 
-
-''' def show_profile(request, account_name_slug):
-    context_dict = {}
-
-    try:
-        # The .get() method returns one model instance or raises an exception.
-        profile = UserProfile.objects.get(slug=account_name_slug)
-
-        # Retrieve all of the associated recipes for this account.
+        except UserProfile.DoesNotExist:
+            return redirect(reverse('spatulaApp:index'))
         
-        recipes = Recipe.objects.filter(postedby=UserProfile.objects.get(user=User.objects.get(username=account_name_slug).id))
-        
-        # Add recipes to context dictionary
-        context_dict['recipies'] = recipes
+        if request.POST.get('update_bio',None) != None:
+            self.user_cache.bio = request.POST['update_bio']
+            self.user_cache.save()
+            return JsonResponse({'bio':str(self.user_cache.bio)})
 
-        # Add profile object to context dictionary
-        context_dict['profile'] = profile
-    except UserProfile.DoesNotExist:
-        return redirect(reverse('spatulaApp:index'))
-    # Render response
-    print("profile view")
-    return render(request, 'spatula/profile.html', context=context_dict)  '''
+        return render(request, 'spatula/profile.html', context=self.context_dict)
+
 
 def recipe_page(request, recipe_slug_name): 
     form = CommentForm()
