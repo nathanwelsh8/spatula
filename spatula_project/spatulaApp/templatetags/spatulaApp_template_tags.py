@@ -34,6 +34,7 @@ def getReviews(h, key):
     
     for item in h: 
         if item.recipe.__str__() ==key.__str__(): 
+            item.rating = str(round((item.rating*2)))
             reviews.append(item)
     return reviews
     

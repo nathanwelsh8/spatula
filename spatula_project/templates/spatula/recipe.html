@@ -69,8 +69,9 @@
 			{% with reviews|getReviews:recipe.name as review %}
 			{% for r in review %}
 			<div class = "newreview">
-				{% with recipe.id|getRating  as recipeRating %}
-				{% with 'images/stars/'|add:recipeRating|add:'.png' as image_static %}
+				{% with r.rating as userRating %}
+				{% with 'images/stars/'|add:userRating|add:'.png' as image_static %}
+				{{image_static}}
 				<img src="{% static image_static %}" class="reciperating">
 				{%endwith%}{%endwith%}
 				{% if r.postedby == None %}
