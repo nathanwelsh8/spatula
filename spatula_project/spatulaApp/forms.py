@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from spatulaApp.models import UserProfile, Recipe, RecipeImage, Category
+from spatulaApp.models import UserProfile, Recipe, RecipeImage, Category, Rating
 from spatulaApp.customFormTypes import NameChoiceField
 
 #choices for diettype field
@@ -75,8 +75,6 @@ class RecipeImageUploadForm(forms.ModelForm):
         model = RecipeImage
         fields = ('image',)
 
-
-
 class UserProfileUpdateForm(forms.ModelForm):
     
     bio = forms.CharField(
@@ -85,3 +83,11 @@ class UserProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('bio',)
+class CommentForm(forms.ModelForm): 
+    rating = forms.IntegerField(widget=forms.HiddenInput(), required=True)
+    comment = forms.CharField(max_length=512, widget=forms.Textarea(attrs={'placeholder':'Comment'}))
+    postedby = forms.SlugField(widget=forms.HiddenInput(),required=False)
+    recipe = forms.SlugField(widget=forms.HiddenInput(),required=False)
+    class Meta: 
+        model = Rating
+        fields = ('rating', 'comment')

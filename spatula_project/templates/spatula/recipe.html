@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="{% static 'css/recipe.css' %}">
 {% endblock %}
 {% block js_block %}
+<script>
+	$(':radio').change(function() {
+	  console.log('New star rating: ' + this.value);
+	});
+</script>
 {% endblock %}
 
 {% block body_block %}
@@ -47,11 +52,81 @@
 		<p>{{ recipe.toolsreq }}</p>
 		<hr/>
 		<h2>Ingedients</h2>
-		<p>{{ recipe.ingredients }}</p>
+		<p>{{ recipe.ingredients|linebreaks }}</p>
 		<hr/>
 		<h2>Method</h2>
-		<p>{{ recipe.method }}</p>
+		<p>{{ recipe.method|linebreaks }}</p>
 		<hr/>
+		<div id= "comments">
+			<h2>Reviews & Ratings</h2>
+			<p id = "label" style ="margin:0px">Average rating</p>
+			{% with recipe.id|getRating  as recipeRating %}
+			{% with 'images/stars/'|add:recipeRating|add:'.png' as image_static %}
+			<img src="{% static image_static %}" class="reciperating">
+			{%endwith%}{%endwith%}
+			<br/>
+			<hr/>
+			{% with reviews|getReviews:recipe.name as review %}
+			{% for r in review %}
+			<div class = "newreview">
+				{% with r.rating as userRating %}
+				{% with 'images/stars/'|add:userRating|add:'.png' as image_static %}
+				{{image_static}}
+				<img src="{% static image_static %}" class="reciperating">
+				{%endwith%}{%endwith%}
+				{% if r.postedby == None %}
+					<p>By anonymous</p>
+				{% else %}
+					<p>By {{r.postedby}}</p>
+				{% endif %}
+				<p>{{r.comment}}</p>
+			</div>
+			<hr/>
+			{% endfor %}
+			{% endwith %} 
+			<div class = "addcomment">
+				<h2>Add a Review</h2>
+				<form id="comment_form" class = "rating" method="post" action=" {% url 'spatulaApp:show_recipe' recipe.slug %} ", enctype="multipart/form-data">
+				    <label>
+				        <input type="radio" name="rating" value="1" />
+						<span class="icon">★</span>
+					</label>
+					<label>
+						<input type="radio" name="rating" value="2" />
+						<span class="icon">★</span>
+						<span class="icon">★</span>
+					</label>
+			        <label>
+						<input type="radio" name="rating" value="3" />
+						<span class="icon">★</span>
+						<span class="icon">★</span>
+						<span class="icon">★</span>   
+				    </label>
+				    <label>
+						<input type="radio" name="rating" value="4" />
+						<span class="icon">★</span>
+						<span class="icon">★</span>
+						<span class="icon">★</span>
+						<span class="icon">★</span>
+				    </label>
+				    <label id = "last">
+						<input type="radio" name="rating" value="5" />
+						<span class="icon">★</span>
+						<span class="icon">★</span>
+						<span class="icon">★</span>
+						<span class="icon">★</span>
+						<span class="icon">★</span>
+				    </label>
+				{% csrf_token %}
+				{% for field in form.visible_fields %} 
+					{{ field.errors }}
+					{{ field.help_text }} 
+					{{ field }}
+				{% endfor %}
+				<input type="submit" name="submit" value="Submit Recipe" />
+			</div>
+
+		</div>
 	</div>
 </div>
 

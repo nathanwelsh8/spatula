@@ -3,11 +3,11 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from spatulaApp.forms import UserForm, UserProfileForm, UserProfileUpdateForm, RecipeForm, RecipeImageUploadForm
+from spatulaApp.forms import UserForm, UserProfileForm, UserProfileUpdateForm, RecipeForm, RecipeImageUploadForm,CommentForm
 from django.contrib.auth import authenticate, login, logout
 
 from spatulaSearchAPI.forms import SearchForm
-from spatulaApp.models import Recipe, Category, RecipeImage, UserProfile
+from spatulaApp.models import Recipe, Category, RecipeImage, UserProfile, Rating
 from django.urls import reverse 
 from spatulaSearchAPI.views import search as API_Search
 from django.views import View
@@ -258,14 +258,45 @@ class ShowProfile(View):
 
 
 def recipe_page(request, recipe_slug_name): 
+    form = CommentForm()
+            
+    if request.method == 'POST': 
+        form = CommentForm(request.POST)   
+        if form.is_valid(): 
+            comment = form.save(commit=False)
+            existingComments = Rating.objects.filter(postedby=comment.postedby)
+            print(request.user)
+            user = UserProfile.objects.get(user=request.user)
 
+            # if the recipe exists, was it posed by our user?
+            # if so do not allow them to resubmit the recipe
+            if existingComments:
+                canPost = True
+                for r in existingComments:
+                    if r.postedby == user:
+                        canPost = False 
+                        # will be displayed custom error message 
+                        form._errors['name'] = form.error_class(['You have already left a review on this recipe!'])
+                        break
+
+            # only add if the recipe does not exist under our user
+            if not existingComments or canPost:
+                comment.postedby = user
+                comment.recipe = Recipe.objects.get(slug = recipe_slug_name)
+                comment.save()
+                return redirect(reverse('spatulaApp:index'))
+        else: 
+            print(form.errors)
+                
+                
     def fix_ratings():
         context_dict['recipe'].rating = str(round(int(context_dict['recipe'].rating * 2)))
         if int(context_dict['recipe'].rating) >5:
             context_dict['recipe'].rating= str(5)
         elif int(context_dict['recipe'].rating) <0:
             context_dict['recipe'].rating = str(0)
-                
+            
+            
     context_dict = {}
     try:
         recipe = Recipe.objects.get(slug = recipe_slug_name)
@@ -273,6 +304,8 @@ def recipe_page(request, recipe_slug_name):
         return redirect(reverse('spatulaApp:index'))
     context_dict['recipe'] = recipe
     context_dict['images'] = RecipeImage.objects.all()
+    context_dict['reviews'] = Rating.objects.all()
+    context_dict['form'] = form
     fix_ratings()
     
     return render(request, 'spatula/recipe.html', context = context_dict)
