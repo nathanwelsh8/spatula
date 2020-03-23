@@ -67,6 +67,7 @@ class Index(View):
             return redirect(reverse('spatulaApp:register'))
 
         user = authenticate(username=username, password=password)
+        #ajax this so we can display error messgaes on page
         if user: 
             if user.is_active:
                 login(request, user)
@@ -74,7 +75,7 @@ class Index(View):
             else: 
                 return HttpResponse("Your Rango account is disabled.")
         else:
-            print(f"Invalid login details: {username}, {password}")
+            #print(f"Invalid login details: {username}, {password}")
             return HttpResponse("Invalid login details supplied.")
     
     
@@ -215,6 +216,8 @@ class ShowProfile(View):
             # let them make edits too ;)
             self.context_dict['canEdit'] =  (request.user == profile.user) or request.user.is_superuser 
 
+        except User.DoesNotExist:
+            return redirect(reverse('spatulaApp:index'))
         except UserProfile.DoesNotExist:
             return redirect(reverse('spatulaApp:index'))
 

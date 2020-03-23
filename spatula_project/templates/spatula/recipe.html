@@ -22,9 +22,11 @@
 <div id="recipe_body">
 
 	{% with images|getKeyImgList:recipe.name as image %}
+	{% if image %}
 	{% for i in image %}
 		<img id="recipe_image" src="../{{i}}" class="recipeimg">
 	{% endfor %}
+	{% endif %}
 	{% endwith %} 
 	<div id = "recipe_info">
 		<h1 id="recipe_name">{{ recipe.name }}</h1>
@@ -71,7 +73,7 @@
 			<div class = "newreview">
 				{% with r.rating as userRating %}
 				{% with 'images/stars/'|add:userRating|add:'.png' as image_static %}
-				{{image_static}}
+				<!--{{image_static}}-->
 				<img src="{% static image_static %}" class="reciperating">
 				{%endwith%}{%endwith%}
 				{% if r.postedby == None %}

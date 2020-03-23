@@ -6,15 +6,19 @@ register = template.Library()
 @register.filter
 def getKeyImg(h,key):
     "Gets the image for display recipe on index page"
-    if type(h) == list:
-        for i in h:
-            for j in i:
-                if j.belongsto.__str__() == key.__str__():
-                    return j.image
-        
-    for item in h:
-        if item.belongsto.__str__() == key.__str__():
-            return item.image
+    try:
+        if type(h) == list:
+            for i in h:
+                for j in i:
+                    if j.belongsto.__str__() == key.__str__():
+                        return j.image
+            
+        for item in h:
+            if item.belongsto.__str__() == key.__str__():
+                return item.image
+    except AttributeError:
+        return None
+
     
 
         
