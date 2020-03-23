@@ -4,7 +4,7 @@
 
 <html>
     <head lang="en">
-        
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="{% static 'css/base.css' %}" />
 		
 		<script src="{% static 'js/base.js' %}"
@@ -29,50 +29,52 @@
 		</title>
 	</head>
     <body>
-
-        {% block header_block %}
-        <div id="top">
-			<a href="{% url 'spatulaApp:index' %}"><img src="{% static 'images/spatula.png' %}" id="logo"></a>
-			<input type="text" id="searchbar" name="searchbar" placeholder="Search">
-			{% if user.is_authenticated %}	
-				<div id="logged_in">
-					<a href="{% url 'spatulaApp:show_profile' user.username %}">My Profile</a> |
-					<a href="{% url 'spatulaApp:logout' %}">Logout</a>
+		<div class = "container-fluid">
+			<div class = "row">
+				{% block header_block %}
+				<div id="top">
+					<a href="{% url 'spatulaApp:index' %}"><img src="{% static 'images/spatula.png' %}" id="logo"></a>
+					<input type="text" id="searchbar" name="searchbar" placeholder="Search">
+					{% if user.is_authenticated %}	
+						<div id="logged_in">
+							<a href="{% url 'spatulaApp:show_profile' user.username %}">My Profile</a> |
+							<a href="{% url 'spatulaApp:logout' %}">Logout</a>
+						</div>
+					{% else %}
+						<button type="button" id="signin" onclick="showSignin()">Sign In / Register</button>
+					{% endif %}
 				</div>
-			{% else %}
-				<button type="button" id="signin" onclick="showSignin()">Sign In / Register</button>
-			{% endif %}
-		</div>
-		<div id="container">
-			{% if not user.is_authenticated %}
-				<form id="sign_in" method = "post" action = "{% url 'spatulaApp:index' %}">
-						{% csrf_token %}
-						<input type="text" id="username" name="username" placeholder="Username"><br>
-						<input type="password" id="password" name="password" placeholder="Password"><br>
+				<div id="container">
+					{% if not user.is_authenticated %}
+						<form id="sign_in" method = "post" action = "{% url 'spatulaApp:index' %}">
+								{% csrf_token %}
+								<input type="text" id="username" name="username" placeholder="Username"><br>
+								<input type="password" id="password" name="password" placeholder="Password"><br>
 
-						<input type="submit" name ="submit" id="containersignin" value = "Sign in"/>
-						<input type="submit" name="register" id="containerregister" value = "Register"/>
+								<input type="submit" name ="submit" id="containersignin" value = "Sign in"/>
+								<input type="submit" name="register" id="containerregister" value = "Register"/>
 
 
 
-				</form>
+						</form>
 
+					
+
+					<!--<img src="profile.png" id="profilepic">-->
+
+					{% endif %}
+
+				</div>
+			</div>
+
+				{% endblock %}
+
+			{% block body_block %}
+				Webpage bodty is overridden here
+			{% endblock %}
 			
-
-			<!--<img src="profile.png" id="profilepic">-->
-
-			{% endif %}
-
-		</div>
-
-        {% endblock %}
-
-        {% block body_block %}
-            Webpage bodty is overridden here
-        {% endblock %}
-        
-        {% block javascript %}
-        {% endblock %}
+			{% block javascript %}
+			{% endblock %}
 
     </body>
 </html>

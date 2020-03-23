@@ -3,35 +3,90 @@ input{
     margin-bottom: 7px;
     margin-top: 7px;
 }
+
+@media (max-width: 550px) {
+	.recipe {
+		float: left;
+		width: 100%;
+		margin: 5px;
+		background-color: #ebd4c0;
+		border-radius: 4px;
+		box-shadow: 1px 1px 3px #9c97c2;
+		transition: 0.2s;
+	}
+	
+	.recipename{
+		margin: 4px;
+		margin-top: 0px;
+		width: 188px;
+		float: left;
+		text-align: left;
+		font-size: 18px;
+		padding: 0px;
+	}
+	
+		.recipeimg {
+		margin: 4px;
+		margin-bottom: 0px;
+		float: left;
+		clip: rect(0px,0px,282px,282px);
+	}
+	.reciperating {
+		height: 20px;
+		/* float: right; */
+		margin-left: 10px;
+		display: inline-block;
+		margin-bottom: 30px;
+	}
+	
+		.recipemeat {
+		float: right;
+		clear: left;
+		margin-right: 4px;
+		height: 28px;
+		margin-bottom: 3px;
+	}
+	
+	.recipecategory {
+		/* float: left; */
+		margin-right: 100px;
+		margin-left: 10px;
+		font-size: 15px;
+		display: inline-block;
+	}
+}
+
 #categories, #meat, #sort {
     padding: 4px;
     margin: 10px;
     margin-bottom: 0px;
     position: relative;
     float: left;
-    width: 240px;
+	width: 190px;
     background-color: #ebd4c0;
     border-radius: 4px;
     box-shadow: 1px 1px 3px #9c97c2;
 }
 #sidebar {
     float: left;
-    height: 100vh;
+	margin-bottom: 20px;
 }
-.sidebarmeat{
-    height: 20px;
-}
+
 #recipies {
-    position: relative;
+    /*position: relative;
     margin-left: auto;
-    margin-right: auto;
-    width: 900px;
+    margin-right: auto;*/
+    /*width: 900px;*/
     height: 100vh;
     border-left: 8px solid #ffffff;
     border-right: 8px solid #ffffff;
     background-color: #ffffff;
 }
 
+
+.sidebarmeat{
+    height: 20px;
+}
 
 .newrecipe{
     position: fixed;
@@ -44,55 +99,60 @@ input{
     height: 100px;
     filter:saturate(0.5) brightness(200%);
 }
-
-.recipe {
-    float: left;
-    width: 290px;
-    margin: 5px;
-    background-color: #ebd4c0;
-    border-radius: 4px;
-    box-shadow: 1px 1px 3px #9c97c2;
-    transition: 0.2s;
+@media (min-width:550px){
+	.recipe {
+		float: left;
+		width: 290px;
+		margin: 5px;
+		background-color: #ebd4c0;
+		border-radius: 4px;
+		box-shadow: 1px 1px 3px #9c97c2;
+		transition: 0.2s;
+	}
+	.recipeimg{
+		margin: 4px;
+		margin-bottom: 0px;
+		height: 282px;
+		clip: rect(0px,0px,282px,282px);
+	}
+	.recipename{
+		margin: 4px;
+		margin-top: 0px;
+		width: 188px;
+		float: left;
+		text-align: left;
+		font-size: 18px;
+		padding: 0px;
+	}
+	.reciperating{
+		height: 12px;
+		float: right;
+		margin-right: 4px;
+	}
+	.reciperatingtotal{
+		float: right;
+		font-size: 9px;
+		margin-right: 4px;
+	}
+	.recipecategory{
+		float: left;
+		margin-left: 4px;
+		margin-right: 100px;
+		font-size: 12px;
+	}
+	.recipemeat{
+		float: right;
+		margin-right: 4px;
+		height: 28px;
+		margin-bottom: 3px;
+	}
 }
+
+
+
+
 .recipe:hover {
     background-color: #f2e0d0;
     box-shadow: 2px 2px 3px #9c97c2;
 }
 
-.recipeimg{
-    margin: 4px;
-    margin-bottom: 0px;
-    height: 282px;
-    clip: rect(0px,0px,282px,282px);
-}
-.recipename{
-    margin: 4px;
-    margin-top: 0px;
-    width: 188px;
-    float: left;
-    text-align: left;
-    font-size: 18px;
-    padding: 0px;
-}
-.reciperating{
-    height: 12px;
-    float: right;
-    margin-right: 4px;
-}
-.reciperatingtotal{
-    float: right;
-    font-size: 9px;
-    margin-right: 4px;
-}
-.recipecategory{
-    float: left;
-    margin-left: 4px;
-    margin-right: 100px;
-    font-size: 12px;
-}
-.recipemeat{
-    float: right;
-    margin-right: 4px;
-    height: 28px;
-    margin-bottom: 3px;
-}
