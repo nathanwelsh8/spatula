@@ -297,10 +297,14 @@ class RecipePage(View):
     
     def post(self,request, recipe_slug_name):
 
-        form = CommentForm(request.POST)   
+        form = CommentForm(request.POST)
+        if self.recipe_cache is None:
+                    self.recipe_cache = Recipe.objects.get(slug = recipe_slug_name)
+
         if form.is_valid(): 
+
             comment = form.save(commit=False)
-            existingComments = Rating.objects.filter(postedby=comment.postedby)
+            existingComments = Rating.objects.filter(recipe=self.recipe_cache.id )
             
             try:
                 if self.user_cache is None:
@@ -317,17 +321,28 @@ class RecipePage(View):
                     if r.postedby == self.user_cache:
                         canPost = False 
                         # will be displayed custom error message 
-                        form._errors['name'] = form.error_class(['You have already left a review on this recipe!'])
+                        form._errors['comment'] = form.error_class(['You have already left a review on this recipe!'])
                         break
-
+            
             # only add if the recipe does not exist under our user
+            # and if the submitted user does not own the recipe
             if not existingComments or canPost:
-                comment.postedby = self.user_cache
-                if self.recipe_cache is None:
-                    self.recipe_cache = Recipe.objects.get(slug = recipe_slug_name)
-                comment.recipe = self.recipe_cache
-                comment.save()
-                return redirect(reverse('spatulaApp:index'))
+                if not self.user_cache == self.recipe_cache.postedby:
+                    comment.postedby = self.user_cache
+                    
+                    comment.recipe = self.recipe_cache
+                    comment.save()
+                    return redirect(reverse('spatulaApp:index'))
+                else:
+                    form._errors['comment'] = form.error_class(['You cannot post your own comment!'])
+            
+                 
+
+
+        self.context_dict['recipe'] = self.recipe_cache
+        self.fix_ratings()
+        #form._errors['name'] = form.error_class(['You need to leave a rating!'])
+        self.context_dict['form'] = form
         return render(request, 'spatula/recipe.html', context = self.context_dict)
                     
     def get(self,request,recipe_slug_name):
@@ -335,11 +350,11 @@ class RecipePage(View):
         try:
             if self.recipe_cache is None:
                 self.recipe_cache = Recipe.objects.get(slug = recipe_slug_name)
-            recipe = self.recipe_cache
+           
         except Recipe.DoesNotExist:
             return redirect(reverse('spatulaApp:index'))
         
-        self.context_dict['recipe'] = recipe
+        self.context_dict['recipe'] = self.recipe_cache
         # There may ve alot of comments and images so reduce load by 
         # only passing in images and comments relevent to this recipe
         self.context_dict['images'] = RecipeImage.objects.filter(belongsto=self.recipe_cache.id)
