@@ -58,7 +58,6 @@ def sortDifficulty(recipes):
 def sortCost(recipes):
     return recipes.order_by('cost')
 
-
 # must go after the functions it stores
 sortTypeDict = { 'rating':sortRating, 
                 'cost':sortCost,
@@ -68,13 +67,26 @@ sortTypeDict = { 'rating':sortRating,
 
 
 def search(request, user_filter=None):
+    """
+    Search recipies, request can contain the following keys:
+        search: the text to search by
+        sorttype: one of ["rating","popularity","cost","difficulty"]
+        diettype: a list of accepted diet types [1,2,3] see Recipe model for what each integer represents
+        categories: a list of accpeted categories to search by
     
-    # provide alternative value incase the user 
-    # attempts to submit bogus data to server
+    user_filter is the ID of the user object to filter by default is None, which does not refine by user.
+    
+    Returns no more than 9 recipies at a time to stop page from being swamped
+    Returns a list of Recipe objects to inject into the results.html template
+    """
+
+    # provide alternative values incase the request only submits 
+    # a search text. in this case assume that they want to refine
+    # only by text and leave everything else unrefined
     recipeName = request.GET.get('search','')
     sortType = request.GET.get('sorttype','popularity')
     dietTypeList = request.GET.getlist('diettype[]',[1,2,3])  # jquery adds [] when sending lists through ajax
-    categoryList = request.GET.getlist('categories[]', [str(x.name) for x in Category.objects.all()])
+    categoryList = request.GET.getlist('categories[]', [str(x.name) for x in Category.objects.all()]) # not many categorys so no need to cache
    
     recipes = Recipe.objects.filter(Q(name__contains=recipeName) & Q(category__in=categoryList) & Q(diettype__in=dietTypeList))
     if user_filter:

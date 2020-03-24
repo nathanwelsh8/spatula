@@ -240,6 +240,8 @@ class ShowProfile(View):
             #recipies already present in context dict so just tell the template to update
             return render(request,'spatulaSearchAPI/results.html',self.context_dict)
 
+        # if user tries to search through the recipies associated with this user
+        # uses the same search API used for index page
         elif 'search' in request.GET:
             self.context_dict['recipies'] = API_Search(request,user_filter=self.user_cache.id)
             self.fix_ratings()
