@@ -48,7 +48,7 @@
 		<img src="{% static image_static %}" class="reciperating">
 		{%endwith%}{%endwith%}
 	</div>
-	<div id = "main">
+	<div id = "document_container_main">
 		<hr/>
 		<h2>Tool Required</h2>
 		<p>{{ recipe.toolsreq }}</p>
@@ -86,6 +86,7 @@
 			{% endfor %}
 			{% endwith %} 
 			<div class = "addcomment">
+				{% if user.is_authenticated %}
 				<h2>Add a Review</h2>
 				<form id="comment_form" class = "rating" method="post" action=" {% url 'spatulaApp:show_recipe' recipe.slug %} ", enctype="multipart/form-data">
 				    <label>
@@ -124,7 +125,10 @@
 					{{ field.help_text }} 
 					{{ field }}
 				{% endfor %}
-				<input type="submit" name="submit" value="Submit Recipe" />
+				<input type="submit" name="submit" value="submit comment" />
+				</form>
+				{% else %} Login to add a review <br/><hr/>
+				{% endif %}
 			</div>
 
 		</div>

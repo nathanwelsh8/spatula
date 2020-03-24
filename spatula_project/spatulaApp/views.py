@@ -234,49 +234,70 @@ class ShowProfile(View):
 
 
     def post(self,request, account_name_slug=None):
-
-        if self.user_cache is None:
-            self.user_cache = UserProfile.objects.get(user=User.objects.get(username=account_name_slug).id)
         try:
+            if self.user_cache is None:
+                self.user_cache = UserProfile.objects.get(user=User.objects.get(username=account_name_slug).id)
             # The .get() method returns one model instance or raises an exception.
+            
             profile = UserProfile.objects.get(slug=account_name_slug)
-
+            
             # Retrieve all of the associated recipes for this account.
-            recipes = Recipe.objects.filter(postedby=UserProfile.objects.get(user=self.user_cache.id))
+            recipes = Recipe.objects.filter(postedby=self.user_cache.id)
             # Add recipes to context dictionary
+            
             self.context_dict['recipies'] = recipes
 
             # Add profile object to context dictionary
             self.context_dict['profile'] = profile
-
+            
         except UserProfile.DoesNotExist:
             return redirect(reverse('spatulaApp:index'))
+        except User.DoesNotExist:
+            return redirect(reverse('spatulaApp:index'))
+        
         
         if request.POST.get('update_bio',None) != None:
             self.user_cache.bio = request.POST['update_bio']
             self.user_cache.save()
-            return JsonResponse({'bio':str(self.user_cache.bio)})
+            return render(request, 'spatula/profile.html', context=self.context_dict)
 
         return render(request, 'spatula/profile.html', context=self.context_dict)
 
 
-def recipe_page(request, recipe_slug_name): 
+class RecipePage(View):
+
+    context_dict = {}
     form = CommentForm()
-            
-    if request.method == 'POST': 
+    recipe_cache = None
+    user_cache = None
+
+    def fix_ratings(self):
+        self.context_dict['recipe'].rating = str(round(int(self.context_dict['recipe'].rating * 2)))
+        if int(self.context_dict['recipe'].rating) >5:
+            self.context_dict['recipe'].rating= str(5)
+        elif int(self.context_dict['recipe'].rating) <0:
+            self.context_dict['recipe'].rating = str(0)
+    
+    def post(self,request, recipe_slug_name):
+
         form = CommentForm(request.POST)   
         if form.is_valid(): 
             comment = form.save(commit=False)
             existingComments = Rating.objects.filter(postedby=comment.postedby)
-            print(request.user)
-            user = UserProfile.objects.get(user=request.user)
+            
+            try:
+                if self.user_cache is None:
+                    self.user_cache = UserProfile.objects.get(user=User.objects.get(username=request.user))
+            except UserProfile.DoesNotExist:
+                print("Admin has not linked their user profile!")
+                return render(request, 'spatula/recipe.html', context_dict)
 
-            # if the recipe exists, was it posed by our user?
-            # if so do not allow them to resubmit the recipe
+            # existing reviews, was one posted by our user?
+            # if so do not allow them to resubmit the review
             if existingComments:
                 canPost = True
                 for r in existingComments:
-                    if r.postedby == user:
+                    if r.postedby == self.user_cache:
                         canPost = False 
                         # will be displayed custom error message 
                         form._errors['name'] = form.error_class(['You have already left a review on this recipe!'])
@@ -284,36 +305,29 @@ def recipe_page(request, recipe_slug_name):
 
             # only add if the recipe does not exist under our user
             if not existingComments or canPost:
-                comment.postedby = user
-                comment.recipe = Recipe.objects.get(slug = recipe_slug_name)
+                comment.postedby = self.user_cache
+                if self.recipe_cache is None:
+                    self.recipe_cache = Recipe.objects.get(slug = recipe_slug_name)
+                comment.recipe = self.recipe_cache
                 comment.save()
                 return redirect(reverse('spatulaApp:index'))
-        else: 
-            print(form.errors)
-                
-                
-    def fix_ratings():
-        context_dict['recipe'].rating = str(round(int(context_dict['recipe'].rating * 2)))
-        if int(context_dict['recipe'].rating) >5:
-            context_dict['recipe'].rating= str(5)
-        elif int(context_dict['recipe'].rating) <0:
-            context_dict['recipe'].rating = str(0)
-            
-            
-    context_dict = {}
-    try:
-        recipe = Recipe.objects.get(slug = recipe_slug_name)
-    except Recipe.DoesNotExist:
-        return redirect(reverse('spatulaApp:index'))
-    context_dict['recipe'] = recipe
-    context_dict['images'] = RecipeImage.objects.all()
-    context_dict['reviews'] = Rating.objects.all()
-    context_dict['form'] = form
-    fix_ratings()
-    
-    return render(request, 'spatula/recipe.html', context = context_dict)
-    
-    
-    
-    
+        return render(request, 'spatula/recipe.html', context = self.context_dict)
+                    
+    def get(self,request,recipe_slug_name):
+        #todo add cache
+        try:
+            if self.recipe_cache is None:
+                self.recipe_cache = Recipe.objects.get(slug = recipe_slug_name)
+            recipe = self.recipe_cache
+        except Recipe.DoesNotExist:
+            return redirect(reverse('spatulaApp:index'))
+        
+        self.context_dict['recipe'] = recipe
+        # There may ve alot of comments and images so reduce load by 
+        # only passing in images and comments relevent to this recipe
+        self.context_dict['images'] = RecipeImage.objects.filter(belongsto=self.recipe_cache.id)
+        self.context_dict['reviews'] = Rating.objects.filter(recipe=self.recipe_cache.id)
+        self.context_dict['form'] = self.form
+        self.fix_ratings()
+        return render(request, 'spatula/recipe.html', context = self.context_dict)
 

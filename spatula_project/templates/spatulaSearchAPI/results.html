@@ -6,7 +6,7 @@
         {% for recipe in recipies %}
             <div class="recipe"><a href="{% url 'spatulaApp:show_recipe' recipe.slug %}" style="display: block">
                 {% with recipe_images|getKeyImg:recipe.name as image %}
-                            <img src="../{{image}}" class="recipeimg">
+                            <img src="../../{{image}}" class="recipeimg">
                 {% endwith %} 
                 <div class="recipename">
                     <p>{{ recipe.name }}</p>
@@ -25,7 +25,7 @@
             </a></div>
         {% endfor %}
     {% else %}
-        <p>Hmm theres nothing to show. <br/>
+        <p class="page_element">Hmm theres nothing to show. <br/>
         Why not{% if not user.is_authenticated %} login to add {% else %} <a href="{% url 'spatulaApp:add_recipe' %}">add</a> {% endif %}a recipie!</p>
     {% endif %}
        
