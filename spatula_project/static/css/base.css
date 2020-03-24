@@ -2,14 +2,18 @@ body {
     margin: 0px;
     /* also declare font and font size */
     font-size: small;
+    overflow-y:scroll;
     
 }
 
 #top {
-    margin: 0px;
-    padding: 0px;
-    height: 40px;
-    border-bottom: 2px solid #d1d4e0;
+    overflow: hidden;
+    background-color: #EBD4C0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 50px;
+    z-index:100;
 }
 
 .row{
@@ -17,17 +21,18 @@ body {
 }
 
 #logo {
-    height: 100%;
-    float:left;
+    height: 80%;
+    margin: 5px;
+    margin-left: 20px;
 }
 #searchbar {
-    position: absolute;
-    width: 50%;
-    margin: 5px;
-    margin-left: 10%;
-    height: 24px;
-    border: 2px solid #d1d4e0;
-    border-radius: 8px;
+    position: fixed;
+    left: calc(50% - 357px);
+    width: 700px;
+    margin: 10px;
+    height: 30px;
+    border: 2px solid #FFFFFF;
+    border-radius: 4px;
 }
 #profilepic {
     float: right;
@@ -37,13 +42,21 @@ body {
     float: right;
     height: 100%;
     border: none;
-    background-color: white;
+    background-color: #562e33;
+    color: #FFFFFF;
+    font-weight: bold;
+    transition: 0.2s;
+}
+#signin:hover{
+    background-color: #7e4940;
+    cursor: pointer;
 }
 #username, #password {
-    margin: 2px;
-    width: 96%;
+    margin: 8px;
+    margin-bottom: 0px;
+    width: 280px;
     height: 24px;
-    border: 2px solid #d1d4e0;
+    border: 2px solid #FFFFFF;
     border-radius: 4px;
 }
 /* the standard container for pages outwith index
@@ -96,64 +109,92 @@ p.page_element{
 }
 
 @media (min-width: 550px){
-	#top {
-		margin: 0px;
-		padding: 0px;
-		height: 40px;
-		width: 100%;
-		border-bottom: 2px solid #d1d4e0;
-	}
-	#logo {
-		height: 100%;
-	}
-	#searchbar {
-		position: absolute;
-		width: 50%;
-		margin: 5px;
-		margin-left: 10%;
-		height: 24px;
-		border: 2px solid #d1d4e0;
-		border-radius: 8px;
-	}
-	#profilepic {
-		float: right;
-		height: 40px;
-	}
-	#signin {
-		float: right;
-		height: 100%;
-		border: none;
-		background-color: white;
-	}
-	#username, #password {
-		margin: 2px;
-		width: 96%;
-		height: 24px;
-		border: 2px solid #d1d4e0;
-		border-radius: 4px;
-	}
+    body {
+        margin: 0px;
+        overflow-y:scroll;
+    }
+    #top {
+        overflow: hidden;
+        background-color: #EBD4C0;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 50px;
+        z-index:100;
 
-	#containerregister, #containersignin {
-		margin: 2px;
-		height: 24px;
-		background-color: #000000;
-		color: #ffffff;
-		border: 2px solid #000000;
-		border-radius: 4px;
-		width: 47.5%;
-	}
-	#container{
-		display: none;
-		position: relative;
-		float: right;
-		width: 240px;
-		border: 2px solid #d1d4e0;
-		border-radius: 4px;
-	}
-	#logged_in{
-		float:right;
-		margin-right: 5%;
-	}
+    }
+    #logo {
+        height: 80%;
+        margin: 5px;
+        margin-left: 20px;
+    }
+    #searchbar {
+        position: fixed;
+        left: calc(50% - 357px);
+        width: 700px;
+        margin: 10px;
+        height: 30px;
+        border: 2px solid #FFFFFF;
+        border-radius: 4px;
+    }
+    #profilepic {
+        float: right;
+        height: 40px;
+    }
+    #signin {
+        float: right;
+        height: 100%;
+        border: none;
+        background-color: #562e33;
+        color: #FFFFFF;
+        font-weight: bold;
+        transition: 0.2s;
+    }
+    #signin:hover{
+        background-color: #7e4940;
+        cursor: pointer;
+    }
+
+    #username, #password {
+        margin: 8px;
+        margin-bottom: 0px;
+        width: 280px;
+        height: 24px;
+        border: 2px solid #FFFFFF;
+        border-radius: 4px;
+    }
+
+    #containerregister, #containersignin {
+        margin: 8px;
+        margin-right: 0px;
+        float: left;
+        height: 28px;
+        background-color: #562e33;
+        color: #ffffff;
+        border: 2px solid #562e33;
+        border-radius: 4px;
+        width: 138px;
+        transition: 0.2s;
+    }
+    #containerregister:hover, #containersignin:hover{
+        background-color: #7e4940;
+        border: 2px solid #7e4940;
+        cursor: pointer;
+    }
+
+    #container{
+        z-index: 99;
+        position: fixed;
+        top: -78px;
+        right: 0px;
+        width: 300px;
+        background-color: #EBD4C0;
+        border-radius: 4px;
+        transition: 0.5s;
+    }
+    #logged_in{
+        float:right;
+    }
 	
 	#userImage{ 
 		display:none;
@@ -167,66 +208,92 @@ p.page_element{
 }
 
 @media (max-width: 550px){
-	#top {
-		margin: 0px;
-		padding: 0px;
-		height: 40px;
-		width:100%;
-		border-bottom: 2px solid #d1d4e0;
-	}
-	#logo {
-		height: 100%;
-	}
-	#searchbar {
-		visibility: hidden;
-		position: absolute;
-		width: 50%;
-		margin: 5px;
-		margin-left: 10%;
-		height: 24px;
-		border: 2px solid #d1d4e0;
-		border-radius: 8px;
-	}
-	#profilepic {
-		float: right;
-		height: 40px;
-	}
-	#signin {
-		visibility: hidden;
-		float: right;
-		height: 100%;
-		border: none;
-		background-color: white;
-	}
-	#username, #password {
-		margin: 2px;
-		width: 96%;
-		height: 24px;
-		border: 2px solid #d1d4e0;
-		border-radius: 4px;
-	}
+    body {
+        margin: 0px;
+        overflow-y:scroll;
+    }
+    #top {
+        overflow: hidden;
+        background-color: #EBD4C0;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 50px;
+        z-index:100;
 
-	#containerregister, #containersignin {
-		margin: 2px;
-		height: 24px;
-		background-color: #000000;
-		color: #ffffff;
-		border: 2px solid #000000;
-		border-radius: 4px;
-		width: 47.5%;
-	}
-	#container{
-		display: none;
-		position: relative;
-		float: right;
-		width: 240px;
-		border: 2px solid #d1d4e0;
-		border-radius: 4px;
-	}
-	#logged_in{
-		display:none;
-		float:right;
-	}
+    }
+    #logo {
+        height: 80%;
+        margin: 5px;
+        margin-left: 20px;
+    }
+    #searchbar {
+        position: fixed;
+        left: calc(50% - 357px);
+        width: 700px;
+        margin: 10px;
+        height: 30px;
+        border: 2px solid #FFFFFF;
+        border-radius: 4px;
+    }
+    #profilepic {
+        float: right;
+        height: 40px;
+    }
+    #signin {
+        float: right;
+        height: 100%;
+        border: none;
+        background-color: #562e33;
+        color: #FFFFFF;
+        font-weight: bold;
+        transition: 0.2s;
+    }
+    #signin:hover{
+        background-color: #7e4940;
+        cursor: pointer;
+    }
+
+    #username, #password {
+        margin: 8px;
+        margin-bottom: 0px;
+        width: 280px;
+        height: 24px;
+        border: 2px solid #FFFFFF;
+        border-radius: 4px;
+    }
+
+    #containerregister, #containersignin {
+        margin: 8px;
+        margin-right: 0px;
+        float: left;
+        height: 28px;
+        background-color: #562e33;
+        color: #ffffff;
+        border: 2px solid #562e33;
+        border-radius: 4px;
+        width: 138px;
+        transition: 0.2s;
+    }
+    #containerregister:hover, #containersignin:hover{
+        background-color: #7e4940;
+        border: 2px solid #7e4940;
+        cursor: pointer;
+    }
+
+    #container{
+        z-index: 99;
+        position: fixed;
+        top: -78px;
+        right: 0px;
+        width: 300px;
+        background-color: #EBD4C0;
+        border-radius: 4px;
+        transition: 0.5s;
+    }
+    #logged_in{
+        float:right;
+    }
 	#userImage{ 
 		float:left;
 		height: 100%;
