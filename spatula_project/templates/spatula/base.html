@@ -15,6 +15,10 @@
         
         <script src="{% static 'js/ajax.js' %}"
          type="text/javascript" charset="utf-8"></script>
+		 
+		 <script>
+
+		</script>
         
         {% block css_block %}
 		{% endblock %}
@@ -32,15 +36,24 @@
 		<div class = "container-fluid">
 			<div class = "row">
 				{% block header_block %}
+				<div id="mySidenav" class="sidenav">
+					<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+					<a href="#">About</a>
+					<a href="#">Services</a>
+					<a href="#">Clients</a>
+					<a href="#">Contact</a>
+				</div>
 				<div id="top">
 					<a href="{% url 'spatulaApp:index' %}"><img src="{% static 'images/spatula.png' %}" id="logo"></a>
 					<input type="text" id="searchbar" name="searchbar" placeholder="Search">
-					{% if user.is_authenticated %}	
+					{% if user.is_authenticated %}
 						<div id="logged_in">
 							<a href="{% url 'spatulaApp:show_profile' user.username %}">My Profile</a> |
 							<a href="{% url 'spatulaApp:logout' %}">Logout</a>
 						</div>
 					{% else %}
+						<img id = "userImage" onclick="openNav()" src = "{{MEDIA_URL}}images/bars.png">
+						<img id = "searchIcon" src="{{MEDIA_URL}}images/searchIcon.png">
 						<button type="button" id="signin" onclick="showSignin()">Sign In / Register</button>
 					{% endif %}
 				</div>

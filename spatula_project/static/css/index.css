@@ -25,9 +25,10 @@ input{
 		padding: 0px;
 	}
 	
-		.recipeimg {
+	.recipeimg {
 		margin: 4px;
 		margin-bottom: 0px;
+		display:inline-block;
 		float: left;
 		clip: rect(0px,0px,282px,282px);
 	}
@@ -41,10 +42,10 @@ input{
 	
 		.recipemeat {
 		float: right;
-		clear: left;
 		margin-right: 4px;
 		height: 28px;
 		margin-bottom: 3px;
+		margin-top:125px;
 	}
 	
 	.recipecategory {
@@ -54,6 +55,25 @@ input{
 		font-size: 15px;
 		display: inline-block;
 	}
+	
+	#filterButton{
+		float:right;
+		margin:5px;
+	}
+	
+	#results{
+		float:left;
+	}
+	
+	#sidebar {
+		float: left;
+		margin-bottom: 20px;
+		display:none;
+	}
+	
+	#meat{ 
+		margin-top:0px;
+}
 }
 
 #categories, #meat, #sort {
@@ -62,15 +82,12 @@ input{
     margin-bottom: 0px;
     position: relative;
     float: left;
-	width: 190px;
+	width: 170px;
     background-color: #ebd4c0;
     border-radius: 4px;
     box-shadow: 1px 1px 3px #9c97c2;
 }
-#sidebar {
-    float: left;
-	margin-bottom: 20px;
-}
+
 
 #recipies {
     /*position: relative;
@@ -100,6 +117,9 @@ input{
     filter:saturate(0.5) brightness(200%);
 }
 @media (min-width:550px){
+	.col-md-1{
+		display:none;
+	}
 	.recipe {
 		float: left;
 		width: 290px;
@@ -146,13 +166,29 @@ input{
 		height: 28px;
 		margin-bottom: 3px;
 	}
+	
+	#filterButton{
+		display:none;
+	}
+	
+	#results{
+		display:none;
+	}
+	#sidebar {
+		float: left;
+		margin-bottom: 20px;
+	}
 }
-
-
-
 
 .recipe:hover {
     background-color: #f2e0d0;
     box-shadow: 2px 2px 3px #9c97c2;
 }
+
+
+
+
+
+
+
 
