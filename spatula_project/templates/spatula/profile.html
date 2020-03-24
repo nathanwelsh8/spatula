@@ -24,7 +24,15 @@
 		{% else %}
 			<p class="page_element">{{profile.bio}}</p>
 		{% endif %}
-		<h2 class="page_element">Recipes by {{ profile.user }}</h2>
+		<h2 class="page_element">
+			{% if not canEdit %}	
+				Recipes by {{ profile.user }}
+			{% else %}
+				Your recipies
+			{% endif %}
+		
+			
+		</h2>
 		<div id="recipies"><!-- id recipies has deliberate spelling mistake-->
 			{% include 'spatulaSearchAPI/results.html' %}
 		</div>
