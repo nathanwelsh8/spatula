@@ -108,6 +108,19 @@ p.page_element{
     text-overflow: ellipsis;
 }
 
+#recipies {
+    /*position: relative;
+    margin-left: auto;
+    margin-right: auto;*/
+    /*width: 900px;*/
+    overflow:auto; 
+    border-left: 8px solid #ffffff;
+    border-right: 8px solid #ffffff;
+    background-color: #ffffff;
+    padding-top: 55px; /*static fix for now probs want to change this ti be dynamic?*/
+    margin-top: auto;
+}
+
 @media (min-width: 550px){
     body {
         margin: 0px;
