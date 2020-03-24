@@ -11,7 +11,6 @@
                 <div class="recipename">
                     <p>{{ recipe.name }}</p>
                 </div>
-                <p class="reciperatingtotal">{{ recipe.id|getNoRatings }}</p>
                 {% with recipe.id|getRating  as recipeRating %}
                 {% with 'images/stars/'|add:recipeRating|add:'.png' as image_static %}
                 <img src="{% static image_static %}" class="reciperating">
