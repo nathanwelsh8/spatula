@@ -1,11 +1,11 @@
 $(document).ready(function(){ 
     // perform a quick load
-    sendRequest();
+    sendRequest(getSearchText(),getSortType(), getDietType(), getCategories());
     console.log("Document ready");
 
     $("#searchbar").keyup(function() {
         
-        sendRequest();
+        sendRequest(getSearchText(),getSortType(), getDietType(), getCategories());
         
     });
 
@@ -13,42 +13,17 @@ $(document).ready(function(){
 
     $('input[type="radio"]').click(function(){
        
-        sendRequest();
+        sendRequest(getSearchText(),getSortType(), getDietType(), getCategories());
     });
 
     $('input[type="checkbox"]').click(function(){
         
-        sendRequest();
+        sendRequest(getSearchText(),getSortType(), getDietType(), getCategories());
     });
 
     
 });
-
- function sendRequest(){
-
-    var searchText = getSearchText();
-    var sortType   = getSortType(); 
-    var dietType   = getDietType(); // array of acceptable diets
-    var categories = getCategories(); // array of acceptable categories
-    console.log(dietType);
-    $.get('/',
-        {
-            'search':searchText,
-            'sorttype':sortType,
-            'diettype':dietType,
-            'categories':categories
-        },
-        function(data){
-            console.log(data);
-            $('#recipies').html(data);
-        });
-        
-}
-
-function getSearchText(){
-    return $('#searchbar').val();
-}
-
+    
 function getSortType(){
     return $('input:radio[name=sort]:checked').val();
 }
@@ -56,11 +31,9 @@ function getSortType(){
 function getDietType(){
     var selected = [];
     $('#meat input:checked').each(function(){
-        if (this.checked){
-            
+        if (this.checked){     
             selected.push($(this).attr('name'));
         }
-        
     });
     return selected;
 }

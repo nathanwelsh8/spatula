@@ -1,7 +1,8 @@
 
-from spatulaApp.models import Recipe, RecipeImage, Rating
+from spatulaApp.models import Recipe, RecipeImage, Rating, Category
 from django.db.models import Q
 # Does not store actual views but instead stores 'queries'
+
 
 def getRating(recipe,cache=None):
     'returns the rating for any given recipe if it exists'
@@ -57,18 +58,27 @@ def sortDifficulty(recipes):
 def sortCost(recipes):
     return recipes.order_by('cost')
 
-sortTypeDict = {'rating':sortRating,'cost':sortCost,'difficulty':sortDifficulty,'popularity':sortPopularity}
-def search(request):
+
+# must go after the functions it stores
+sortTypeDict = { 'rating':sortRating, 
+                'cost':sortCost,
+                'difficulty':sortDifficulty,
+                'popularity':sortPopularity
+                }
+
+
+def search(request, user_filter=None):
     
     # provide alternative value incase the user 
     # attempts to submit bogus data to server
-    recipeName = request.GET.get('search','chicken')
+    recipeName = request.GET.get('search','')
     sortType = request.GET.get('sorttype','popularity')
-    dietTypeList = request.GET.getlist('diettype[]',[1])  # jquery adds [] when sending lists through ajax
-    categoryList = request.GET.getlist('categories[]','Italian')
+    dietTypeList = request.GET.getlist('diettype[]',[1,2,3])  # jquery adds [] when sending lists through ajax
+    categoryList = request.GET.getlist('categories[]', [str(x.name) for x in Category.objects.all()])
    
     recipes = Recipe.objects.filter(Q(name__contains=recipeName) & Q(category__in=categoryList) & Q(diettype__in=dietTypeList))
-    
+    if user_filter:
+        recipes = recipes.filter(postedby=user_filter)
     # sort the results as per users request
     recipes = sortTypeDict.get(sortType,sortTypeDict['rating'])(recipes)
     # stops too many recipes being displayed on page

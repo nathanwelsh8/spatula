@@ -5,7 +5,10 @@
 {% block css_block %}
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
 {% endblock %}
-
+{% block js_block %}
+<script src="{% static 'js/index.js' %}"
+         type="text/javascript" charset="utf-8"></script>
+{% endblock %}
 {% block title_block %}
     Index
 {% endblock %}

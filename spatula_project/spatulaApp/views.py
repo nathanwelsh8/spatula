@@ -47,7 +47,6 @@ class Index(View):
         
         if 'search' in request.GET:
             # get users live search criteria
-
             self.context_dict['recipies'] = self.search(request)
 
             self.fix_ratings()
@@ -188,6 +187,17 @@ def add_recipe(request):
 
 
 class ShowProfile(View):
+
+    def fix_ratings(self):
+    
+        # map ratings to integer values and sanitise edge cases
+        for r in self.context_dict['recipies']: 
+            r.rating = str(round(int(r.rating * 2)))
+            if int(r.rating) >5:
+                r.rating= str(5)
+            elif int(r.rating) <0:
+                r.rating = str(0)
+
     context_dict = {}
     user_cache = None
 
@@ -229,6 +239,11 @@ class ShowProfile(View):
             
             #recipies already present in context dict so just tell the template to update
             return render(request,'spatulaSearchAPI/results.html',self.context_dict)
+
+        elif 'search' in request.GET:
+            self.context_dict['recipies'] = API_Search(request,user_filter=self.user_cache.id)
+            self.fix_ratings()
+            return render(request, 'spatulaSearchAPI/results.html',self.context_dict)
 
         return render(request, 'spatula/profile.html', context=self.context_dict)
 

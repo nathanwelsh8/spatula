@@ -1,19 +1,15 @@
 $(document).ready(function(){
 
-        /* this method fetches data from the db.
-            hackers, I see you have you tried replacing 
-            getUser with getUserAll? 
-        */
-       console.log("sending get"+window.location.href);
+    /* this method fetches data from the db.
+        hackers, I see you have you tried replacing 
+        getUser with getUserAll? 
+    */
 
-        $.get(window.location.href,
-            {
-                'get_recipes':"getUser"
-            },
-            function(data){
-                $('#recipies').html(data);
-            }
-            );
+    getUserData();
+
+    $("#searchbar").keyup(function() {
+        sendRequest(getSearchText());
+    });
 
 });    
 function update_bio(){
@@ -37,4 +33,16 @@ function update_bio(){
             }, 2000);
         } 
         );
+}
+
+function getUserData(param){
+    $.get(window.location.href,
+        {
+            'get_recipes':"getUser"
+        },
+        function(data){
+            $('#recipies').html(data);
+        }
+        );
+
 }
