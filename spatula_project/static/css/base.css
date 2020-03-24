@@ -5,6 +5,96 @@ body {
     
 }
 
+#top {
+    margin: 0px;
+    padding: 0px;
+    height: 40px;
+    border-bottom: 2px solid #d1d4e0;
+}
+
+.row{
+    margin-block-end: 1%;
+}
+
+#logo {
+    height: 100%;
+    float:left;
+}
+#searchbar {
+    position: absolute;
+    width: 50%;
+    margin: 5px;
+    margin-left: 10%;
+    height: 24px;
+    border: 2px solid #d1d4e0;
+    border-radius: 8px;
+}
+#profilepic {
+    float: right;
+    height: 40px;
+}
+#signin {
+    float: right;
+    height: 100%;
+    border: none;
+    background-color: white;
+}
+#username, #password {
+    margin: 2px;
+    width: 96%;
+    height: 24px;
+    border: 2px solid #d1d4e0;
+    border-radius: 4px;
+}
+/* the standard container for pages outwith index
+    Used in recipe_page and account_page
+*/
+
+#document_container_master {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    height: 100vh;
+    border-left: 8px solid #ffffff;
+    border-right: 8px solid #ffffff;
+    background-color: #ffffff;
+}
+
+#document_container_main{
+	width:80%;
+	position: relative;
+    margin-left: auto;
+    margin-right: auto;
+	
+}
+
+/** This css styling is for elements inside the #document_container_main */
+#page_title{
+    text-align: center;
+    margin-top: 5%;
+    margin-block-end: 1%;
+    margin-inline-end: 1%;
+    width: 100%;
+}
+
+.page_element{
+    margin-left: 1%;
+    float:left;
+    margin-block-end: 1%;
+    margin-inline-end: 1%;
+}
+
+h2.page_element{
+    margin-left: 1%;
+    clear: left;
+    width: 100%; /* aka put items below the heading*/
+}
+
+p.page_element{
+    text-overflow: ellipsis;
+}
+
 @media (min-width: 550px){
 	#top {
 		margin: 0px;
@@ -62,6 +152,7 @@ body {
 	}
 	#logged_in{
 		float:right;
+		margin-right: 5%;
 	}
 	
 	#userImage{ 
@@ -133,7 +224,7 @@ body {
 		border-radius: 4px;
 	}
 	#logged_in{
-		visibility:hidden;
+		display:none;
 		float:right;
 	}
 	#userImage{ 
@@ -148,6 +239,7 @@ body {
 	}
 	
 }
+
 /*sidenav css*/
 @media (max-width:550px){
 	.sidenav {

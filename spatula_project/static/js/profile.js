@@ -28,12 +28,12 @@ function update_bio(){
         },
         function(data){
             // tell the user that there data was updated
-            $(".sucessfull_update").html("Details updated sucessfully!");
+            $("#bio_success_msg").html("Details updated sucessfully!");
             document.getElementById('bio_success_msg').style.visibility = 'visible';
 
             setTimeout(function(){
                 document.getElementById('bio_success_msg').style.visibility = 'hidden';
-                $(".sucessfull_update").html("");
+                $("#bio_success_msg").html("");
             }, 2000);
         } 
         );
