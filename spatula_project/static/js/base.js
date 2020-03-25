@@ -13,7 +13,8 @@ function showSignin(){
 		y.style.marginTop = "170px";
 	}else{
 		y.style.marginTop = "0px"; 
-	}
+    }
+
 }
 
 /*These  are the functions causing problems with inline styling*/
@@ -51,7 +52,7 @@ function sendRequest(text,sort,diet,categories){
             'search':text,
         },
         function(data){
-            console.log(data);
+            
             $('#recipies').html(data);
         });
 
@@ -64,7 +65,7 @@ function sendRequest(text,sort,diet,categories){
             'categories':categories
         },
         function(data){
-            console.log(data);
+            
             $('#recipies').html(data);
         });
     }
