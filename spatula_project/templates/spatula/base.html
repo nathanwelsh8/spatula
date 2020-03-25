@@ -27,28 +27,31 @@
 	</head>
     <body>
 		<div class = "container-fluid">
-			<div class = "row">
+			<div class = "row" id = "header">
 				{% block header_block %}
 				<div id="mySidenav" class="sidenav">
-					<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-					<a href="#">About</a>
-					<a href="#">Services</a>
-					<a href="#">Clients</a>
-					<a href="#">Contact</a>
+				{% if user.is_authenticated %}
+					<a href="{% url 'spatulaApp:show_profile' user.username %}">My Profile</a>
+					<a href="{% url 'spatulaApp:add_recipe' %}">Add Recipe</a>
+					<a href="{% url 'spatulaApp:logout' %}">Logout</a>
+				{% else %}
+					<p onclick = "showSignin()" style = "margin-top:0px">Sign in</p>
+					<a href="{% url 'spatulaApp:register' %}">Register</a>
+				{% endif %}
 				</div>
 				<div id="top">
 					<a href="{% url 'spatulaApp:index' %}"><img src="{% static 'images/spatula.png' %}" id="logo"></a>
-					<input type="text" id="searchbar" name="searchbar" placeholder="Search">
 					{% if user.is_authenticated %}
 						<div id="logged_in">
 							<a href="{% url 'spatulaApp:show_profile' user.username %}">My Profile</a> |
 							<a href="{% url 'spatulaApp:logout' %}">Logout</a>
 						</div>
 					{% else %}
-						<img id = "userImage" onclick="openNav()" src = "{{MEDIA_URL}}images/bars.png">
-						<img id = "searchIcon" src="{{MEDIA_URL}}images/searchIcon.png">
 						<button type="button" id="signin" onclick="showSignin()">Sign In / Register</button>
 					{% endif %}
+					<img id = "userImage" onclick="openNav()" src = "{{MEDIA_URL}}images/bars.png">
+					<img id = "searchIcon" onclick = "showSearch()" src="{{MEDIA_URL}}images/searchIcon.png">
+					<input type="text" id="searchbar" name="searchbar"  placeholder="Search">
 				</div>
 				<div id="container">
 					{% if not user.is_authenticated %}
@@ -62,7 +65,6 @@
 						</form>
 					<!--<img src="profile.png" id="profilepic">-->
 					{% endif %}
-
 				</div>
 			</div>
 

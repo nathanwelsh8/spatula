@@ -6,14 +6,8 @@ body {
     
 }
 
-#top {
-    overflow: hidden;
-    background-color: #EBD4C0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 50px;
-    z-index:100;
+#header{
+	height:50px;
 }
 
 .row{
@@ -25,28 +19,12 @@ body {
     margin: 5px;
     margin-left: 20px;
 }
-#searchbar {
-    position: fixed;
-    left: calc(50% - 357px);
-    width: 700px;
-    margin: 10px;
-    height: 30px;
-    border: 2px solid #FFFFFF;
-    border-radius: 4px;
-}
+
 #profilepic {
     float: right;
     height: 40px;
 }
-#signin {
-    float: right;
-    height: 100%;
-    border: none;
-    background-color: #562e33;
-    color: #FFFFFF;
-    font-weight: bold;
-    transition: 0.2s;
-}
+
 #signin:hover{
     background-color: #7e4940;
     cursor: pointer;
@@ -118,8 +96,6 @@ p.page_element{
     border-left: 8px solid #ffffff;
     border-right: 8px solid #ffffff;
     background-color: #ffffff;
-    padding-top: 55px; /*static fix for now probs want to change this ti be dynamic?*/
-    margin-top: auto;
 }
 
 @media (min-width: 550px){
@@ -226,8 +202,12 @@ p.page_element{
         margin: 0px;
         overflow-y:scroll;
     }
+	
+	#header{ 
+		height:50px;
+	}
+	
     #top {
-        overflow: hidden;
         background-color: #EBD4C0;
         position: fixed;
         top: 0;
@@ -242,40 +222,35 @@ p.page_element{
         margin-left: 20px;
     }
     #searchbar {
-        position: fixed;
-        left: calc(50% - 357px);
-        width: 700px;
-        margin: 10px;
+		display:none;
+		width:100%;
+		position: fixed;
         height: 30px;
         border: 2px solid #FFFFFF;
         border-radius: 4px;
+
     }
     #profilepic {
         float: right;
         height: 40px;
     }
     #signin {
-        float: right;
-        height: 100%;
-        border: none;
-        background-color: #562e33;
-        color: #FFFFFF;
-        font-weight: bold;
-        transition: 0.2s;
+		display:none;
     }
     #signin:hover{
         background-color: #7e4940;
         cursor: pointer;
     }
-
-    #username, #password {
+	
+	#username, #password {
         margin: 8px;
         margin-bottom: 0px;
-        width: 280px;
-        height: 24px;
+        width: 235px;
+        height: 35px;
         border: 2px solid #FFFFFF;
         border-radius: 4px;
     }
+
 
     #containerregister, #containersignin {
         margin: 8px;
@@ -298,14 +273,14 @@ p.page_element{
     #container{
         z-index: 99;
         position: fixed;
-        top: -78px;
-        right: 0px;
-        width: 300px;
+        top: -125px;
+        width: 250px;
         background-color: #EBD4C0;
         border-radius: 4px;
         transition: 0.5s;
     }
     #logged_in{
+		display:none;
         float:right;
     }
 	#userImage{ 
@@ -347,6 +322,18 @@ p.page_element{
 	}
 
 	.sidenav a:hover {
+	  color: #f1f1f1;
+	}
+	
+	.sidenav p {
+	  padding: 8px 8px 8px 32px;
+	  font-size: 25px;
+	  color: #818181;
+	  display: block;
+	  transition: 0.3s;
+	}
+
+	.sidenav p:hover {
 	  color: #f1f1f1;
 	}
 
