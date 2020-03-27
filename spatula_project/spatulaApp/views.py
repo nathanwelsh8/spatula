@@ -172,14 +172,24 @@ def add_recipe(request):
                 recipe.postedby = user
                 recipe.save()
 
+                success = False
                 for form in formset.cleaned_data:
+                    print("form:",form)
                     if form:
                         image = form['image']
-                        
-                        photo = RecipeImage(belongsto=Recipe.objects.get(name=recipe.name, postedby=user), image=image)
-                        photo.save()
+                        if image:
+                            print("Image:",image)
+                            photo = RecipeImage(belongsto=Recipe.objects.get(name=recipe.name, postedby=user), image=image)
+                            photo.save()
+                            success = True
+                if success:
+                    recipe.save() # only save image if we have a recipe image
+                    return redirect(reverse('spatulaApp:index'))
+                else:
+                    context_dict['form'] = form
+                    context_dict['formset'] = ImageFormSet(queryset=RecipeImage.objects.none())
+                    return render(request, 'spatula/add_recipe.html', context=context_dict)
 
-                return redirect(reverse('spatulaApp:index'))
         else: 
             print(form.errors, formset.errors)
     context_dict['form'] = form
