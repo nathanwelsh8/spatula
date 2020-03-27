@@ -66,4 +66,8 @@ def getRating(recipeID):
 def getNoRatings(recipeID):
     return Rating.objects.filter(recipe=recipeID).count()
     
-    
+@register.filter
+def recipeNameLengthCheck(name):
+    if len(str(name))>21:
+        name = name[:19]+"..."
+    return name

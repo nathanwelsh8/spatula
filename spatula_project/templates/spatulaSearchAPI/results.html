@@ -9,7 +9,9 @@
                             <img src="../..{{MEDIA_URL}}{{image}}" class="recipeimg">
                 {% endwith %} 
                 <div class="recipename">
-                    <p>{{ recipe.name }}</p>
+                    {% with recipe.name|recipeNameLengthCheck as name %}
+                    <p>{{ name }}</p>
+                    {% endwith %}
                 </div>
                 {% with recipe.id|getRating  as recipeRating %}
                 {% with 'images/stars/'|add:recipeRating|add:'.png' as image_static %}
