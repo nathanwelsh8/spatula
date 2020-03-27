@@ -24,7 +24,7 @@
 	{% with images|getKeyImgList:recipe.name as image %}
 	{% if image %}
 	{% for i in image %}
-		<img id="recipe_image" src="../{{i}}" class="recipeimg">
+		<img id="recipe_image" src="..{{MEDIA_URL}}{{i}}" class="recipeimg">
 	{% endfor %}
 	{% endif %}
 	{% endwith %} 

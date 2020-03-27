@@ -78,7 +78,7 @@ class Index(View):
             return HttpResponse("Invalid login details supplied.")
     
     
-@login_required
+@login_required(login_url='spatulaApp:index')
 def user_logout(request): 
     logout(request)
     # Take the user back to the homepage.
@@ -139,7 +139,7 @@ def register(request):
                   context={'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
     
     
-@login_required
+@login_required(login_url="spatulaApp:index")
 def add_recipe(request): 
     form = RecipeForm()
     context_dict = {}
@@ -175,6 +175,7 @@ def add_recipe(request):
                 for form in formset.cleaned_data:
                     if form:
                         image = form['image']
+                        
                         photo = RecipeImage(belongsto=Recipe.objects.get(name=recipe.name, postedby=user), image=image)
                         photo.save()
 

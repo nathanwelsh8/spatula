@@ -155,4 +155,3 @@ MEDIA_URL = '/media/'
 
 IMAGES_DIR = os.path.join(MEDIA_URL,"images")
 
-

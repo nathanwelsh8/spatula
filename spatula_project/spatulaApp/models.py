@@ -111,11 +111,12 @@ class Image(models.Model):
     def images_path():
         return os.path.join(settings.IMAGES_DIR, 'usruploads')
 
+    
     def resize(self):
-        im = PIL.Image.open(self.image)
+        im = PIL.Image.open(self.image.path) # use path for pythonanywhere
         size=(200,200)
         out = im.resize(size)
-        out.save(self.image.__str__())
+        out.save(self.image.path) # usepath for python anywhere
 
     def save(self, *args, **kwargs):
         super(Image, self).save(*args, **kwargs)

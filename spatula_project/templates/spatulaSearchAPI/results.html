@@ -6,7 +6,7 @@
         {% for recipe in recipies %}
             <div class="recipe"><a href="{% url 'spatulaApp:show_recipe' recipe.slug %}" style="display: block">
                 {% with recipe_images|getKeyImg:recipe.name as image %}
-                            <img src="../../{{image}}" class="recipeimg">
+                            <img src="../..{{MEDIA_URL}}{{image}}" class="recipeimg">
                 {% endwith %} 
                 <div class="recipename">
                     <p>{{ recipe.name }}</p>
