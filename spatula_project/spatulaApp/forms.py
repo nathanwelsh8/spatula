@@ -21,8 +21,8 @@ class RecipeForm(forms.ModelForm):
     category = NameChoiceField(widget=forms.Select(), queryset =Category.objects.all(), initial = 0)
 
     toolsreq = forms.CharField(max_length=512, widget=forms.TextInput(attrs={'placeholder':'Tools Required'}))
-    difficulty = forms.IntegerField(widget=forms.NumberInput(attrs={'type':'range', 'step':'1', 'min':'1','max':'3'}), help_text = 'Difficulty: ')
-    cost = forms.IntegerField(widget=forms.NumberInput(attrs={'type':'range', 'step':'1', 'min':'1','max':'3'}), help_text = 'Cost: ')
+    difficulty = forms.ChoiceField(choices = ((1,'Basic'), (2,'Challenging'), (3, 'Difficult')), help_text = 'Difficulty: ')
+    cost = forms.ChoiceField(choices = ((1, '£'), (2, '££'), (3, '£££')), help_text = 'Cost: ')
     diettype = forms.IntegerField(widget=forms.RadioSelect(choices=DIET_CHOICES))
 
     # not required as its not stored in DB

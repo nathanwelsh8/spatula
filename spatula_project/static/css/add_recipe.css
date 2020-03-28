@@ -1,52 +1,116 @@
-
-input[type = text]{ 
-    width: 100%;
-    padding:3px;
-    margin: 2px 0;
+#header{
+	margin-left:-15px;
 }
 
-textarea{ 
-    width: 100%;
-    padding:3px;
-    margin: 2px 0;
-}
+@media screen and (min-device-width: 1024px){
+	.recipe_form{ 
+		margin-left: 18%;
+		margin-right: 18%;
+	}
+	#diettype{
+		margin-top:20px;
+	}
+	input[type = text]{ 
+		width: 100%;
+		padding:3px;
+		margin: 2px 0;
+	}
+
+	textarea{ 
+		width: 100%;
+		padding:3px;
+		margin: 2px 0;
+	}
 
 
-select{ 
-    width: 101%;
-    padding:3px;
-    margin: 2px 0;
+	select{ 
+		width: 101%; 
+		padding:3px;
+		margin: 2px 0;
+	}
+
+	input[type = submit] { 
+		float:right;
+	}
+
+	div{
+		font-size:14px;
+	}
+
+	input#id_difficulty{
+		font-size:18px;
+	}
+
+	.row{ 
+		background-color:#F5EFEB;
+		margin-right:0px;
+		margin-left:0px;
+		border: 2px solid #FFFFFF;
+		border-radius: 8px;
+	}
+
+	#images{
+		padding-top:10px;
+	}
 }
 
-input[type = submit] { 
-    float:right;
-}
+@media screen and (max-device-width: 480px){
+	form{ 
+		font-size:40px;
+	}
+	#diettype{
+		margin-top:30px;
+		padding-right:20px;
+	}
+	input[type = text]{ 
+		width: 100%;
+		padding:3px;
+		margin: 2px 0;
+	}
 
-div{
-    font-size:14px;
-}
+	textarea{ 
+		width: 100%;
+		padding:3px;
+		margin: 2px 0;
+	}
 
-input#id_difficulty{
-    font-size:18px;
-}
 
-.recipe_form{ 
-    margin-left: 18%;
-    margin-right: 18%;
-}
+	select{ 
+		width: 101%; 
+		padding:3px;
+		margin: 2px 0;
+	}
 
-ul#id_diettype{ 
-    border: 2px solid #ccc;
-    width:39%;
-    font-size:13px;
-    padding-left:5px;
-    display: inline-block;
-}
+	input[type = submit] { 
+		float:right;
+	}
 
-ul#id_diettype li{ 
-    display: inline-block;
-    margin-right:15px;
+
+
+	input#id_difficulty{
+		font-size:18px;
+	}
+
+	.row{ 
+		background-color:#F5EFEB;
+		margin-right:0px;
+		margin-left:0px;
+		border: 2px solid #FFFFFF;
+		border-radius: 8px;
+	}
+
+	#images{
+		padding-top:10px;
+	}
+	
+	.form-control{
+		font-size:40px
+	}
+	
+	label{
+		margin-right:20px;
+	}
 }
-			
+	
 			
 	

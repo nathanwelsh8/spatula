@@ -4,6 +4,7 @@
 	Spatula! User - {{ profile.user }}
 {% endblock %}
 {% block css_block %}
+	<link rel="stylesheet" href="{% static 'css/profile.css' %}">
 	<link rel="stylesheet" href="{% static 'css/index.css' %}"> <!--Used for recipe layout-->
 {% endblock %}
 {% block js_block %}
@@ -11,33 +12,33 @@
 	type="text/javascript" charset="utf-8"></script>
 {% endblock %}
 {% block body_block %}
-<div id="document_container_master">
-	<div id="document_container_main">
-		<h1 id="page_title">{{ profile.user }}</h1>
-		<hr/>
-		<h2 class="page_element">Bio</h2>
-		{% if canEdit %}
-			{% csrf_token %}
-			<textarea id="edit_bio" form="user_form" class="page_element">{{ profile.bio }}</textarea>
-			<input type='submit' name='Update', value="Update" onclick="update_bio();" class="page_element"/>
-			<p class="page_element" id="bio_success_msg"></p>
+<div class = "col-12 col-lg-2"></div>
+<div class = "col-12 col-lg-8">
+	<h1 id="page_title">{{ profile.user }}</h1>
+	<hr/>
+	<h2 class="page_element">Bio</h2>
+	{% if canEdit %}
+		{% csrf_token %}
+		<textarea id="edit_bio" form="user_form" class="page_element">{{ profile.bio }}</textarea>
+		<input type='submit' name='Update', value="Update" onclick="update_bio();" class="page_element"/>
+		<p class="page_element" id="bio_success_msg"></p>
+	{% else %}
+		<p class="page_element">{{profile.bio}}</p>
+	{% endif %}
+	<h2 class="page_element">
+		{% if not canEdit %}	
+			Recipes by {{ profile.user }}
 		{% else %}
-			<p class="page_element">{{profile.bio}}</p>
+			Your recipies
 		{% endif %}
-		<h2 class="page_element">
-			{% if not canEdit %}	
-				Recipes by {{ profile.user }}
-			{% else %}
-				Your recipies
-			{% endif %}
 		
 			
-		</h2>
-		<div id="recipies"><!-- id recipies has deliberate spelling mistake-->
-			{% include 'spatulaSearchAPI/results.html' %}
-		</div>
-		
+	</h2>
+	<div id="recipies"><!-- id recipies has deliberate spelling mistake-->
+		{% include 'spatulaSearchAPI/results.html' %}
 	</div>
+		
 </div>
+<div class = "col-12 col-lg-2"></div>
 {% endblock %}
 

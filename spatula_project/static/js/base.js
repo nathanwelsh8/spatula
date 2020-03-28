@@ -3,14 +3,16 @@
 function showSignin(){
     var x = document.getElementById("container");
 	var y = document.querySelector('.sidenav p')
-    if(x.style.top == "50px"){
-        x.style.top= "-125px";
-    }else{ 
+    if(x.style.top == "-200px" & window.matchMedia('(max-device-width: 480px)').matches){
+        x.style.top= "100px";
+    }else if(x.style.top == "-200px" & window.matchMedia('(min-device-width: 1024px)').matches){ 
         x.style.top= "50px";
-    }
+    }else{
+		x.style.top = "-200px";
+	}
 	
-	if(y.style.marginTop == "0px"){
-		y.style.marginTop = "170px";
+	if(y.style.marginTop == "0px" & x.style.top != "-200px" ){
+		y.style.marginTop = "260px";
 	}else{
 		y.style.marginTop = "0px"; 
     }
@@ -32,10 +34,10 @@ function showSearch(){
 	var y = document.getElementById("header")
     if(x.style.display=="none"){
         x.style.display="block";
-		y.style.height="90px";
+		y.style.height="170px";
     }else{
         x.style.display="none";
-		y.style.height="50px";
+		y.style.height="100px";
     }
 }
 
@@ -81,16 +83,12 @@ function openNav() {
 	var y = document.getElementById("container");
 	var z = document.querySelector('.sidenav p')
 	if(x.style.width == "0px"){ 
-		x.style.width = "250px";
+		x.style.width = "500px";
 	}else{
-		if (y.style.top == "50px"){
-			y.style.top =  "-125px";
+		if (y.style.top == "100px"){
+			y.style.top =  "-200px";
 			z.style.marginTop = "0px";
 		}
 		x.style.width = "0px"; 
 	}
 }
-
-function closeNav() {
-	document.getElementById("mySidenav").style.width = "0";
-} 

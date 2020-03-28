@@ -52,14 +52,6 @@ body {
     background-color: #ffffff;
 }
 
-#document_container_main{
-	width:80%;
-	position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    overflow:auto; 
-	
-}
 
 /** This css styling is for elements inside the #document_container_main */
 #page_title{
@@ -73,7 +65,6 @@ body {
 .page_element{
     margin-left: 1%;
     float:left;
-    margin-block-end: 1%;
     margin-inline-end: 1%;
 }
 
@@ -98,7 +89,7 @@ p.page_element{
     background-color: #ffffff;
 }
 
-@media (min-width: 550px){
+@media screen and (min-device-width: 1024px){
     body {
         margin: 0px;
         overflow-y:scroll;
@@ -175,7 +166,7 @@ p.page_element{
     #container{
         z-index: 99;
         position: fixed;
-        top: -78px;
+        top: -20px;
         right: 0px;
         width: 300px;
         background-color: #EBD4C0;
@@ -197,25 +188,25 @@ p.page_element{
 	}
 }
 
-@media (max-width: 550px){
+@media screen and (max-device-width: 480px) and (orientation: portrait){
     body {
         margin: 0px;
         overflow-y:scroll;
     }
 	
 	#header{ 
-		height:50px;
+		height:100px;
 	}
 	
     #top {
-        background-color: #EBD4C0;
-        position: fixed;
-        top: 0;
-        width: 100%;
-        height: 50px;
-        z-index:100;
-
+		background-color: #EBD4C0;
+		position: fixed;
+		top: 0;
+		width: 100%;
+		height: 100px;
+		z-index: 100;
     }
+	
     #logo {
         height: 80%;
         margin: 5px;
@@ -225,9 +216,10 @@ p.page_element{
 		display:none;
 		width:100%;
 		position: fixed;
-        height: 30px;
+        height: 80px;
         border: 2px solid #FFFFFF;
         border-radius: 4px;
+		font-size:35px;
 
     }
     #profilepic {
@@ -245,25 +237,31 @@ p.page_element{
 	#username, #password {
         margin: 8px;
         margin-bottom: 0px;
-        width: 235px;
-        height: 35px;
+        width: 470px;
+        height: 80px;
         border: 2px solid #FFFFFF;
         border-radius: 4px;
+		font-size:40px;
     }
 
 
-    #containerregister, #containersignin {
+    #containersignin {
         margin: 8px;
         margin-right: 0px;
         float: left;
-        height: 28px;
+        height: 80px;
         background-color: #562e33;
         color: #ffffff;
         border: 2px solid #562e33;
         border-radius: 4px;
-        width: 138px;
+        width: 238px;
         transition: 0.2s;
+		font-size:40px
     }
+	
+	#containerregister{
+		display:none;
+	}
     #containerregister:hover, #containersignin:hover{
         background-color: #7e4940;
         border: 2px solid #7e4940;
@@ -273,8 +271,8 @@ p.page_element{
     #container{
         z-index: 99;
         position: fixed;
-        top: -125px;
-        width: 250px;
+        top: -200px;
+        width: 500px;
         background-color: #EBD4C0;
         border-radius: 4px;
         transition: 0.5s;
@@ -297,7 +295,7 @@ p.page_element{
 }
 
 /*sidenav css*/
-@media (max-width:550px){
+@media screen and (max-device-width: 480px) and (orientation: portrait){
 	.sidenav {
 	  height: 100%;
 	  width: 0;
@@ -308,14 +306,14 @@ p.page_element{
 	  background-color: #111;
 	  overflow-x: hidden;
 	  transition: 0.5s;
-	  padding-top: 60px;
+	  padding-top: 120px;
 	  float:right;
 	}
 
 	.sidenav a {
 	  padding: 8px 8px 8px 32px;
 	  text-decoration: none;
-	  font-size: 25px;
+	  font-size: 70px;
 	  color: #818181;
 	  display: block;
 	  transition: 0.3s;
@@ -327,7 +325,7 @@ p.page_element{
 	
 	.sidenav p {
 	  padding: 8px 8px 8px 32px;
-	  font-size: 25px;
+	  font-size: 70px;
 	  color: #818181;
 	  display: block;
 	  transition: 0.3s;
