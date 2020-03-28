@@ -7,6 +7,11 @@
 {% block css_block %}
 	<link rel="stylesheet" href="{% static 'css/add_recipe.css' %}">
 {% endblock %}
+
+{% block js_block %}
+	<script src="{% static 'js/add_recipe.js' %}"
+    type="text/javascript" charset="utf-8"></script>
+{% endblock %}
 {% block title_block %}
 Add Recipe
 {% endblock %}
@@ -16,17 +21,72 @@ Add Recipe
 	<div class = "recipe_form">
 		<form id="recipe_form" method="post" action=" {% url 'spatulaApp:add_recipe' %} ", enctype="multipart/form-data">
 			{% csrf_token %}
+
 			{% for field in form.visible_fields %} 
-				{{ field.errors }}
-				{{ field.help_text }} 
-				{{ field }}
+				{%if field.name == "difficulty" %}
+				<div class = "row">
+					<div class = "col-6 col-lg">
+						<div id = "{{ field.name }}">
+							{{ field.errors }}
+							{{ field.help_text }} 
+							{{ field }}
+						</div>
+					</div>
+				{%elif field.name == "cost"%}
+					<div class = "col-6 col-lg">
+						<div id = "{{ field.name }}">
+							{{ field.errors }}
+							{{ field.help_text }} 
+							{{ field }}
+						</div>
+					</div>
+				{%elif field.name == "diettype"%}
+					<div class = "col col-lg">
+						<p>Diet:</p>
+						<div id = "{{ field.name }}">
+							{{ field.errors }}
+							{{ field.help_text }} 
+							<div class="form-check form-check-inline">
+							  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="1" checked>
+							  <label class="form-check-label" for="exampleRadios1">
+								Meat
+							  </label>
+							</div>
+							<div class="form-check form-check-inline">
+							  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="2">
+							  <label class="form-check-label" for="exampleRadios2">
+								Veg
+							  </label>
+							</div>
+							<div class="form-check form-check-inline">
+							  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="3">
+							  <label class="form-check-label" for="exampleRadios3">
+								Vegan
+							  </label>
+							</div>
+						</div>
+					</div>
+				</div>
+				{%else%}
+					<div id = "{{ field.name }}">
+						{{ field.errors }}
+						{{ field.help_text }} 
+						{{ field }}
+					</div>
+				{%endif%}
+				
 			{% endfor %}
 			{{ formset.management_form }}
+			<div class = "row" id="images"> 
 			{% for form in formset %}
-				{{ form }}<br />
+				<div class = "col">
+					{{ form }}
+				</div>
 			{% endfor %}
+			</div>
 			<input type="submit" name="submit" value="Submit Recipe" />
 		</form>
+
 	</div>
 {% endblock %}
 	

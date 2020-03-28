@@ -19,8 +19,8 @@
 
 <!-- ive moved this pages css to base.css -->
 
-<div id="recipe_body">
-
+<div class = "row">
+	<div class = "col-12 col-lg-8">
 	{% with images|getKeyImgList:recipe.name as image %}
 	{% if image %}
 	{% for i in image %}

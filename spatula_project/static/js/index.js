@@ -66,11 +66,11 @@ function resetCss(){
         var search_bar = document.getElementById("searchbar");
         var side_bar = document.getElementById("sidebar");
         var header = document.getElementById("header");
-        search_bar.style.display = "inline-block";
-        side_bar.style.display = "block";
-        header.style.height="50px";
+		search_bar.removeAttribute("style");
+        side_bar.removeAttribute("style");
+        header.removeAttribute("style");
         console.log("css reset");
-    }   
+    }
     previous_size = w;
 
 }

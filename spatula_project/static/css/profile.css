@@ -1,0 +1,36 @@
+.col-12{
+	background-color: #FFF;
+}
+.col-lg-8{
+	background-color: #FFFFFF;
+	position: relative;
+	margin-right: auto;
+	margin-left: auto;
+}
+@media screen and (max-device-width: 480px) and (orientation: portrait){
+
+
+	h2{
+		font-size: 4rem;
+		margin-top:10px;
+		padding-bottom:10px;
+	}
+
+	h1{
+		font-size: 5rem;
+	}
+	
+	textarea{
+		padding-bottom:20px;
+		width: 300px;
+		font-size: 40px;
+		z-index:100;
+	}
+	
+	input{
+		height: 80px;
+		width: 130px;
+		font-size: 30px;
+		margin-top: 20px;
+	}
+}
