@@ -122,11 +122,6 @@ class Image(models.Model):
         super(Image, self).save(*args, **kwargs)
         self.resize()
 
-    #image      = models.FilePathField(path=images_path)
-    # Django docs are using image 
-    # field instead of FilePathField
-    # so try this first
-
     image      = models.ImageField(upload_to=images_path()[1:], max_length=255)
 
 class UserImage(Image):

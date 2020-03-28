@@ -3,11 +3,11 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from spatulaApp.forms import UserForm, UserProfileForm, UserProfileUpdateForm, RecipeForm, RecipeImageUploadForm,CommentForm
+from spatulaApp.forms import UserForm, UserProfileForm, UserProfileUpdateForm, RecipeForm, RecipeImageUploadForm,CommentForm,ProfileImageUploadForm
 from django.contrib.auth import authenticate, login, logout
 
 from spatulaSearchAPI.forms import SearchForm
-from spatulaApp.models import Recipe, Category, RecipeImage, UserProfile, Rating
+from spatulaApp.models import Recipe, Category, RecipeImage, UserProfile, Rating, UserImage
 from django.urls import reverse 
 from spatulaSearchAPI.views import search as API_Search
 from django.views import View
@@ -236,11 +236,21 @@ class ShowProfile(View):
             # let them edit it. if there is a logged in user who is admin
             # let them make edits too ;)
             self.context_dict['canEdit'] =  (request.user == profile.user) or request.user.is_superuser 
+            
+            # if user is allowed to edit, allow them to upload an profile pic
+            self.context_dict['image_form'] = None
+            if self.context_dict['canEdit']:
+                self.context_dict['image_form'] = ProfileImageUploadForm()
+            
+            self.context_dict['profile_pic'] = UserImage.objects.get(belongsto=self.user_cache.id) # try to retrieve users profile pic
 
         except User.DoesNotExist:
             return redirect(reverse('spatulaApp:index'))
         except UserProfile.DoesNotExist:
             return redirect(reverse('spatulaApp:index'))
+        except UserImage.DoesNotExist:
+            self.context_dict['profile_pic'] = None # users has no profile pic so use default
+
 
         # get the recipes belonging to this user
         if request.GET.get('get_recipes',None) == "getUser":
@@ -258,6 +268,7 @@ class ShowProfile(View):
             self.fix_ratings()
             return render(request, 'spatulaSearchAPI/results.html',self.context_dict)
 
+
         return render(request, 'spatula/profile.html', context=self.context_dict)
 
 
@@ -267,7 +278,7 @@ class ShowProfile(View):
                 self.user_cache = UserProfile.objects.get(user=User.objects.get(username=account_name_slug).id)
             # The .get() method returns one model instance or raises an exception.
             
-            profile = UserProfile.objects.get(slug=account_name_slug)
+            profile = self.user_cache #UserProfile.objects.get(slug=account_name_slug)
             
             # Retrieve all of the associated recipes for this account.
             recipes = Recipe.objects.filter(postedby=self.user_cache.id)
@@ -283,11 +294,21 @@ class ShowProfile(View):
         except User.DoesNotExist:
             return redirect(reverse('spatulaApp:index'))
         
-        
-        if request.POST.get('update_bio',None) != None:
+        if request.POST.get('update_bio',None): # if user updates bio
             self.user_cache.bio = request.POST['update_bio']
             self.user_cache.save()
             return render(request, 'spatula/profile.html', context=self.context_dict)
+        
+        elif request.POST.get('update_profile_pic',None): # if user updates profile image
+            form = ProfileImageUploadForm(request.POST, request.FILES)
+            if form.is_valid():
+                #form.belongsto = self.user_cache.id
+                image = form['image'].data
+                if image:
+                    photo = UserImage(belongsto=self.user_cache, image=image)
+                    photo.save()
+                    self.context_dict['profile_pic'] = photo 
+
 
         return render(request, 'spatula/profile.html', context=self.context_dict)
 
