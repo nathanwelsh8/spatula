@@ -306,6 +306,7 @@ class ShowProfile(View):
                 image = form['image'].data
                 if image:
                     photo = UserImage(belongsto=self.user_cache, image=image)
+                    UserImage.objects.filter(belongsto=self.user_cache).delete() #only allowed 1 profile pic
                     photo.save()
                     self.context_dict['profile_pic'] = photo 
 
