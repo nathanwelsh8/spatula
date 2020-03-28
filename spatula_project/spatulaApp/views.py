@@ -65,7 +65,7 @@ class Index(View):
         if 'register' in request.POST:
             return redirect(reverse('spatulaApp:register'))
 
-        user = authenticate(username=username, password=password)
+        user = authenticate(username=username.lower(), password=password)
         #ajax this so we can display error messgaes on page
         if user: 
             if user.is_active:
@@ -106,7 +106,7 @@ def register(request):
         if user_form.is_valid()and profile_form.is_valid():
             # Save the user's form data to the database.
             user = user_form.save()
-
+            user.username = user.username.lower()
             # Now we hash the password with the set_password method.
             # Once hashed, we can update the user object.
             user.set_password(user.password)
@@ -123,6 +123,11 @@ def register(request):
             # Update our variable to indicate that the template
             # registration was successful.
             registered = True
+            
+            user = authenticate(username=user.username.lower(), password=user_form['password'].data)
+            if user:
+                login(request, user)
+                
             return redirect(reverse('spatulaApp:index'))
         else:
             # Invalid form or forms - mistakes or something else?
