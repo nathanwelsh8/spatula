@@ -11,11 +11,26 @@
     <script src="{% static 'js/profile.js' %}"
 	type="text/javascript" charset="utf-8"></script>
 {% endblock %}
-{% block body_block %}
+{% block body_block %}		
 <div class = "col-12 col-lg-2"></div>
 <div class = "col-12 col-lg-8">
 	<h1 id="page_title">{{ profile.user }}</h1>
 	<hr/>
+
+	{% if profile_pic %}
+			<img src="../..{{MEDIA_URL}}{{profile_pic.image}}">
+		{% else %}
+			<img src="{% static 'images/profile.png' %}" alt="{{ profile.user }}'s profile pic'">	
+		{% endif %}
+		{% if image_form %}
+		<form id="uploadImage" method="post" action=" {% url 'spatulaApp:show_profile' profile.slug %} ", enctype="multipart/form-data">
+			{% csrf_token %}
+			<p>{{ image_form.image }}
+				<input type="submit" name="update_profile_pic" value="Update" />
+			</p>
+		</form>
+		{% endif %}
+		<hr/>
 	<h2 class="page_element">Bio</h2>
 	{% if canEdit %}
 		{% csrf_token %}
