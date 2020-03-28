@@ -149,6 +149,7 @@ input{
         margin: 4px;
         margin-bottom: 0px;
         height: 282px;
+		width: 282px;
         clip: rect(0px,0px,282px,282px);
     }
     .recipename{
