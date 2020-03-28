@@ -166,7 +166,7 @@ p.page_element{
     #container{
         z-index: 99;
         position: fixed;
-        top: -20px;
+        top: -200px;
         right: 0px;
         width: 300px;
         background-color: #EBD4C0;
