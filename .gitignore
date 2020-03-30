@@ -5,6 +5,8 @@
 
 # ignore database
 /spatula_project/db.sqlite3
+/spatula_project/spatula_project/security_key.py
+//spatula_project/spatula_project/settings.py
 /spatula_project/spatula_project/__pycache__/*
 /spatula_project/spatulaApp/__pycache__/*
 /spatula_project/spatulaApp/templatetags/__pycache__/*

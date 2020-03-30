@@ -50,7 +50,7 @@ class Index(View):
             self.context_dict['login_error_msg'] =  kwargs['login_error_msg']
         else:
             self.context_dict['login_error_msg'] = None
-            
+
         if 'search' in request.GET:
             # get users live search criteria
             self.context_dict['recipies'] = self.search(request)
@@ -72,18 +72,16 @@ class Index(View):
             return redirect(reverse('spatulaApp:register'))
 
         user = authenticate(username=username.lower(), password=password)
-        #ajax this so we can display error messgaes on page
+        
         if user: 
             if user.is_active:
                 login(request, user)
                 return redirect(reverse('spatulaApp:index'))
             else: 
-
                 return self.get(request, **{"login_error_msg":"Your Spatula account has been disabled."})
-                #return HttpResponse("Your Rango account is disabled.")
+                
         else:
             return self.get(request, **{"login_error_msg":"Invalid login details supplied."})
-            #return HttpResponse("Invalid login details supplied.")
     
     
 @login_required(login_url='spatulaApp:index')
