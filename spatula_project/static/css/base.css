@@ -173,6 +173,7 @@ p.page_element{
         border-radius: 4px;
         transition: 0.5s;
     }
+
     #logged_in{
         float:right;
     }

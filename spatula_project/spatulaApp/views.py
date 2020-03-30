@@ -18,11 +18,24 @@ from django.forms import modelformset_factory
 # Create your views here.
 # here so the database can be migrated without errors
 
+# instead of displaying 404, keep things simple by redirecting to index
+def error_404(request, *args, **kwargs):
+    return redirect(reverse('spatulaApp:index'))
+
+# This needs its own page as it an internal
+# server error, loading a page which is dynamic
+# is not possible so display static html
+def error_500(request, *args,**kwargs):
+    return HttpResponse("spatula/500.html")
+    # return redirect(reverse('spatulaApp:index'))
+
 
 class Index(View):
 
-    def search(self, request):
-        return API_Search(request)
+    recipe_cache = None
+
+    def search(self, request, cache=None):
+        return API_Search(request, cache=cache)
     def fix_ratings(self):
 
         # map ratings to integer values and sanitise edge cases
@@ -41,13 +54,22 @@ class Index(View):
         'categories':Category.getModelsAsList,
         'diet_choices':Recipe.getChoicesAsList,
         'recipe_images': RecipeImage.objects.all(),
+        'login_error_msg':None
         }
 
-    def get(self, request):
-        
+    def get(self, request, **kwargs):
+
+        if kwargs.get('login_error_msg'):
+            self.context_dict['login_error_msg'] =  kwargs['login_error_msg']
+        else:
+            self.context_dict['login_error_msg'] = None
+
         if 'search' in request.GET:
             # get users live search criteria
-            self.context_dict['recipies'] = self.search(request)
+            if not self.recipe_cache:
+                self.recipe_cache = Recipe.objects.all()
+
+            self.context_dict['recipies'] = self.search(request, cache=self.recipe_cache)
 
             self.fix_ratings()
             return render(request, 'spatulaSearchAPI/results.html',self.context_dict)
@@ -65,17 +87,17 @@ class Index(View):
         if 'register' in request.POST:
             return redirect(reverse('spatulaApp:register'))
 
-        user = authenticate(username=username, password=password)
-        #ajax this so we can display error messgaes on page
+        user = authenticate(username=username.lower(), password=password)
+        
         if user: 
             if user.is_active:
                 login(request, user)
                 return redirect(reverse('spatulaApp:index'))
             else: 
-                return HttpResponse("Your Rango account is disabled.")
+                return self.get(request, **{"login_error_msg":"Your Spatula account has been disabled."})
+                
         else:
-            #print(f"Invalid login details: {username}, {password}")
-            return HttpResponse("Invalid login details supplied.")
+            return self.get(request, **{"login_error_msg":"Invalid login details supplied."})
     
     
 @login_required(login_url='spatulaApp:index')
@@ -106,7 +128,7 @@ def register(request):
         if user_form.is_valid()and profile_form.is_valid():
             # Save the user's form data to the database.
             user = user_form.save()
-
+            user.username = user.username.lower()
             # Now we hash the password with the set_password method.
             # Once hashed, we can update the user object.
             user.set_password(user.password)
@@ -123,6 +145,11 @@ def register(request):
             # Update our variable to indicate that the template
             # registration was successful.
             registered = True
+            
+            user = authenticate(username=user.username.lower(), password=user_form['password'].data)
+            if user:
+                login(request, user)
+                
             return redirect(reverse('spatulaApp:index'))
         else:
             # Invalid form or forms - mistakes or something else?
@@ -310,6 +337,39 @@ class ShowProfile(View):
                     photo.save()
                     self.context_dict['profile_pic'] = photo 
 
+        elif request.POST.get('delete_profile',None):
+            print("delete_profile")
+            if self.context_dict['canEdit']: # stops javascript console injection
+                try:
+                    print("Deleting", self.user_cache)
+                    #Get all recipes to delete
+                    del_recipes = Recipe.objects.filter(postedby=self.user_cache.id)
+                    
+                    # delete all images linked to these recipes
+                    for recipe in del_recipes:
+                        print(recipe)
+                        images = RecipeImage.objects.filter(belongsto=recipe.id).delete()
+                        print("\tdeleted images")
+                        #delete the recipe
+                        recipe.delete()
+                        print("\tdeleted recipe")
+                    #   Delete users profile pic
+                    #   Use filter as it may be none
+
+                    UserImage.objects.filter(belongsto=self.user_cache.id).delete()
+                    print("\tdeleted profile pic")
+                    # Finally delete the user from db
+                    UserProfile.objects.get(id=self.user_cache.id).delete()
+                    print("\deleted UserProfile")
+                    User.objects.get(username=request.user).delete()
+                    print("DeletedUser")
+                except UserProfile.DoesNotExist:
+                    print("Profile not exist")
+                except User.DoesNotExist:
+                    print("User object not exist")
+                finally:
+                    print("redirecting..")
+                    return redirect(reverse('spatulaApp:index'))
 
         return render(request, 'spatula/profile.html', context=self.context_dict)
 

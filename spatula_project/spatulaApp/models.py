@@ -2,6 +2,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.dispatch import receiver
 import os
 import PIL.Image
 # Create your models here.
@@ -142,3 +143,16 @@ class Rating(models.Model):
     rating     = models.DecimalField(decimal_places=2, max_digits=3, default=0)
     # comments are optional
     comment    = models.TextField(max_length=MAX_TEXT_LENGTH, blank=True)
+
+
+@receiver(models.signals.post_delete, sender=Image)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+    """
+    Deletes file from filesystem
+    when corresponding `Image` object is deleted.
+    """
+    print(instance.image)
+    if instance.image:
+        if os.path.isfile(instance.image.path):
+            print("deleting")
+            os.remove(instance.image.path)

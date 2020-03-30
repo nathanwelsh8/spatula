@@ -16,10 +16,12 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from spatulaApp import urls
+#from spatulaApp import views as spatula_view
 from django.urls import path 
 from django.urls import include 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
+from django.conf.urls import handler404, handler500
 
 urlpatterns = [
     path(r'admin/', admin.site.urls),
@@ -28,3 +30,6 @@ urlpatterns = [
 ]
 
 urlpatterns += staticfiles_urlpatterns()
+
+handler404 = "spatulaApp.views.error_404"
+handler500 = "spatulaApp.views.error_500"

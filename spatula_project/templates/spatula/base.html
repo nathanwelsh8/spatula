@@ -55,6 +55,7 @@
 				</div>
 				<div id="container">
 					{% if not user.is_authenticated %}
+						{% if login_error_msg %}<p style="text-align: center;margin-bottom: 0px;">{{login_error_msg}}</p>{% endif %}
 						<form id="sign_in" method = "post" action = "{% url 'spatulaApp:index' %}">
 								{% csrf_token %}
 								<input type="text" id="username" name="username" placeholder="Username"><br>
