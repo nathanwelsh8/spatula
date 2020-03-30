@@ -1,5 +1,6 @@
 from django import template 
-from spatulaApp.models import Category, Recipe, Rating
+from spatulaApp.models import Category, Recipe, Rating, UserProfile
+from django.contrib.auth.models import User
 
 register = template.Library() 
 
@@ -71,3 +72,39 @@ def recipeNameLengthCheck(name):
     if len(str(name))>21:
         name = name[:19]+"..."
     return name
+
+@register.filter
+def getProfileRating(username):
+
+    # Users rating is based an averge of all their recipies ratings
+    #
+
+    try:
+        user = UserProfile.objects.get(user=User.objects.get(username=username))
+        recipies = Recipe.objects.filter(postedby=user.id)
+
+        total = 0
+        length = len(recipies)
+        for recipie in recipies:
+            total += int(getRating(recipie.id)) 
+        
+        if length==0:
+            length = 1
+
+        return str(round((total/length)*2,0)/2) 
+
+    except UserProfile.DoesNotExist:
+        return str(0)
+    except User.DoesNotExist:
+        return str(0)
+
+@register.filter
+def getNumRecipies(username):
+    try:
+        user = UserProfile.objects.get(user=User.objects.get(username=username))
+        recipies = Recipe.objects.filter(postedby=user.id)
+        return str(len(recipies))
+    except Exception:
+        return str(0)
+    
+

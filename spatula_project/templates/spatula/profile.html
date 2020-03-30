@@ -1,5 +1,7 @@
 {% extends 'spatula/base.html' %}
 {% load staticfiles %}
+{% load spatulaApp_template_tags %} 
+
 {% block title_block %}
 	Spatula! User - {{ profile.user }}
 {% endblock %}
@@ -32,28 +34,43 @@
 		</form>
 		{% endif %}
 		<hr/>
-	<div class="row"><h2 class="page_element">Bio</h2></div>
-	{% if canEdit %}
-		{% csrf_token %}
-		<div class="row">
-			<textarea id="edit_bio" form="user_form" class="page_element">{{ profile.bio }}</textarea>
-			<button name='Update' value="Update" onclick="update_bio();" class="page_element btn btn-default">Update Bio</button>
+	<div class="row">
+		<div class="col-12 col-md-1"></div>
+		<div class="col-12 col-md-6">
+			<div class="row"><h2 class="page_element">Bio</h2></div>
+			{% if canEdit %}
+				{% csrf_token %}
+				<div class="row">
+					<textarea id="edit_bio" form="user_form" class="page_element">{{ profile.bio }}</textarea>
+					<button name='Update' value="Update" onclick="update_bio();" class="page_element btn btn-primary">Update Bio</button>
+				</div>
+				<br/>
+				<div class="row"><button class ="page_element btn btn-danger" id="delete_button" onclick="deleteProfile();">Delete Account</button></div>
+				<p class="page_element" id="bio_success_msg"></p>
+				
+			{% else %}
+				<p class="page_element">{{profile.bio}}</p>
+			{% endif %}
 		</div>
-		<br/>
-		<div class="row"><button class ="page_element btn btn-danger" id="delete_button" onclick="deleteProfile();">Delete Account</button></div>
-		<p class="page_element" id="bio_success_msg"></p>
-		<hr/>
-	{% else %}
-		<p class="page_element">{{profile.bio}}</p>
-	{% endif %}
+		<div class="col-12 col-md-1"></div>
+		<div class="col-12 col-md-4">
+			<h2>{% if canEdit %}Your stats{% else %} {{profile.user}}'s stats {% endif %}</h2>
+			<p>User rating: {{ profile.user|getProfileRating }}/10.0<br/>
+			Number of recipies: {{ profile.user|getNumRecipies }}</p>
+			{% if canEdit %} <p><strong>Chefs tip</strong>: Your user rating is determined by your recipe ratings. 
+				Indepth recipes with clear pictures attract higher ratings
+				and will boost your profiles rating!  {% endif %}</p>
+			
+		</div>
+		
+	</div>
+	<hr/>
 	<h2 class="page_element">
 		{% if not canEdit %}	
 		Recipes by {{ profile.user }}
 		{% else %}
 		Your recipies
-		{% endif %}
-		
-			
+		{% endif %}	
 	</h2>
 	<div id="recipies"><!-- id recipies has deliberate spelling mistake-->
 		{% include 'spatulaSearchAPI/results.html' %}
