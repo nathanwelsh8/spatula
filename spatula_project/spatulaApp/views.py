@@ -32,8 +32,10 @@ def error_500(request, *args,**kwargs):
 
 class Index(View):
 
-    def search(self, request):
-        return API_Search(request)
+    recipe_cache = None
+
+    def search(self, request, cache=None):
+        return API_Search(request, cache=cache)
     def fix_ratings(self):
 
         # map ratings to integer values and sanitise edge cases
@@ -64,7 +66,10 @@ class Index(View):
 
         if 'search' in request.GET:
             # get users live search criteria
-            self.context_dict['recipies'] = self.search(request)
+            if not self.recipe_cache:
+                self.recipe_cache = Recipe.objects.all()
+
+            self.context_dict['recipies'] = self.search(request, cache=self.recipe_cache)
 
             self.fix_ratings()
             return render(request, 'spatulaSearchAPI/results.html',self.context_dict)
@@ -332,6 +337,39 @@ class ShowProfile(View):
                     photo.save()
                     self.context_dict['profile_pic'] = photo 
 
+        elif request.POST.get('delete_profile',None):
+            print("delete_profile")
+            if self.context_dict['canEdit']: # stops javascript console injection
+                try:
+                    print("Deleting", self.user_cache)
+                    #Get all recipes to delete
+                    del_recipes = Recipe.objects.filter(postedby=self.user_cache.id)
+                    
+                    # delete all images linked to these recipes
+                    for recipe in del_recipes:
+                        print(recipe)
+                        images = RecipeImage.objects.filter(belongsto=recipe.id).delete()
+                        print("\tdeleted images")
+                        #delete the recipe
+                        recipe.delete()
+                        print("\tdeleted recipe")
+                    #   Delete users profile pic
+                    #   Use filter as it may be none
+
+                    UserImage.objects.filter(belongsto=self.user_cache.id).delete()
+                    print("\tdeleted profile pic")
+                    # Finally delete the user from db
+                    UserProfile.objects.get(id=self.user_cache.id).delete()
+                    print("\deleted UserProfile")
+                    User.objects.get(username=request.user).delete()
+                    print("DeletedUser")
+                except UserProfile.DoesNotExist:
+                    print("Profile not exist")
+                except User.DoesNotExist:
+                    print("User object not exist")
+                finally:
+                    print("redirecting..")
+                    return redirect(reverse('spatulaApp:index'))
 
         return render(request, 'spatula/profile.html', context=self.context_dict)
 

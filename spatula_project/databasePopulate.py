@@ -14,8 +14,8 @@ from spatula_project import settings
 
 def populate():
     users = [
-        {'username': 'bob777', 'password': 'bob123456', 'bio': 'Hi Im bob and i like cooking'},
-        {'username': 'crazyman4', 'password': 'bob123456', 'bio': 'I like cooking and getting crazy'},
+        {'username': 'bob777', 'password': 'b3b123456', 'bio': 'Hi Im bob and i like cooking'},
+        {'username': 'crazyman4', 'password': 'b3b123456', 'bio': 'I like cooking and getting crazy'},
     ]
 
     categories = [
