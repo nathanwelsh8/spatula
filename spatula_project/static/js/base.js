@@ -3,7 +3,7 @@
 function showSignin(){
     var x = document.getElementById("container");
 	var y = document.querySelector('.sidenav p')
-    if(x.style.top == "-200px" & window.matchMedia('(max-device-width: 480px)').matches){
+    if(x.style.top == "-200px" & window.matchMedia('(max-device-width: 1024px)').matches){
         x.style.top= "100px";
     }else if(x.style.top == "-200px" & window.matchMedia('(min-device-width: 1024px)').matches){ 
         x.style.top= "50px";

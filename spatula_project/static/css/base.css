@@ -189,7 +189,9 @@ p.page_element{
 	}
 }
 
-@media screen and (max-device-width: 480px) and (orientation: portrait){
+
+
+@media screen and (max-device-width: 1024px) and (orientation: portrait){
     body {
         margin: 0px;
         overflow-y:scroll;
@@ -221,6 +223,7 @@ p.page_element{
         border: 2px solid #FFFFFF;
         border-radius: 4px;
 		font-size:35px;
+		left:0px;
 
     }
     #profilepic {
@@ -283,12 +286,14 @@ p.page_element{
         float:right;
     }
 	#userImage{ 
+		display:block;
 		float:left;
 		height: 100%;
 		margin-right:10px;
 		margin-left:10px;
 	}
 	#searchIcon{ 
+		display:block;
 		float:right;
 		height: 100%;
 	}
@@ -296,8 +301,9 @@ p.page_element{
 }
 
 /*sidenav css*/
-@media screen and (max-device-width: 480px) and (orientation: portrait){
+@media screen and (max-device-width: 1024px) and (orientation: portrait){
 	.sidenav {
+	  display:block;
 	  height: 100%;
 	  width: 0;
 	  position: fixed;
