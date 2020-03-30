@@ -66,7 +66,7 @@ sortTypeDict = { 'rating':sortRating,
                 }
 
 
-def search(request, user_filter=None):
+def search(request, user_filter=None, cache=None):
     """
     Search recipies, request can contain the following keys:
         search: the text to search by
@@ -88,7 +88,11 @@ def search(request, user_filter=None):
     dietTypeList = request.GET.getlist('diettype[]',[1,2,3])  # jquery adds [] when sending lists through ajax
     categoryList = request.GET.getlist('categories[]', [str(x.name) for x in Category.objects.all()]) # not many categorys so no need to cache
    
-    recipes = Recipe.objects.filter(Q(name__contains=recipeName) & Q(category__in=categoryList) & Q(diettype__in=dietTypeList))
+    if cache:
+        recipes = cache.filter(Q(name__contains=recipeName) & Q(category__in=categoryList) & Q(diettype__in=dietTypeList))
+    else:
+        recipes = Recipe.objects.filter(Q(name__contains=recipeName) & Q(category__in=categoryList) & Q(diettype__in=dietTypeList))
+    
     if user_filter:
         recipes = recipes.filter(postedby=user_filter)
     # sort the results as per users request

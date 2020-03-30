@@ -46,3 +46,17 @@ function getUserData(param){
         );
 
 }
+
+// Security checks handles by database. Insecure? heck ye
+function deleteProfile(params){
+    $.post(window.location.href,
+        {
+            'delete_profile':"True",
+            'csrfmiddlewaretoken':$('input:hidden[name=csrfmiddlewaretoken]').val()
+        },
+        function(data){
+            //redirect to index
+            window.location = "/";
+        }
+        )
+}
