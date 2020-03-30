@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block css_block %}
-   <!-- <link rel="stylesheet" href="{% static 'css/register.css' %}"> -->
+   <link rel="stylesheet" href="{% static 'css/register.css' %}">
 {% endblock %}
 
 {% block title_block %}
@@ -41,7 +41,7 @@
 						
 						<br/>
 						<div class="input-group">
-							<div class="input-group-prepend">
+							<div class="input-group-prepend" id="bioPrepend">
 							<span class="input-group-text">About you</span>
 							</div>
 							{{ profile_form.bio}}
