@@ -115,7 +115,7 @@ class Image(models.Model):
     
     def resize(self):
         im = PIL.Image.open(self.image.path) # use path for pythonanywhere
-        size=(200,200)
+        size=(600,600)
         out = im.resize(size)
         out.save(self.image.path) # usepath for python anywhere
 

@@ -26,7 +26,7 @@
 		<form id="uploadImage" method="post" action=" {% url 'spatulaApp:show_profile' profile.slug %} ", enctype="multipart/form-data">
 			{% csrf_token %}
 			<p>{{ image_form.image }}
-				<input type="submit" name="update_profile_pic" value="Update" />
+				<input class="btn btn-primary" type="submit" name="update_profile_pic" value="Update" />
 			</p>
 		</form>
 		{% endif %}

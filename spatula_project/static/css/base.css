@@ -89,9 +89,6 @@ p.page_element{
     background-color: #ffffff;
 }
 
-.btn:hover{
-    background-color: #7e4940;
-}
 
 @media screen and (min-device-width: 1024px){
     body {
