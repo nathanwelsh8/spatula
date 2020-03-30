@@ -87,7 +87,8 @@ class Index(View):
         if 'register' in request.POST:
             return redirect(reverse('spatulaApp:register'))
 
-        user = authenticate(username=username.lower(), password=password)
+        print(username,password)
+        user = authenticate(username=str(username.lower()), password=str(password))
         
         if user: 
             if user.is_active:
@@ -140,7 +141,7 @@ def register(request):
             # until we're ready to avoid integrity problems.
             profile = profile_form.save(commit=False)
             profile.user = user
-
+            profile.bio = profile_form['bio'].data
             profile.save()
             # Update our variable to indicate that the template
             # registration was successful.

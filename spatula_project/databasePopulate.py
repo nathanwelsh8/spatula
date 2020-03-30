@@ -14,8 +14,8 @@ from spatula_project import settings
 
 def populate():
     users = [
-        {'username': 'bob777', 'password': 'b3b123456', 'bio': 'Hi Im bob and i like cooking'},
-        {'username': 'crazyman4', 'password': 'b3b123456', 'bio': 'I like cooking and getting crazy'},
+        {'username': 'bob777', 'password': 'b3B123456', 'bio': 'Hi Im bob and i like cooking'},
+        {'username': 'crazyman4', 'password': 'b3B123456', 'bio': 'I like cooking and getting crazy'},
     ]
 
     categories = [
@@ -161,6 +161,7 @@ def populate():
 def add_user(user_info):
     new_user = User.objects.get_or_create(username=user_info['username'], password=user_info['password'])[0]
     profile = UserProfile.objects.get_or_create(user=new_user, bio=user_info['bio'])[0]
+    new_user.set_password(user_info['password'])
     new_user.save()
     profile.save()
     return user_info['username']
