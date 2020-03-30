@@ -24,13 +24,7 @@ function update_bio(){
         },
         function(data){
             // tell the user that there data was updated
-            $("#bio_success_msg").html("Details updated sucessfully!");
-            document.getElementById('bio_success_msg').style.visibility = 'visible';
-
-            setTimeout(function(){
-                document.getElementById('bio_success_msg').style.visibility = 'hidden';
-                $("#bio_success_msg").html("");
-            }, 2000);
+            tempDisplayMessage(id="bio_success_msg",content="Bio successfully updated!");
         } 
         );
 }
@@ -47,16 +41,45 @@ function getUserData(param){
 
 }
 
-// Security checks handles by database. Insecure? heck ye
+// Security checks handled by view
+delete_int = 0;
+num_click = 3;
 function deleteProfile(params){
-    $.post(window.location.href,
-        {
-            'delete_profile':"True",
-            'csrfmiddlewaretoken':$('input:hidden[name=csrfmiddlewaretoken]').val()
-        },
-        function(data){
-            //redirect to index
-            window.location = "/";
-        }
-        )
+
+    if (delete_int >=num_click){
+        $.post(window.location.href,
+            {
+                'delete_profile':"True",
+                'csrfmiddlewaretoken':$('input:hidden[name=csrfmiddlewaretoken]').val()
+            },
+            function(data){
+                //redirect to index
+                window.location = "/";
+            }
+        );
+    }else{
+        var id = 'delete_button';
+        tempDisplayMessage(id=id,
+            content="Click "+(num_click-delete_int)+" more times",
+            contentAfter="Delete Account", time =5000, remainVisible=true);
+
+        delete_int +=1;
+    }
+}
+
+function tempDisplayMessage(id,content="", contentAfter="",time=2000, remainVisible){
+    console.log(remainVisible);
+    if (id){
+        $("#"+id).html(content);
+            document.getElementById(id).style.visibility = 'visible';
+
+            setTimeout(function(){
+                if (remainVisible == false){
+                    console.log("hide after 2secs");
+                    document.getElementById(id).style.visibility = 'hidden';
+                }
+                $("#"+id).html(contentAfter);
+            }, time);
+
+    }
 }

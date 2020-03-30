@@ -4,14 +4,15 @@
 
 <html>
     <head lang="en">
+
+		<script src = "{% static 'js/jquery-1.11.1.min.js' %}"
+        type = "text/javascript" charset = "utf-8"></script>
+
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="{% static 'css/base.css' %}" />
 		
 		<script src="{% static 'js/base.js' %}"
          type="text/javascript" charset="utf-8"></script>
-		
-        <script src = "{% static 'js/jquery-1.11.1.min.js' %}"
-        type = "text/javascript" charset = "utf-8"></script>
         
         {% block css_block %}
 		{% endblock %}

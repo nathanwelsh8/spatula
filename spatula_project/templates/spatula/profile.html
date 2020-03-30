@@ -35,9 +35,10 @@
 	{% if canEdit %}
 		{% csrf_token %}
 		<textarea id="edit_bio" form="user_form" class="page_element">{{ profile.bio }}</textarea>
-		<input type='submit' name='Update', value="Update" onclick="update_bio();" class="page_element"/>
+		<button name='Update' value="Update" onclick="update_bio();" class="page_element btn btn-default">Update Bio</button>
+		<button class ="page_element btn btn-danger" id="delete_button" onclick="deleteProfile();">Delete Account</button>
 		<p class="page_element" id="bio_success_msg"></p>
-		<p class="page_element"><input type="submit" name="DeleteProfile" value="DeleteProfile" onclick="deleteProfile();"></p>
+		
 	{% else %}
 		<p class="page_element">{{profile.bio}}</p>
 	{% endif %}
