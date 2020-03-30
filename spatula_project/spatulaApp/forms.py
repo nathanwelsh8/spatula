@@ -60,7 +60,7 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
   
     bio = forms.CharField(
-        widget=forms.Textarea(attrs={'placeholder': 'Your bio - tell us about yourself...', 'id': 'bio', 'class':'form-control rounded-0'}), label='')
+        widget=forms.Textarea(attrs={'placeholder': 'Your bio - tell others about yourself...', 'id': 'bio', 'class':'form-control rounded-0'}), label='')
 
     class Meta:
         model = UserProfile
