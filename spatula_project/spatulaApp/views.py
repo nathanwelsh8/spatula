@@ -41,10 +41,16 @@ class Index(View):
         'categories':Category.getModelsAsList,
         'diet_choices':Recipe.getChoicesAsList,
         'recipe_images': RecipeImage.objects.all(),
+        'login_error_msg':None
         }
 
-    def get(self, request):
-        
+    def get(self, request, **kwargs):
+
+        if kwargs.get('login_error_msg'):
+            self.context_dict['login_error_msg'] =  kwargs['login_error_msg']
+        else:
+            self.context_dict['login_error_msg'] = None
+            
         if 'search' in request.GET:
             # get users live search criteria
             self.context_dict['recipies'] = self.search(request)
@@ -72,10 +78,12 @@ class Index(View):
                 login(request, user)
                 return redirect(reverse('spatulaApp:index'))
             else: 
-                return HttpResponse("Your Rango account is disabled.")
+
+                return self.get(request, **{"login_error_msg":"Your Spatula account has been disabled."})
+                #return HttpResponse("Your Rango account is disabled.")
         else:
-            #print(f"Invalid login details: {username}, {password}")
-            return HttpResponse("Invalid login details supplied.")
+            return self.get(request, **{"login_error_msg":"Invalid login details supplied."})
+            #return HttpResponse("Invalid login details supplied.")
     
     
 @login_required(login_url='spatulaApp:index')
