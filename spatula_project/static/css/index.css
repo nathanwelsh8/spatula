@@ -158,7 +158,9 @@ input{
 		float: right;
 		margin: 5px;
 		font-size: 3.25rem;
+		color:#562e33;
 	}
+	
 	
 	#results{
 		float:left;
