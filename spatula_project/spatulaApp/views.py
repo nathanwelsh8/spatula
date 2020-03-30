@@ -18,6 +18,17 @@ from django.forms import modelformset_factory
 # Create your views here.
 # here so the database can be migrated without errors
 
+# instead of displaying 404, keep things simple by redirecting to index
+def error_404(request, *args, **kwargs):
+    return redirect(reverse('spatulaApp:index'))
+
+# This needs its own page as it an internal
+# server error, loading a page which is dynamic
+# is not possible so display static html
+def error_500(request, *args,**kwargs):
+    return HttpResponse("spatula/500.html")
+    # return redirect(reverse('spatulaApp:index'))
+
 
 class Index(View):
 
