@@ -23,30 +23,34 @@
 			<img src="{% static 'images/profile.png' %}" alt="{{ profile.user }}'s profile pic'">	
 		{% endif %}
 		{% if image_form %}
-		<form id="uploadImage" method="post" action=" {% url 'spatulaApp:show_profile' profile.slug %} ", enctype="multipart/form-data">
+		<form id="uploadImage" method="post" action=" {% url 'spatulaApp:show_profile' profile.slug %} " enctype="multipart/form-data">
 			{% csrf_token %}
-			<p>{{ image_form.image }}
-				<input class="btn btn-primary" type="submit" name="update_profile_pic" value="Update" />
-			</p>
+			<div class="row">
+				<div class="col-6 col-md-4">{{ image_form.image }}</div>
+				<div class="col-4 col-md-2"><input class="btn btn-primary float-right" type="submit" name="update_profile_pic" value="Update" /></div>
+			</div>
 		</form>
 		{% endif %}
 		<hr/>
-	<h2 class="page_element">Bio</h2>
+	<div class="row"><h2 class="page_element">Bio</h2></div>
 	{% if canEdit %}
 		{% csrf_token %}
-		<textarea id="edit_bio" form="user_form" class="page_element">{{ profile.bio }}</textarea>
-		<button name='Update' value="Update" onclick="update_bio();" class="page_element btn btn-default">Update Bio</button>
-		<button class ="page_element btn btn-danger" id="delete_button" onclick="deleteProfile();">Delete Account</button>
+		<div class="row">
+			<textarea id="edit_bio" form="user_form" class="page_element">{{ profile.bio }}</textarea>
+			<button name='Update' value="Update" onclick="update_bio();" class="page_element btn btn-default">Update Bio</button>
+		</div>
+		<br/>
+		<div class="row"><button class ="page_element btn btn-danger" id="delete_button" onclick="deleteProfile();">Delete Account</button></div>
 		<p class="page_element" id="bio_success_msg"></p>
-		
+		<hr/>
 	{% else %}
 		<p class="page_element">{{profile.bio}}</p>
 	{% endif %}
 	<h2 class="page_element">
 		{% if not canEdit %}	
-			Recipes by {{ profile.user }}
+		Recipes by {{ profile.user }}
 		{% else %}
-			Your recipies
+		Your recipies
 		{% endif %}
 		
 			

@@ -78,7 +78,7 @@ class RecipeImageUploadForm(forms.ModelForm):
 
 class ProfileImageUploadForm(forms.ModelForm):
     
-    image = forms.ImageField(required=False, label='Image')
+    image = forms.ImageField(widget=forms.FileInput(attrs={"class":"form-control","id":'custom-file-input'}),required=False, label='Image')
     belongsto = forms.IntegerField(widget=forms.HiddenInput(),required=False)
 
     class Meta:
