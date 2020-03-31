@@ -54,7 +54,7 @@
 	}
 }
 
-@media screen and (max-device-width: 480px){
+@media screen and (max-device-width: 1024px){
 	form{ 
 		font-size:40px;
 	}

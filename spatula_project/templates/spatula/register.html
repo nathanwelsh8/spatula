@@ -25,13 +25,14 @@
 						<!-- Display each form -->
 						{{username}}
 						{{password}}
+						{{user_form.username.errors}}
 						<div class="input-group mb-3 flex-nowrap">
 							<div class="input-group-prepend">
 								<span class="input-group-text" id="basic-addon3">/account/</span>
 							</div>
 							{{ user_form.username }}
 						</div>
-
+						{{user_form.password.errors}}
 						<div class="input-group flex-nowrap">
 							<div class="input-group-prepend">
 							<span class="input-group-text" id="addon-wrapping">Password</span>
@@ -40,6 +41,7 @@
 						</div>
 						
 						<br/>
+						{{user_form.bio.errors}}
 						<div class="input-group">
 							<div class="input-group-prepend" id="bioPrepend">
 							<span class="input-group-text">About you</span>
