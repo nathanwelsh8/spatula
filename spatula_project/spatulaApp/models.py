@@ -115,8 +115,24 @@ class Image(models.Model):
     
     def resize(self):
         im = PIL.Image.open(self.image.path) # use path for pythonanywhere
-        size=(600,600)
-        out = im.resize(size)
+
+        new_width,new_height=(600,600)
+        width, height = im.size   # Get dimensions
+
+        left = (width - new_width)/2
+        top = (height - new_height)/2
+        right = (width + new_width)/2
+        bottom = (height + new_height)/2
+
+        # Crop the center of the image if the image is big,
+        # keeps images high def where possible at 600x600px
+        if width >= new_width and height >= new_height:
+            out = im.crop((left, top, right, bottom))
+        else:
+            # if image is smaller than 600x600 then
+            # resize up to 600x600
+            out = im.resize( (new_width,new_height) )
+
         out.save(self.image.path) # usepath for python anywhere
 
     def save(self, *args, **kwargs):

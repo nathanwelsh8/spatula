@@ -1,5 +1,20 @@
 /* functions to be included in base.html file here */
 
+$(document).ready(function(){ 
+    $('#searchbar').on('keydown', function(e) {
+        if (e.which == 13 ||e.keyCode == 13) {
+            text = getSearchText();
+            if (text.length >0){
+                
+                //sendRequest(getSearchText());
+                console.log("base enter query sent");
+                window.location ='/?redirect_search_text='+text;
+            }
+        }
+    });
+});
+
+
 function showSignin(){
     var x = document.getElementById("container");
 	var y = document.querySelector('.sidenav p')
@@ -77,6 +92,30 @@ function sendRequest(text,sort,diet,categories){
 function getSearchText(){
     return $('#searchbar').val();
 }
+
+
+function getSortType(){
+    return $('input:radio[name=sort]:checked').val();
+}
+
+function getDietType(){
+    var selected = [];
+    $('#meat input:checked').each(function(){
+        if (this.checked){     
+            selected.push($(this).attr('name'));
+        }
+    });
+    return selected;
+}
+
+function getCategories(){
+    var categories = [];
+    $('#categories input:checked').each(function(){
+        categories.push($(this).attr('name'));
+    });
+    return categories;
+}
+
 
 function openNav() {
 	var x = document.getElementById("mySidenav");

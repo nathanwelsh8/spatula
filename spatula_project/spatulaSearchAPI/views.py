@@ -88,6 +88,21 @@ def search(request, user_filter=None, cache=None):
     dietTypeList = request.GET.getlist('diettype[]',[1,2,3])  # jquery adds [] when sending lists through ajax
     categoryList = request.GET.getlist('categories[]', [str(x.name) for x in Category.objects.all()]) # not many categorys so no need to cache
    
+    return core(recipeName=recipeName,sortType=sortType,dietTypeList=dietTypeList,categoryList=categoryList,user_filter=user_filter,cache=cache)
+
+def non_http_search(request, user_filter=None,cache=None):
+    recipeName = request.get('search')
+    return core(recipeName=recipeName)
+
+def core(
+    recipeName='',
+    sortType='popularity',
+    dietTypeList=[1,2,3],
+    categoryList=[str(x.name) for x in Category.objects.all()],
+     user_filter=None,
+      cache=None
+      ):
+    
     if cache:
         recipes = cache.filter(Q(name__contains=recipeName) & Q(category__in=categoryList) & Q(diettype__in=dietTypeList))
     else:

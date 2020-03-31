@@ -1,11 +1,10 @@
 $(document).ready(function(){ 
-    // perform a quick load
-    sendRequest(getSearchText(),getSortType(), getDietType(), getCategories());
+    
     console.log("Document ready");
     var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     console.log("is a mobile device:"+isMobile);
     $("#searchbar").keyup(function() {
-        
+        console.log("search bar trigger");
         sendRequest(getSearchText(),getSortType(), getDietType(), getCategories());
         
     });
@@ -13,12 +12,12 @@ $(document).ready(function(){
     // add the filters now
 
     $('input[type="radio"]').click(function(){
-       
+        console.log("radio trigger");
         sendRequest(getSearchText(),getSortType(), getDietType(), getCategories());
     });
 
     $('input[type="checkbox"]').click(function(){
-        
+        console.log("checkbox trigger");
         sendRequest(getSearchText(),getSortType(), getDietType(), getCategories());
     });
 
@@ -30,27 +29,7 @@ $(document).ready(function(){
     
 });
     
-function getSortType(){
-    return $('input:radio[name=sort]:checked').val();
-}
 
-function getDietType(){
-    var selected = [];
-    $('#meat input:checked').each(function(){
-        if (this.checked){     
-            selected.push($(this).attr('name'));
-        }
-    });
-    return selected;
-}
-
-function getCategories(){
-    var categories = [];
-    $('#categories input:checked').each(function(){
-        categories.push($(this).attr('name'));
-    });
-    return categories;
-}
 
 /**
  * If the window is do be styles desktop mode then
