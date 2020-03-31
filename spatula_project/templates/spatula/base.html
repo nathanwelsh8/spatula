@@ -34,7 +34,7 @@
 		<div class = "container-fluid">
 			<div class = "row" id = "header">
 				{% block header_block %}
-				<div id="mySidenav" class="sidenav">
+				<div id="mySidenav" class="sidenav" style = "width:0px">
 				{% if user.is_authenticated %}
 					<a href="{% url 'spatulaApp:show_profile' user.username %}">My Profile</a>
 					<a href="{% url 'spatulaApp:add_recipe' %}">Add Recipe</a>
@@ -58,7 +58,7 @@
 					<img id = "searchIcon" onclick = "showSearch()" src="{{MEDIA_URL}}images/searchIcon.png">
 					<input type="text" id="searchbar" name="searchbar"  placeholder="Search">
 				</div>
-				<div id="container">
+				<div id="container" style = "top:-200px">
 					{% if not user.is_authenticated %}
 						{% if login_error_msg %}<p style="text-align: center;margin-bottom: 0px;">{{login_error_msg}}</p>{% endif %}
 						<form id="sign_in" method = "post" action = "{% url 'spatulaApp:index' %}">

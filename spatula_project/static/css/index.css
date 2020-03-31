@@ -100,6 +100,9 @@ input{
 		background-color: #ebd4c0;
 		border-radius: 4px;
 	}
+	.sidebarmeat{
+		height: 20px;
+	}
 }
 
 @media screen and (max-device-width: 1024px) and (orientation: portrait){
@@ -208,6 +211,10 @@ input{
 	label{
 		font-size:60px;
 	}
+	.sidebarmeat{
+		height: 70px;
+		margin-right:20px;
+	}
 }
 
 
@@ -216,9 +223,7 @@ input{
 
 
 
-.sidebarmeat{
-    height: 20px;
-}
+
 
 .recipe:hover {
     background-color: #f2e0d0;

@@ -15,9 +15,9 @@ class RecipeForm(forms.ModelForm):
         super(RecipeForm, self).__init__(*args, **kwargs)
 
     #input fields for recipe form
-    method = forms.CharField(max_length=512, widget=forms.Textarea(attrs={'placeholder':'Method'}))
+    method = forms.CharField(max_length=512, widget=forms.Textarea(attrs={'placeholder':'Method - Please Take a new line for each step.'}))
     name = forms.CharField(max_length=128, widget=forms.TextInput(attrs={'placeholder':'Recipe Name'}))
-    ingredients = forms.CharField(max_length=512, widget=forms.Textarea(attrs={'placeholder':'Ingredients'}))
+    ingredients = forms.CharField(max_length=512, widget=forms.Textarea(attrs={'placeholder':'Ingredients - Please take a new line for each ingredient.'}))
 
     category = NameChoiceField(widget=forms.Select(), queryset =Category.objects.all(), initial = 0)
 
