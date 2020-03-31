@@ -20,23 +20,22 @@
 	<hr/>
 
 	{% if profile_pic %}
-			<img src="../..{{MEDIA_URL}}{{profile_pic.image}}">
+			<img class = "profilePic" src="../..{{MEDIA_URL}}{{profile_pic.image}}">
 		{% else %}
-			<img src="{% static 'images/profile.png' %}" alt="{{ profile.user }}'s profile pic'">	
+			<img class = "profilePic" src="{% static 'images/profile.png' %}" alt="{{ profile.user }}'s profile pic'">	
 		{% endif %}
 		{% if image_form %}
 		<form id="uploadImage" method="post" action=" {% url 'spatulaApp:show_profile' profile.slug %} " enctype="multipart/form-data">
 			{% csrf_token %}
 			<div class="row">
-				<div class="col-6 col-md-4">{{ image_form.image }}</div>
-				<div class="col-4 col-md-2"><input class="btn btn-primary float-right" type="submit" name="update_profile_pic" value="Update" /></div>
+				<div class="col-10 col-lg-4">{{ image_form.image }}</div>
+				<div class="col-2 col-lg-2"><input class="btn btn-primary float-right" type="submit" name="update_profile_pic" value="Update" /></div>
 			</div>
 		</form>
 		{% endif %}
 		<hr/>
 	<div class="row">
-		<div class="col-12 col-md-1"></div>
-		<div class="col-12 col-md-6">
+		<div class="col-12 col-lg-6">
 			<div class="row"><h2 class="page_element">Bio</h2></div>
 			{% if canEdit %}
 				{% csrf_token %}
@@ -52,8 +51,7 @@
 				<p class="page_element">{{profile.bio}}</p>
 			{% endif %}
 		</div>
-		<div class="col-12 col-md-1"></div>
-		<div class="col-12 col-md-4">
+		<div class="col-12 col-lg-6">
 			<h2>{% if canEdit %}Your stats{% else %} {{profile.user}}'s stats {% endif %}</h2>
 			<p>User rating: {{ profile.user|getProfileRating }}/10.0<br/>
 			Number of recipies: {{ profile.user|getNumRecipies }}</p>

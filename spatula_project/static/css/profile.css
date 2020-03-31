@@ -7,6 +7,20 @@
 	margin-right: auto;
 	margin-left: auto;
 }
+
+.profilePic{ 
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+#edit_bio{
+	width:90%;
+	height:70px;
+	margin-bottom:20px;
+}
+
 @media screen and (max-device-width: 1024px) and (orientation: portrait){
 
 
@@ -22,15 +36,17 @@
 	
 	textarea{
 		padding-bottom:20px;
-		width: 300px;
-		font-size: 40px;
-		z-index:100;
+		font-size: 50px;
 	}
 	
 	input{
-		height: 80px;
-		width: 130px;
-		font-size: 30px;
+		font-size: 50px !important;
 		margin-top: 20px;
+	}
+	p{
+		font-size:40px;
+	}
+	button{ 
+		font-size:50px !important;
 	}
 }
