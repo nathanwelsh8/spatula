@@ -34,25 +34,25 @@ function showSignin(){
 
 }
 
-/*These  are the functions causing problems with inline styling*/
 function showFilters(){
     var x = document.getElementById("sidebar");
-    if(x.style.display=="none"){
-        x.style.display="block";
+    if(x.style.display=="block"){
+        x.style.display="none";
     }else{
-        x.style.display = "none";
+        x.style.display = "block";
     }
 }
 
 function showSearch(){
     var x = document.getElementById("searchbar")
 	var y = document.getElementById("header")
-    if(x.style.display=="none"){
-        x.style.display="block";
-		y.style.height="170px";
-    }else{
+    if(x.style.display=="block"){
         x.style.display="none";
 		y.style.height="100px";
+    }else{
+		x.style.display="block";
+		y.style.height="170px";
+
     }
 }
 
