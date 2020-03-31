@@ -87,7 +87,15 @@ def search(request, user_filter=None, cache=None):
     sortType = request.GET.get('sorttype','popularity')
     dietTypeList = request.GET.getlist('diettype[]',[1,2,3])  # jquery adds [] when sending lists through ajax
     categoryList = request.GET.getlist('categories[]', [str(x.name) for x in Category.objects.all()]) # not many categorys so no need to cache
-   
+    
+    # all vegan food is vegetarian so include both 
+    # vegetarian and vegan food when vegan selected
+    
+    if dietTypeList == ['3']:
+        print(dietTypeList == ['3'])
+        dietTypeList = [2,3]
+    print(dietTypeList)
+    
     return core(recipeName=recipeName,sortType=sortType,dietTypeList=dietTypeList,categoryList=categoryList,user_filter=user_filter,cache=cache)
 
 def non_http_search(request, user_filter=None,cache=None):
