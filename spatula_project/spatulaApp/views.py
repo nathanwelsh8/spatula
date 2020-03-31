@@ -1,5 +1,5 @@
 from django.shortcuts import render, render_to_response
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -400,6 +400,22 @@ class RecipePage(View):
             self.context_dict['recipe'].rating = str(0)
     
     def post(self,request, recipe_slug_name):
+        # deal with POST requests that want to
+        # edit an existing recipe
+        if request.POST.get('update_recipe', False):
+            recipe = Recipe.objects.get(slug=recipe_slug_name)
+            recipe.difficulty = request.POST['difficulty']
+            recipe.cost = request.POST['cost']
+            recipe.method = request.POST['method']
+            recipe.ingredients = request.POST['ingredients']
+            recipe.toolsreq = request.POST['tools']
+            recipe.category = Category.objects.get(name=request.POST['category'])
+            # recipe.diettype = request.POST['diet']
+            print(request.POST.get('category'))
+            print(request.POST.get('diet'))
+            recipe.save()
+            return redirect(reverse('spatulaApp:index'))
+
 
         form = CommentForm(request.POST)
         if self.recipe_cache is None:
@@ -415,7 +431,7 @@ class RecipePage(View):
                     self.user_cache = UserProfile.objects.get(user=User.objects.get(username=request.user))
             except UserProfile.DoesNotExist:
                 print("Admin has not linked their user profile!")
-                return render(request, 'spatula/recipe.html', context_dict)
+                return render(request, 'spatula/recipe.html')
 
             # existing reviews, was one posted by our user?
             # if so do not allow them to resubmit the review
@@ -472,6 +488,17 @@ class RecipePage(View):
         self.context_dict['images'] = RecipeImage.objects.filter(belongsto=self.recipe_cache.id)
         self.context_dict['reviews'] = Rating.objects.filter(recipe=self.recipe_cache.id)
         self.context_dict['form'] = self.form
+
+        # if there is a logged in user who 'owns' the recipe
+        # let them edit it. if there is a logged in user who is admin
+        # let them make edits too ;)
+        recipe = Recipe.objects.get(slug=recipe_slug_name)
+        profile = recipe.postedby
+        self.context_dict['canEdit'] = (request.user == profile.user) or request.user.is_superuser
+        self.context_dict['categories'] = Category.getModelsAsList()
+        diet_choices = [choice[1] for choice in Recipe.DIET_CHOICES]
+        self.context_dict['diet_choices'] = diet_choices
+
         self.fix_ratings()
         return render(request, 'spatula/recipe.html', context = self.context_dict)
 
