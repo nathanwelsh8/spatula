@@ -6,9 +6,30 @@
 		margin-left: auto;
 		margin-right: auto;
 	}
+	
+	.form-check-label{
+		font-size:18px;
+	}
 	body{
 		background-color: #F5EFEB;
 		font-family: sans-serif;
+	}
+	
+	textarea{
+		width:400px;
+	}
+	
+	#edit_method, #edit_ingredients{
+		height:300px;
+	}
+	
+	#ratingHeader{
+		margin-top:30px;
+	}
+	
+	#difficulty_input{
+		float:left;
+		margin-right:40px;
 	}
 
 	#recipe_body {

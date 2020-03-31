@@ -54,12 +54,15 @@ type="text/javascript" charset="utf-8"></script>
 	</div>
 	{% endif %}
 	{% endwith %} 
-	<div id = "recipe_info">
-		<h1 id="recipe_name">{{ recipe.name }}</h1>
-
+	{% if canEdit %}
+	<div id = "recipe_info" class = "row" style = "height:150px">
+		<h1 id="recipe_name" style = "float:none" class = "col-lg-12">{{ recipe.name }}</h1>
+		
+		<h2 class = "col-lg-12">Edit:</h2>
 		<!-- Display the category -->
-		{% if canEdit %}
-			<select id= "edit_category" form="recipe_form" class= "page_element">
+		<div class = "col-lg-3">
+			<p class = "form-check-label">Category</p>
+			<select id= "edit_category" form="recipe_form">
 			{% for cat in categories %}
 				{% if cat == recipe.category|cut:"Category object ("|cut:")" %}
 					<option value= {{cat}} selected>{{cat}}</option>
@@ -67,52 +70,48 @@ type="text/javascript" charset="utf-8"></script>
 					<option value= {{cat}}>{{cat}}</option>
 				{% endif %}
 			{% endfor %}
-		{% else %}
-			{% with recipe.category|cut:"Category object (" as cut_cat %}
-				<p id="recipecat" >{{cut_cat|cut:")"}}</p>
-			{% endwith %}
-		{% endif %}
-
-		<!-- Display the user who posted the recipe -->
-		<p id= "postedby"> <a href="{% url 'spatulaApp:show_profile' recipe.postedby %}" class="postedby_url">{{ recipe.postedby }}</a></p>
-	</div>
-	<div id="recipe_stats">
-		
+			</select>
+		</div>
 		<!-- Display the difficulty -->
-		<p id = "label">Difficulty</p>
-		{% if canEdit %}
-			<input id= "edit_difficulty" form="recipe_form" class= "page_element" type="range" min="1" max="3">
-		{% else %}
-			<img id ="recipemeter" src="{{MEDIA_URL}}images/{{ recipe.difficulty }}_meter.png ">
-		{% endif %}
-
+		<div class = "col-lg-5">
+		<div id = "difficulty_input">
+		<p class = "form-check-label">Difficulty</p>
+			<select id= "edit_difficulty" form="recipe_form" class= "form-check-inline">
+				<option value = "1">Easy</option>
+				<option value = "2">Challenging</option>
+				<option value = "3">Difficult</option>
+			</select>
+		</div>
 		<!-- Display the cost -->
-		<p id = "label">Cost</p>
-		{% if canEdit %}
-			<input id= "edit_cost" form="recipe_form" class= "page_element" type="range" min="1" max="3">
-		{% else %}
-			<img id ="recipemeter" src="{{MEDIA_URL}}images/{{ recipe.cost }}_meter.png ">
-		{% endif %}
-		
+		<p class = "form-check-label">Cost</p>
+			<select id= "edit_cost" form="recipe_form" class= "form-check-inline" type="range" min="1" max="3">
+				<option value = "1">£</option>
+				<option value = "2">££</option>
+				<option value = "3">£££</option>
+			</select>
+		</div>
 		<!-- Display the diet choice -->
-		{% if canEdit %}
-			<form id="edit_choice">
-			{% for choice in diet_choices %}
-				<input type="radio" name="diet_choices" class="page_element" value= {{choice}}>
-				<label for= {{choice}}>{{choice}}</label>
-				<br>
-			{% endfor %}
-			</form>
-
-		{% else %}
-			<img id ="recipemeat" src="{{MEDIA_URL}}images/{{ recipe.diettype }}_diet.png ">
-		{% endif %}
-
-		<!-- Display the rating -->
-		{% with recipe.id|getRating  as recipeRating %}
-		{% with 'images/stars/'|add:recipeRating|add:'.png' as image_static %}
-		<img src="{% static image_static %}" class="reciperating">
-		{%endwith%}{%endwith%}
+		<div class = "col-lg-4">
+		<p class = "form-check-label">Diet</p>
+		<div class="form-check form-check-inline">
+			<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="1" checked>
+		    <label class="form-check-label" for="exampleRadios1">
+				Meat
+	        </label>
+		</div>
+		<div class="form-check form-check-inline">
+			<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="2">
+			<label class="form-check-label" for="exampleRadios2">
+				Veg
+			</label>
+		</div>
+		<div class="form-check form-check-inline">
+			<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="3">
+			<label class="form-check-label" for="exampleRadios3">
+				Vegan
+			</label>
+		</div>
+		</div>
 	</div>
 	<div id = "document_container_main">
 		<hr/>
@@ -120,38 +119,55 @@ type="text/javascript" charset="utf-8"></script>
 
 		<!-- Display the tools required -->
 		<h2>Tools Required</h2>
-		{% if canEdit %}
-			<textarea id="edit_tools" form="recipe_form" class="page_element">{{ recipe.toolsreq }}</textarea>
-		{% else %}
-			<p>{{ recipe.toolsreq }}</p>
-		{% endif %}
+			<textarea id="edit_tools" form="recipe_form">{{ recipe.toolsreq }}</textarea>
 		<hr/>
 
 		<!-- Display the ingredients -->
 		<h2>Ingredients</h2>
-		{% if canEdit %}
-			<textarea id="edit_ingredients" form="recipe_form" class="page_element">{{ recipe.ingredients }}</textarea>
-		{% else %}
-			<p>{{ recipe.ingredients|linebreaks }}</p>
-		{% endif %}
+			<textarea id="edit_ingredients" form="recipe_form">{{ recipe.ingredients }}</textarea>
 		<hr/>
 
 		<!-- Display the method -->
 		<h2>Method</h2>
-		{% if canEdit %}
-			<p><textarea id="edit_method" form="recipe_form" class="page_element">{{ recipe.method }}</textarea></p>
-		{% else %}
-			<p>{{ recipe.method|linebreaks }}</p>
-		{% endif %}
+			<p><textarea id="edit_method" form="recipe_form" style = "width:600px">{{ recipe.method }}</textarea></p>
 		<hr/>
 
 		<!-- Display a submit button to save changes -->
-		{% if canEdit %}
-			<input type='submit' name='Update' value="Save Changes" onclick="update_recipe();" class="page_element"/>
+			<input type='submit' name='Update' value="Save Changes" onclick="update_recipe();"/>
 			<p class="page_element" id="recipe_success_msg"></p>
-		{% endif %}
-
-		<!-- Display the Reviews and ratings -->
+	</div>
+	{% else %}
+	<div id = "recipe_info">
+		<h1 id="recipe_name">{{ recipe.name }}</h1>
+        {% with recipe.category|cut:"Category object (" as cut_cat %}
+            <p id="recipecat" >{{cut_cat|cut:")"}}</p>
+        {% endwith %}
+		
+		<p id= "postedby"> <a href="{% url 'spatulaApp:show_profile' recipe.postedby %}" class="postedby_url">{{ recipe.postedby }}</a></p>
+	</div>
+	<div id="recipe_stats">
+		<p id = "label">Difficulty</p>
+		<img id ="recipemeter" src="{{MEDIA_URL}}images/{{ recipe.difficulty }}_meter.png ">
+		<p id = "label">Cost</p>
+		<img id ="recipemeter" src="{{MEDIA_URL}}images/{{ recipe.cost }}_meter.png ">
+		
+		<img id ="recipemeat" src="{{MEDIA_URL}}images/{{ recipe.diettype }}_diet.png ">
+		{% with recipe.id|getRating  as recipeRating %}
+		{% with 'images/stars/'|add:recipeRating|add:'.png' as image_static %}
+		<img src="{% static image_static %}" class="reciperating">
+		{%endwith%}{%endwith%}
+	</div>
+	<div id = "document_container_main">
+		<hr/>
+		<h2>Tool Required</h2>
+		<p>{{ recipe.toolsreq }}</p>
+		<hr/>
+		<h2>Ingedients</h2>
+		<p>{{ recipe.ingredients|linebreaks }}</p>
+		<hr/>
+		<h2>Method</h2>
+		<p>{{ recipe.method|linebreaks }}</p>
+		<hr/>
 		<div id= "comments">
 			<h2>Reviews & Ratings</h2>
 			<p id = "label" style ="margin:0px">Average rating</p>
@@ -178,8 +194,6 @@ type="text/javascript" charset="utf-8"></script>
 			<hr/>
 			{% endfor %}
 			{% endwith %} 
-
-			{% if not canEdit %}
 			<div class = "addcomment">
 				{% if user.is_authenticated %}
 				<h2>Add a Review</h2>
@@ -207,9 +221,10 @@ type="text/javascript" charset="utf-8"></script>
 				{% else %} Login to add a review <br/><hr/>
 				{% endif %}
 			</div>
-			{% endif %}
+
 		</div>
 	</div>
+	{% endif %}
 </div>
 
 	
