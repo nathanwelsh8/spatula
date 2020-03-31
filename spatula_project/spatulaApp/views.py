@@ -10,6 +10,7 @@ from spatulaSearchAPI.forms import SearchForm
 from spatulaApp.models import Recipe, Category, RecipeImage, UserProfile, Rating, UserImage
 from django.urls import reverse 
 from spatulaSearchAPI.views import search as API_Search
+from spatulaSearchAPI.views import non_http_search as non_http_API_search
 from django.views import View
 
 # funky import that allows users to upload multiple images at once
@@ -54,7 +55,8 @@ class Index(View):
         'categories':Category.getModelsAsList,
         'diet_choices':Recipe.getChoicesAsList,
         'recipe_images': RecipeImage.objects.all(),
-        'login_error_msg':None
+        'login_error_msg':None,
+        'runPreSearch':True
         }
 
     def get(self, request, **kwargs):
@@ -73,12 +75,21 @@ class Index(View):
 
             self.fix_ratings()
             return render(request, 'spatulaSearchAPI/results.html',self.context_dict)
+        
+        elif 'redirect_search_text' in request.GET:
+            self.context_dict['runPreSearch'] = False
+            
+            json_req = {}
+            json_req['search'] = request.GET['redirect_search_text']
+            
+            self.context_dict['recipies'] = non_http_API_search(json_req)
+        else:
+            self.context_dict['runPreSearch'] = True
 
         self.fix_ratings() # multiply by 2 so they are mapped to a stars rating
         return render(request, 'spatula/index.html', self.context_dict)
 
     def post(self, request):
-        # do nothing for bogus post request
          
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -87,7 +98,6 @@ class Index(View):
         if 'register' in request.POST:
             return redirect(reverse('spatulaApp:register'))
 
-        print(username,password)
         user = authenticate(username=str(username.lower()), password=str(password))
         
         if user: 
@@ -448,6 +458,14 @@ class RecipePage(View):
         except Recipe.DoesNotExist:
             return redirect(reverse('spatulaApp:index'))
         
+
+        if 'search' in request.GET:
+            print("search request recieved")
+            #self.context_dict['recipies'] = API_Search(request,user_filter=self.user_cache.id)
+            #self.fix_ratings()
+            return redirect(reverse( 'spatulaApp:index'))
+
+
         self.context_dict['recipe'] = self.recipe_cache
         # There may ve alot of comments and images so reduce load by 
         # only passing in images and comments relevent to this recipe
