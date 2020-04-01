@@ -7,6 +7,8 @@ WAD2 Recipie WebApp
 ### sources
 The following sources have been used to help piece this web app together
 - [tangowithdjango](https://www.tangowithdjango.com/book17/)
+- [Bootstrap 3](https://getbootstrap.com/docs/3.3/getting-started/#download)
+- [jquery 1.1](https://jquery.com/download/)
 #### Stack exchange help question I posted
 - [Setting field value of a form in the view](https://stackoverflow.com/questions/60635957/setting-the-field-value-of-a-form-in-view-py)
 - [Troubleshooting media directory setup on python anywhere](https://stackoverflow.com/questions/60875133/trouble-with-media-directory-files-on-pythonanywhere)
