@@ -1,11 +1,11 @@
+/** Universial atyling */
 body {
     margin: 0px;
-    /* also declare font and font size */
     font-size: small;
     overflow-y:scroll;
     
 }
-
+ 
 #header{
 	height:50px;
 }
@@ -37,6 +37,7 @@ body {
     border: 2px solid #FFFFFF;
     border-radius: 4px;
 }
+
 /* the standard container for pages outwith index
     Used in recipe_page and account_page
 */
@@ -79,17 +80,13 @@ p.page_element{
 }
 
 #recipies {
-    /*position: relative;
-    margin-left: auto;
-    margin-right: auto;*/
-    /*width: 900px;*/
     overflow:auto; 
     border-left: 8px solid #ffffff;
     border-right: 8px solid #ffffff;
     background-color: #ffffff;
 }
 
-
+/* Styling for desktop view */
 @media screen and (min-device-width: 1024px){
     body {
         margin: 0px;
@@ -203,7 +200,7 @@ p.page_element{
 }
 
 
-
+/* Styling for mobile/tablet views */
 @media screen and (max-device-width: 1024px) and (orientation: portrait){
     body {
         margin: 0px;

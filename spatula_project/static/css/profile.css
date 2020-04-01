@@ -1,3 +1,5 @@
+/** Universal styles for mobile, tablet and desktop views*/
+
 .col-12{
 	background-color: #FFF;
 }
@@ -21,8 +23,8 @@
 	margin-bottom:20px;
 }
 
+/** Styling for mobile and tablet view */
 @media screen and (max-device-width: 1024px) and (orientation: portrait){
-
 
 	h2{
 		font-size: 4rem;
@@ -39,14 +41,18 @@
 		font-size: 50px;
 	}
 	
+	p{
+		font-size:40px;
+	}
+	
+	/** Override bootstap form css which has a higher priority  */
 	input{
 		font-size: 50px !important;
 		margin-top: 20px;
 	}
-	p{
-		font-size:40px;
-	}
+	
 	button{ 
 		font-size:50px !important;
 	}
+
 }
