@@ -436,11 +436,11 @@ class RecipePage(View):
                 return render(request, 'spatula/recipe.html')
 
             # existing reviews, was one posted by our user?
-            # if so do not allow them to resubmit the review
+            # if so do not allow them to submit another review
             if existingComments:
                 canPost = True
                 for r in existingComments:
-                    if r.postedby == self.user_cache:
+                    if r.postedby.__str__()== request.user.username:
                         canPost = False 
                         # will be displayed custom error message 
                         form._errors['comment'] = form.error_class(['You have already left a review on this recipe!'])
