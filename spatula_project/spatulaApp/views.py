@@ -411,8 +411,6 @@ class RecipePage(View):
             recipe.toolsreq = request.POST['tools']
             recipe.category = Category.objects.get(name=request.POST['category'])
             # recipe.diettype = request.POST['diet']
-            print(request.POST.get('category'))
-            print(request.POST.get('diet'))
             recipe.save()
             return redirect(reverse('spatulaApp:index'))
 

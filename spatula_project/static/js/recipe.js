@@ -1,6 +1,3 @@
-$(document).ready(function(){
-});    
-
 function update_recipe(){
 
     var csrf = $('input:hidden[name=csrfmiddlewaretoken]').val();
@@ -16,7 +13,7 @@ function update_recipe(){
     var category = $('#edit_category option:selected').val();
     
     
-
+    console.log("java detected post");
     $.post(window.location.href,
         {
             'csrfmiddlewaretoken': csrf,
@@ -41,5 +38,4 @@ function update_recipe(){
             }, 2000);
         } 
         );
-}
 }
