@@ -393,6 +393,9 @@ class RecipePage(View):
     user_cache = None
 
     def fix_ratings(self):
+
+        # use a class based context dict to allow caching queries
+        # when getting / posting secondry requests
         self.context_dict['recipe'].rating = str(round(int(self.context_dict['recipe'].rating * 2)))
         if int(self.context_dict['recipe'].rating) >5:
             self.context_dict['recipe'].rating= str(5)
@@ -400,6 +403,7 @@ class RecipePage(View):
             self.context_dict['recipe'].rating = str(0)
     
     def post(self,request, recipe_slug_name):
+        
         # deal with POST requests that want to
         # edit an existing recipe
         if request.POST.get('update_recipe', False):
