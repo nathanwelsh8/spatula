@@ -3,6 +3,8 @@
 # Except spatula project
 !/spatula_project/
 
+# Except requirements file
+!/requirements.txt
 # ignore database
 /spatula_project/db.sqlite3
 /spatula_project/spatula_project/security_key.py
