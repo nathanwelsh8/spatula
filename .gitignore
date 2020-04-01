@@ -13,3 +13,6 @@
 /spatula_project/spatulaSearchAPI/__pycache__/*
 /spatula_project/spatulaApp/migrations/*
 spatula_project/spatulaApp/templatetags/__pycache__/spatulaApp_template_tags.cpython-37.pyc
+*.jpg
+*.pyc
+*.pyc
