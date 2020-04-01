@@ -55,12 +55,12 @@ type="text/javascript" charset="utf-8"></script>
 	{% endif %}
 	{% endwith %} 
 	{% if canEdit %}
-	<div id = "recipe_info" class = "row" style = "height:150px">
+	<div id = "recipe_info_edit" class = "row" >
 		<h1 id="recipe_name" style = "float:none" class = "col-lg-12">{{ recipe.name }}</h1>
 		
 		<h2 class = "col-lg-12">Edit:</h2>
 		<!-- Display the category -->
-		<div class = "col-lg-3">
+		<div class = " col-4 col-lg-3">
 			<p class = "form-check-label">Category</p>
 			<select id= "edit_category" form="recipe_form">
 			{% for cat in categories %}
@@ -73,7 +73,7 @@ type="text/javascript" charset="utf-8"></script>
 			</select>
 		</div>
 		<!-- Display the difficulty -->
-		<div class = "col-lg-5">
+		<div class = "col-8 col-lg-5">
 		<div id = "difficulty_input">
 		<p class = "form-check-label">Difficulty</p>
 			<select id= "edit_difficulty" form="recipe_form" class= "form-check-inline">
@@ -91,8 +91,8 @@ type="text/javascript" charset="utf-8"></script>
 			</select>
 		</div>
 		<!-- Display the diet choice -->
-		<div class = "col-lg-4">
-		<p class = "form-check-label">Diet</p>
+		<div class = "col-12 col-lg-4">
+		<p class = "form-check-label" id="dietLabel">Diet</p>
 		<div class="form-check form-check-inline">
 			<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="1" checked>
 		    <label class="form-check-label" for="exampleRadios1">
@@ -129,7 +129,7 @@ type="text/javascript" charset="utf-8"></script>
 
 		<!-- Display the method -->
 		<h2>Method</h2>
-			<p><textarea id="edit_method" form="recipe_form" style = "width:600px">{{ recipe.method }}</textarea></p>
+			<textarea id="edit_method" form="recipe_form">{{ recipe.method }}</textarea>
 		<hr/>
 
 		<!-- Display a submit button to save changes -->
@@ -137,7 +137,7 @@ type="text/javascript" charset="utf-8"></script>
 			<p class="page_element" id="recipe_success_msg"></p>
 	</div>
 	{% else %}
-	<div id = "recipe_info">
+	<div id = "recipe_info" onload="setHeight()">
 		<h1 id="recipe_name">{{ recipe.name }}</h1>
         {% with recipe.category|cut:"Category object (" as cut_cat %}
             <p id="recipecat" >{{cut_cat|cut:")"}}</p>
