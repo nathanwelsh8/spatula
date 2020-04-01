@@ -2,6 +2,7 @@
 {% load staticfiles %}
 
 {% block css_block %}
+	<!-- Main stylesheet for register page-->
    <link rel="stylesheet" href="{% static 'css/register.css' %}">
 {% endblock %}
 
@@ -10,52 +11,49 @@
 {% endblock %}
 
 {% block body_block %}
-
-
 	{% if not registered %}
-	<div class = "row">
-		<div class = "col-12 col-lg-4"></div>
-		<div class = "col-12 col-lg-4">
+		<div class = "row">
+			<div class = "col-12 col-lg-4"></div>
+			<div class = "col-12 col-lg-4">
 				<h1>Register for Spatula</h1>
 				<hr/>
-					<form id="user_form" method="post" action="{% url 'spatulaApp:register' %}" enctype="multipart/form-data">
+				<!--Register form styled using bootstrap -->
+				<form id="user_form" method="post" action="{% url 'spatulaApp:register' %}" enctype="multipart/form-data">
+					{% csrf_token %}
 
-						{% csrf_token %}
-
-						<!-- Display each form -->
-						{{username}}
-						{{password}}
-						{{user_form.username.errors}}
-						<div class="input-group mb-3 flex-nowrap">
-							<div class="input-group-prepend">
-								<span class="input-group-text" id="basic-addon3">/account/</span>
-							</div>
-							{{ user_form.username }}
+					<!-- Display each form -->
+					{{username}}
+					{{password}}
+					{{user_form.username.errors}}
+					<div class="input-group mb-3 flex-nowrap">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="basic-addon3">/account/</span>
 						</div>
-						{{user_form.password.errors}}
-						<div class="input-group flex-nowrap">
-							<div class="input-group-prepend">
+						{{ user_form.username }}
+					</div>
+					{{user_form.password.errors}}
+					<div class="input-group flex-nowrap">
+						<div class="input-group-prepend">
 							<span class="input-group-text" id="addon-wrapping">Password</span>
-							</div>
-							{{ user_form.password }}
 						</div>
-						
-						<br/>
-						{{user_form.bio.errors}}
-						<div class="input-group">
-							<div class="input-group-prepend" id="bioPrepend">
+						{{ user_form.password }}
+					</div>		
+					<br/>
+					{{user_form.bio.errors}}
+					<div class="input-group">
+						<div class="input-group-prepend" id="bioPrepend">
 							<span class="input-group-text">About you</span>
-							</div>
-							{{ profile_form.bio}}
 						</div>
+						{{ profile_form.bio}}
+					</div>
 
-						<!-- Provide a button to click to submit the form. -->
-						<input class="form-control btn btn-primary" id = "button" type="submit" name="submit" value="Register" />
-					</form>
+					<!-- Provide a button to click to submit the form. -->
+					<input class="form-control btn btn-primary" id = "button" type="submit" name="submit" value="Register" />
+				</form>
 			</div>
-		
-		<div class = "col-12 col-lg-4"></div>
-	</div>
+			
+			<div class = "col-12 col-lg-4"></div>
+		</div>
 	{% else %}
 		<strong>Thank you for registering!</strong>
 		<a href="{% url 'spatulaApp:index' %}">Return to the homepage.</a><br />

@@ -4,80 +4,94 @@
 
 <html>
     <head lang="en">
-
+		<!--Import jquery-->
 		<script src = "{% static 'js/jquery-1.11.1.min.js' %}"
         type = "text/javascript" charset = "utf-8"></script>
-
+		<!-- Import bootstrap css libary - used for grid system, image carousels and forms-->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+		<!-- Sytle sheet for base elements -->
         <link rel="stylesheet" href="{% static 'css/base.css' %}" />
-		
+		<!-- Script for base elements -->
 		<script src="{% static 'js/base.js' %}"
          type="text/javascript" charset="utf-8"></script>
-		
-        <script src = "{% static 'js/jquery-1.11.1.min.js' %}"
-        type = "text/javascript" charset = "utf-8"></script>
+		<!-- Import bootstrap js libary - used for image carousel on recipe pages -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
         {% block css_block %}
 		{% endblock %}
-		{% block js_block %}{% endblock %}
-
+		
+		{% block js_block %}
+		{% endblock %}
+		
+		<!--Forgot to add the viewport meta tag at start of project so everything is scaled manually for responsive css -->
         <meta charset="UTF-8" />
+		
 		<title>
             Spatula!
             {% block title_block %}
             
             {% endblock %}
 		</title>
+		
 	</head>
+	
     <body>
+		<!-- Using bootstaps grid system for responsive css -->
 		<div class = "container-fluid">
 			<div class = "row" id = "header">
 				{% block header_block %}
-				<div id="mySidenav" class="sidenav" style = "width:0px">
-				{% if user.is_authenticated %}
-					<a href="{% url 'spatulaApp:show_profile' user.username %}">My Profile</a>
-					<a href="{% url 'spatulaApp:add_recipe' %}">Add Recipe</a>
-					<a href="{% url 'spatulaApp:logout' %}">Logout</a>
-				{% else %}
-					<p onclick = "showSignin()" style = "margin-top:0px">Sign in</p>
-					<a href="{% url 'spatulaApp:register' %}">Register</a>
-				{% endif %}
-				</div>
-				<div id="top">
-					<a href="{% url 'spatulaApp:index' %}"><img src="{% static 'images/spatula.png' %}" id="logo"></a>
+					<!-- A sidenav for mobile/tablet view for easier navigation on smaller devices -->
+					<div id="mySidenav" class="sidenav" style = "width:0px">
 					{% if user.is_authenticated %}
-						<div id="logged_in">
-							<a href="{% url 'spatulaApp:show_profile' user.username %}">My Profile</a> |
-							<a href="{% url 'spatulaApp:logout' %}">Logout</a>
-						</div>
+						<a href="{% url 'spatulaApp:show_profile' user.username %}">My Profile</a>
+						<a href="{% url 'spatulaApp:add_recipe' %}">Add Recipe</a>
+						<a href="{% url 'spatulaApp:logout' %}">Logout</a>
 					{% else %}
-						<button type="button" id="signin" onclick="showSignin()">Sign In / Register</button>
+						<p onclick = "showSignin()" style = "margin-top:0px">Sign in</p>
+						<a href="{% url 'spatulaApp:register' %}">Register</a>
 					{% endif %}
-					<img id = "userImage" onclick="openNav()" src = "{{MEDIA_URL}}images/bars.png">
-					<img id = "searchIcon" onclick = "showSearch()" src="{{MEDIA_URL}}images/searchIcon.png">
-					<input type="text" id="searchbar" name="searchbar"  placeholder="Search">
-				</div>
-				<div id="container" style = "top:-200px">
-					{% if not user.is_authenticated %}
-						{% if login_error_msg %}<p style="text-align: center;margin-bottom: 0px;">{{login_error_msg}}</p>{% endif %}
-						<form id="sign_in" method = "post" action = "{% url 'spatulaApp:index' %}">
-								{% csrf_token %}
-								<input type="text" id="username" name="username" placeholder="Username"><br>
-								<input type="password" id="password" name="password" placeholder="Password"><br>
+					</div>
+					
+					<div id="top">
+						<a href="{% url 'spatulaApp:index' %}"><img src="{% static 'images/spatula.png' %}" id="logo"></a>
+						<!--Display links to profile if user logged in, signin/register button if not 
+							Signin form is displayed as part of base.html not a seperate template 
+						-->
+						{% if user.is_authenticated %}
+							<div id="logged_in">
+								<a href="{% url 'spatulaApp:show_profile' user.username %}">My Profile</a> |
+								<a href="{% url 'spatulaApp:logout' %}">Logout</a>
+							</div>
+						{% else %}
+							<button type="button" id="signin" onclick="showSignin()">Sign In / Register</button>
+						{% endif %}
+						<input type="text" id="searchbar" name="searchbar"  placeholder="Search">
+						
+						<!--Show images if in mobile/tablet view-->
+						<img id = "userImage" onclick="openNav()" src = "{{MEDIA_URL}}images/bars.png">
+						<img id = "searchIcon" onclick = "showSearch()" src="{{MEDIA_URL}}images/searchIcon.png">
 
-								<input type="submit" name ="submit" id="containersignin" value = "Sign in"/>
-								<input type="submit" name="register" id="containerregister" value = "Register"/>
-						</form>
-					<!--<img src="profile.png" id="profilepic">-->
-					{% endif %}
+					</div>
+					
+					<!-- Container containing signin from - inline style required for js to function properly-->
+					<div id="container" style = "top:-200px">
+						{% if not user.is_authenticated %}
+							{% if login_error_msg %}<p style="text-align: center;margin-bottom: 0px;">{{login_error_msg}}</p>{% endif %}
+							<form id="sign_in" method = "post" action = "{% url 'spatulaApp:index' %}">
+									{% csrf_token %}
+									<input type="text" id="username" name="username" placeholder="Username"><br>
+									<input type="password" id="password" name="password" placeholder="Password"><br>
+									<input type="submit" name ="submit" id="containersignin" value = "Sign in"/>
+									<!-- Redirect to register page-->
+									<input type="submit" name="register" id="containerregister" value = "Register"/>
+							</form>
+						{% endif %}
+					</div>
 				</div>
-			</div>
-
-				{% endblock %}
+			{% endblock %}
 
 			{% block body_block %}
-				Webpage bodty is overridden here
+				<!--Body overwritten here by each page -->
 			{% endblock %}
 			
 			{% block javascript %}

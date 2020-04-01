@@ -1,31 +1,36 @@
 
 {% load staticfiles %}
 {% load spatulaApp_template_tags %} 
+<!--Display recipes that meet the search criteria -->
 {% block results %}
     {% if recipies %}
         {% for recipe in recipies %}
-            <div class="recipe"><a href="{% url 'spatulaApp:show_recipe' recipe.slug %}" style="display: block">
-                {% with recipe_images|getKeyImg:recipe.name as image %}
-                            <img src="../..{{MEDIA_URL}}{{image}}" class="recipeimg">
-                {% endwith %} 
-                <div class="recipename">
-                    {% with recipe.name|recipeNameLengthCheck as name %}
-                    <p>{{ name }}</p>
-                    {% endwith %}
-                </div>
-                {% with recipe.id|getRating  as recipeRating %}
-                {% with 'images/stars/'|add:recipeRating|add:'.png' as image_static %}
-                <img src="{% static image_static %}" class="reciperating">
-                {%endwith%}
-                <img src="{{MEDIA_URL}}images/{{ recipe.diettype }}_diet.png " class="recipemeat">
-                <div class="recipecategory">
-                {% with recipe.category|cut:"Category object (" as cut_cat %}
-                    <p>{{cut_cat|cut:")"}}</p>
-                {% endwith %}{% endwith %}
-                </div>
-            </a></div>
+            <div class="recipe">
+				<a href="{% url 'spatulaApp:show_recipe' recipe.slug %}" style="display: block">
+					{% with recipe_images|getKeyImg:recipe.name as image %}
+						<img src="../..{{MEDIA_URL}}{{image}}" class="recipeimg">
+					{% endwith %} 
+					<div class="recipename">
+						<!-- Check name isnt long enough to cause styling problems -->
+						{% with recipe.name|recipeNameLengthCheck as name %}
+							<p>{{ name }}</p>
+						{% endwith %}
+					</div>
+					{% with recipe.id|getRating  as recipeRating %}
+					{% with 'images/stars/'|add:recipeRating|add:'.png' as image_static %}
+						<img src="{% static image_static %}" class="reciperating">
+					{%endwith%}
+					<img src="{{MEDIA_URL}}images/{{ recipe.diettype }}_diet.png " class="recipemeat">
+					<div class="recipecategory">
+					{% with recipe.category|cut:"Category object (" as cut_cat %}
+						<p>{{cut_cat|cut:")"}}</p>
+					{% endwith %}{% endwith %}
+					</div>
+				</a>
+			</div>
         {% endfor %}
     {% else %}
+		<!-- if no recipes found display hyerlink to add recipe page or login page -->
         <p class="page_element">Hmm theres nothing to show. <br/>
         Why not{% if not user.is_authenticated %} login to add {% else %} <a href="{% url 'spatulaApp:add_recipe' %}">add</a> {% endif %}a recipie!</p>
     {% endif %}
