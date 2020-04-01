@@ -62,7 +62,7 @@
 	{% endwith %} 
 	<!-- if user submitted the recipe show an editable view of the page else display normal page --> 
 	{% if canEdit %}
-		{% include 'edit_recipe.html'%}
+		{% include 'spatula/edit_recipe.html'%}
 	{% else %}
 		<!-- Recipe info include: Name, category and user who submitted recipe -->
 		<div id = "recipe_info">
