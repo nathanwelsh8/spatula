@@ -14,6 +14,9 @@
 		background-color: #F5EFEB;
 		font-family: sans-serif;
 	}
+	#edit_method{
+		width:700px;
+	}
 	
 	textarea{
 		width:400px;
@@ -62,6 +65,12 @@
 		padding: 0px;
 	}
 
+	#recipe_info_edit { 
+		margin-top:10px;
+		width:100%;
+		height:150px;
+	}
+	
 	#recipe_info { 
 		margin-top:10px;
 		width:100%;
@@ -197,7 +206,9 @@
 	}
 	
 	textarea{
-		font-size:50px;
+		font-size:40px;
+		width:100%;
+		height:600px;
 	}
 
 	#recipe_image { 
@@ -223,6 +234,12 @@
 		margin-top:10px;
 		width:100%;
 		height:150px;
+	}
+	
+	#recipe_info_edit { 
+		margin-top:10px;
+		width:100%;
+		height:500px;
 	}
 
 	#recipe_stats { 
@@ -316,6 +333,29 @@
 	  transition      : opacity 0.2s linear;
 	}
 	
+	.form-check-label{
+		font-size:50px;
+	}
+	
+	select{
+		transform: scale(2.9);
+		margin-left: 80px;
+		margin-top:20px;
+	}
+	.form-check-input{
+		transform:scale(3);
+		margin-left:20px !important;
+		margin-right:30px !important;
+	}
+	
+	#difficulty_input{
+		float:left;
+		margin-right:160px;
+	}
+	
+	#dietLabel{
+		margin-top:50px;
+	}
 }
 
 @media screen and (max-device-width: 480px){
@@ -367,7 +407,7 @@
 	#recipe_info { 
 		margin-top:10px;
 		width:100%;
-		height:150px;
+		height:500px;
 	}
 
 	#recipe_stats { 
