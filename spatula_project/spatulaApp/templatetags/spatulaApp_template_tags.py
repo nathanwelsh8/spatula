@@ -106,5 +106,16 @@ def getNumRecipies(username):
         return str(len(recipies))
     except Exception:
         return str(0)
+        
+def getUserImage(h, key): 
+    for item in h:
+        if item.belongsto.__str__() == key.__str__():
+            return item.image
+
+
+
+
+
+
     
 

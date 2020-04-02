@@ -60,7 +60,6 @@ class Index(View):
         }
 
     def get(self, request, **kwargs):
-
         if kwargs.get('login_error_msg'):
             self.context_dict['login_error_msg'] =  kwargs['login_error_msg']
         else:
@@ -485,6 +484,7 @@ class RecipePage(View):
 
 
         self.context_dict['recipe'] = self.recipe_cache
+        self.context_dict['user_images'] = UserImage.objects.all();
         # There may ve alot of comments and images so reduce load by 
         # only passing in images and comments relevent to this recipe
         self.context_dict['images'] = RecipeImage.objects.filter(belongsto=self.recipe_cache.id)

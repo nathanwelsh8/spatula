@@ -174,7 +174,22 @@ p.page_element{
 
     #logged_in{
         float:right;
+		font-size:20px;
+		font-weight:bold; 
+		margin-top:5px;
+		margin-right:10px;
     }
+	
+	a{
+		color:#000;
+		text-decoration:none;
+	}
+	
+	a:hover{ 
+		text-decoration:none;
+
+		
+	}
 	
 	#userImage{ 
 		display:none;

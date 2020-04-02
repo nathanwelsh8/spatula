@@ -124,9 +124,19 @@ body{
 
 	#postedby{ 
 		float:right;
+		margin-top:5px;
+	}
+	
+	.profilePic{
+		border-radius:50%; 
+		height:30px;
+		width:30px;
+		float:right;
 	}
 
 	#recipecat{
+		margin-top:15px;
+		margin-left:10px;
 		float:left;
 	}
 
@@ -258,6 +268,7 @@ body{
 		text-align: left;
 		font-size: 80px;
 		padding: 0px;
+		width:100%;
 	}
 
 	#recipe_info { 
@@ -273,7 +284,7 @@ body{
 	}
 
 	#recipe_stats { 
-		margin-top:10px;
+		margin-top: 60px;
 		width:100%;
 		height:100px;
 	}
@@ -288,10 +299,18 @@ body{
 	#postedby{ 
 		float:right;
 	}
+	
+	.profilePic{
+		border-radius:50%;
+		height: 60px;
+		width: 60px;
+		float:right;
+		margin-left: 10px;
+	}
 
 	#recipecat{
-		float:left;
-		margin-left:50px;
+		display: inline-block;
+		margin-left: 50px;
 	}
 
 	#recipemeat{
