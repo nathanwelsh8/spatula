@@ -11,6 +11,7 @@ django.setup()
 from spatulaApp.models import Category, Rating, UserProfile, Recipe, Image, RecipeImage
 from django.contrib.auth.models import User 
 from spatula_project import settings
+from datetime import datetime
 
 def populate():
     users = [
@@ -44,6 +45,7 @@ def populate():
         print("\t Added", c)
 
     bob = UserProfile.objects.get(user=User.objects.get(username='bob777'))
+    crazyman = UserProfile.objects.get(user=User.objects.get(username='crazyman4'))
     recipies = {
         'Vegan Chilli':
         {
@@ -103,7 +105,7 @@ def populate():
                 'diettype': 3,
                 'rating': 3,
                 'category': 'Other',
-                'postedby': bob
+                'postedby': crazyman
             },
         'Vegetable Stir Fry':
             {
@@ -115,7 +117,7 @@ def populate():
                 'diettype': 3,
                 'rating': 3,
                 'category': 'Chinese',
-                'postedby': bob
+                'postedby': crazyman
             },
         'American Style Burger':
         {
@@ -127,7 +129,7 @@ def populate():
             'diettype': 1,
             'rating': 1,
             'category': 'Western',
-            'postedby': bob
+            'postedby': crazyman
         }
     }
 
