@@ -211,14 +211,18 @@ p.page_element{
 
 @media (max-width:1040px){
 	#searchbar {
-        position: fixed;
-        left: calc(50% - 357px);
-        width: 700px;
+		left:0;
+		display: block;
+        width: 95%;
         margin: 10px;
         height: 30px;
         border: 2px solid #FFFFFF;
         border-radius: 4px;
     }
+	#top{ 
+		padding-bottom: 50px;
+		height:100px;
+	}
 }
 
 

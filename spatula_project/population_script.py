@@ -5,10 +5,11 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE',
                       'spatula_project.settings')
 
 import django
+from django.core.files import File
 
 django.setup()
 
-from spatulaApp.models import Category, Rating, UserProfile, Recipe, Image, RecipeImage
+from spatulaApp.models import Category, Rating, UserProfile, Recipe, Image, RecipeImage, UserImage
 from django.contrib.auth.models import User 
 from spatula_project import settings
 from datetime import datetime
@@ -137,6 +138,14 @@ def populate():
     for recipe, recipe_data in recipies.items():
         r = add_recipe(recipe, recipe_data)
         print("\t Added", r)
+    
+    userImages = [
+        {'image': 'userImage2.jpg' , 'belongsto': bob},
+        {'image': 'userImage1.jpg', 'belongsto': crazyman}
+    ]
+    print("Adding Profile Images:")
+    for image in userImages:
+           add_images(image)
 
     # you need to pass the object to the model not the string name.
     vsf = Recipe.objects.filter(name='Vegetable Stir Fry')[0]
@@ -158,6 +167,24 @@ def populate():
     print("Adding Ratings")
     for rating in ratings:
         add_rating(rating)
+        
+    vc = Recipe.objects.filter(name='Vegan Chilli')[0]
+    ccc = Recipe.objects.filter(name='Chilli Con Carne')[0]    
+    vc = Recipe.objects.filter(name='Cheese Toastie')[0]
+    sb = Recipe.objects.filter(name='Scotch Broth')[0] 
+    ms = Recipe.objects.filter(name='Millionaire Shortbread')[0] 
+    
+    recipeImages = [
+        {'image': 'userImage2.jpg' , 'belongsto': bob},
+        {'image': 'userImage1.jpg', 'belongsto': crazyman}, 
+        {'image': 'userImage2.jpg' , 'belongsto': bob},
+        {'image': 'userImage1.jpg', 'belongsto': crazyman},  
+        {'image': 'userImage2.jpg' , 'belongsto': bob},
+        {'image': 'userImage1.jpg', 'belongsto': crazyman}, 
+        {'image': 'userImage2.jpg' , 'belongsto': bob},
+    ]
+        
+    
 
 
 def add_user(user_info):
@@ -196,7 +223,17 @@ def add_rating(rating_info):
     r = Rating(recipe=recipe, rating=rating_info['rating'], comment=rating_info.get('comment',''))
     
     r.save()
+    
+def add_images(image): 
+    i = UserImage(belongsto = image.get('belongsto'))
+    i.image.save(image.get('image') + '.jpg', File(open(os.path.join(settings.STATIC_DIR, 'images/' + image.get('image')), 'rb')))
+    print("\t Added", i)
 
+def add_recipe_images(image): 
+    i = RecipeImage(belongsto = image.get('belongsto'))
+    i.image.save(image.get('image') + '.jpg', File(open(os.path.join(settings.STATIC_DIR, 'images/' + image.get('image')), 'rb')))
+    print("\t Added", i)
+    
 if __name__ == '__main__':
     print("Populating database...")
     populate()
