@@ -121,8 +121,11 @@ p.page_element{
         border-radius: 4px;
     }
     #profilepic {
-        float: right;
-        height: 40px;
+		float: right;
+		height: 40px;
+		border-radius: 50%;
+		margin:0px;
+		margin-left:10px;
     }
     #signin {
         float: right;

@@ -55,6 +55,7 @@ class Index(View):
         'categories':Category.getModelsAsList,
         'diet_choices':Recipe.getChoicesAsList,
         'recipe_images': RecipeImage.objects.all(),
+        'user_pic': UserImage.objects.all(),
         'login_error_msg':None,
         'runPreSearch':True
         }
@@ -86,7 +87,7 @@ class Index(View):
             self.context_dict['runPreSearch'] = True
 
         self.fix_ratings() # multiply by 2 so they are mapped to a stars rating
-        
+            
         return render(request, 'spatula/index.html', self.context_dict)
 
     def post(self, request):
@@ -180,7 +181,9 @@ def register(request):
 @login_required(login_url="spatulaApp:index")
 def add_recipe(request): 
     form = RecipeForm()
-    context_dict = {}
+    context_dict = {
+            'user_pic': UserImage.objects.all(),
+    }
     ImageFormSet = modelformset_factory(RecipeImage, form=RecipeImageUploadForm, extra=2, min_num=1, max_num=3) # extra =3 --> user can upload 3 images of recipe
 
     if request.method == 'POST': 
@@ -247,7 +250,9 @@ class ShowProfile(View):
             elif int(r.rating) <0:
                 r.rating = str(0)
 
-    context_dict = {}
+    context_dict = {
+            'user_pic': UserImage.objects.all(),
+    }
     user_cache = None
 
     def get(self, request,account_name_slug=None):
@@ -387,7 +392,9 @@ class ShowProfile(View):
 
 class RecipePage(View):
 
-    context_dict = {}
+    context_dict = {
+            'user_pic': UserImage.objects.all(),
+    }
     form = CommentForm()
     recipe_cache = None
     user_cache = None

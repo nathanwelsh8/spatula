@@ -20,8 +20,6 @@ def getKeyImg(h,key):
     except AttributeError:
         return None
 
-    
-
         
 @register.filter
 def getKeyImgList(h,key):
@@ -107,10 +105,7 @@ def getNumRecipies(username):
     except Exception:
         return str(0)
         
-def getUserImage(h, key): 
-    for item in h:
-        if item.belongsto.__str__() == key.__str__():
-            return item.image
+
 
 
 
