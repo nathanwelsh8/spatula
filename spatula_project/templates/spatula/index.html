@@ -38,47 +38,49 @@
 			Display inline with results for desktop view, above for mobile/tablet view
 		-->
 		<div id="sidebar" class = "col-xs-12  col-lg-2">
-			<!--Get categories and diet_choices from database and display
-				Allows page to be easily updated if any categories/diet_choices added
-			-->
-			{% if categories %}
-				<div id="categories">
-					{% for category in categories %}
-						<input type="checkbox" name="{{ category }}" checked>
-						<label for="{{ category }}"> {{ category }}</label><br>
-					{% endfor %}
-				</div>
-			{% endif  %}
-			
-			<br>
-			  
-			{% if diet_choices %}
-				<div id="meat">
-					{% for type in diet_choices %}
-					<!-- Type is now a list, type.0 = value ; type.1 = name -->
-						<input type="checkbox" name="{{ type.0 }}" checked>
-						<img src="{{ MEDIA_URL }}images/{{type.0}}_diet.png" class="sidebarmeat">
-						<label for="{{ type.1 }}">{{type.1}}</label><br>
-					{% endfor %}
-				</div>
-			{% endif %}
-			
-			<br>
-			
-			<!--Sorting parameters for the results section of index page -->
-			<div id="sort">
-				<input type="radio" name="sort" checked value="rating">
-				<label for="category1"> Rating</label><br>
-				
-				<input type="radio" name="sort" value="popularity">
-				<label for="category2"> Popularity</label><br>
-				
-				<input type="radio" name="sort" value="difficulty">
-				<label for="category3"> Difficulty</label><br>
-				
-				<input type="radio" name="sort" value="cost">
-				<label for="category4"> Cost</label><br>
-			</div>
+            <div id="sidebarcontainer">
+                <!--Get categories and diet_choices from database and display
+                    Allows page to be easily updated if any categories/diet_choices added
+                -->
+                {% if categories %}
+                    <div id="categories">
+                        {% for category in categories %}
+                            <input type="checkbox" name="{{ category }}" checked>
+                            <label for="{{ category }}"> {{ category }}</label><br>
+                        {% endfor %}
+                    </div>
+                {% endif  %}
+
+                <br>
+
+                {% if diet_choices %}
+                    <div id="meat">
+                        {% for type in diet_choices %}
+                        <!-- Type is now a list, type.0 = value ; type.1 = name -->
+                            <input type="checkbox" name="{{ type.0 }}" checked>
+                            <img src="{{ MEDIA_URL }}images/{{type.0}}_diet.png" class="sidebarmeat">
+                            <label for="{{ type.1 }}">{{type.1}}</label><br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <br>
+
+                <!--Sorting parameters for the results section of index page -->
+                <div id="sort">
+                    <input type="radio" name="sort" checked value="rating">
+                    <label for="category1"> Rating</label><br>
+
+                    <input type="radio" name="sort" value="popularity">
+                    <label for="category2"> Popularity</label><br>
+
+                    <input type="radio" name="sort" value="difficulty">
+                    <label for="category3"> Difficulty</label><br>
+
+                    <input type="radio" name="sort" value="cost">
+                    <label for="category4"> Cost</label><br>
+                </div>
+            </div>
 		</div>
 		
 		<!--Results section of index page 

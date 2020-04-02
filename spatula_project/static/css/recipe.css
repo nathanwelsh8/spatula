@@ -1,6 +1,6 @@
 /** Universal styling */
 body{
-	background-color: #FFF;
+	background-color: #F5EFEB;
 	font-family: sans-serif;
 }
 
@@ -41,6 +41,7 @@ body{
 		position: relative;
 		margin-left: auto;
 		margin-right: auto;
+        padding-bottom: 60px;
 	}
 	
 	.form-check-label{
@@ -169,6 +170,7 @@ body{
 	}
 
 	.addcomment{
+        float: right;
 		margin-top: 30px;
 		width: 100%;
 	}
@@ -223,6 +225,20 @@ body{
 		width: 600px;
 		margin: auto;
 	}
+    
+    #submit {
+        float: left;
+        height: 40px;
+        width: 200px;
+        border: none;
+        background-color: #562e33;
+        color: #FFFFFF;
+        transition: 0.2s;
+    }
+    #submit:hover{
+        background-color: #7e4940;
+        cursor: pointer;
+    }
 }
 
 /** Mobile/tablet styling */
