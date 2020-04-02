@@ -90,6 +90,11 @@ input{
 		float: left;
 		margin-bottom: 20px;
 	}
+    #sidebarcontainer {
+        margin: 0px;
+        float: left;
+        width: 100px;
+    }
 	
 	.newrecipe{
 		position: fixed;

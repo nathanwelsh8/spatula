@@ -59,7 +59,15 @@
 						-->
 						{% if user.is_authenticated %}
 							<div id="logged_in">
-								<a href="{% url 'spatulaApp:show_profile' user.username %}">My Profile</a> |
+                            {% if profile_pic %}
+                                <a href="{% url 'spatulaApp:show_profile' user.username %}">
+				                    <img id="profilepic" src="../..{{MEDIA_URL}}{{profile_pic.image}}">
+                                </a>
+			                 {% else %}
+                                <a href="{% url 'spatulaApp:show_profile' user.username %}">
+				                    <img id="profilepic" src="{% static 'images/profile.png' %}" alt="{{ profile.user }}'s profile pic'">
+                                </a>
+			                 {% endif %}
 								<a href="{% url 'spatulaApp:logout' %}">Logout</a>
 							</div>
 						{% else %}

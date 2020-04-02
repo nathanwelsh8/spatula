@@ -22,7 +22,11 @@ body {
 
 #profilepic {
     float: right;
-    height: 40px;
+    margin: 5px;
+    transition: 0.2s;
+}
+#profilepic:hover {
+    filter: brightness(120%);
 }
 
 #signin:hover{
@@ -235,10 +239,6 @@ p.page_element{
 		font-size:35px;
 		left:0px;
 
-    }
-    #profilepic {
-        float: right;
-        height: 40px;
     }
     #signin {
 		display:none;
