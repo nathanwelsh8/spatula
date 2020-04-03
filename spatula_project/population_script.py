@@ -50,9 +50,9 @@ def populate():
     recipies = {
         'Vegan Chilli':
         {
-            'ingredients': '3 tbsp olive oil, 2 sweet potatoes, 1 onion, 2 carrots, 2 celery sticks, 2 garlic cloves, 2tsp chilli powder, 2x400g chopped tomoatoes, 400g can black beans, 400g kidney beans',
+            'ingredients': '3 tbsp olive oil \n 2 sweet potatoes \n 1 onion \n 2 carrots \n 2 celery sticks \n 2 garlic cloves \n 2tsp chilli powder \n 2x400g chopped tomoatoes \n 400g can black beans \n 400g kidney beans',
             'toolsreq': 'Saucepan',
-            'method': 'Heat oven to 200C/180C fan/gas 6. Put the sweet potato chunks in a roasting tin and drizzle over 1½ tbsp oil, 1 tsp smoked paprika and 1 tsp ground cumin. Give everything a good mix so that all the chunks are coated in spices, season with salt and pepper then roast for 25 mins until cooked. /ES  Meanwhile, heat the remaining oil in a large saucepan over a medium heat. Add the onion, carrot and celery. Cook for 8-10 mins, stirring occasionally until soft then crush in the garlic and cook for 1 min more. Add the remaining dried spices and tomato puree. Give everything a good mix and cook for 1 min more.  /ES Add the red pepper, chopped tomatoes and 200ml of water. Bring the chilli to a boil then simmer for 20 mins. Tip in the beans and cook for another 10 mins before adding the sweet potato. Season to taste then serve with lime wedges, guac, rice and coriander. Make ahead and freeze for up to 3 months. ',
+            'method': 'Heat oven to 200C/180C fan/gas 6. Put the sweet potato chunks in a roasting tin and drizzle over 1½ tbsp oil, 1 tsp smoked paprika and 1 tsp ground cumin. Give everything a good mix so that all the chunks are coated in spices, season with salt and pepper then roast for 25 mins until cooked. \n  Meanwhile, heat the remaining oil in a large saucepan over a medium heat. Add the onion, carrot and celery. Cook for 8-10 mins, stirring occasionally until soft then crush in the garlic and cook for 1 min more. Add the remaining dried spices and tomato puree. Give everything a good mix and cook for 1 min more.  \n Add the red pepper, chopped tomatoes and 200ml of water. Bring the chilli to a boil then simmer for 20 mins. Tip in the beans and cook for another 10 mins before adding the sweet potato. Season to taste then serve with lime wedges, guac, rice and coriander. Make ahead and freeze for up to 3 months. ',
             'difficulty': 2,
             'cost': 1,
             'diettype': 3,
@@ -62,9 +62,9 @@ def populate():
         },
         'Chilli Con Carne':
             {
-                'ingredients': '3 tbsp olive oil, 500g mince, 1 onion, 2 carrots, 2 celery sticks, 2 garlic cloves, 2tsp chilli powder, 2x400g chopped tomoatoes, 400g can black beans, 400g kidney beans',
+                'ingredients': '3 tbsp olive oil, 500g mince\n 1 onion\n 2 carrots\n 2 celery sticks\n 2 garlic cloves\n 2tsp chilli powder\n 2x400g chopped tomoatoes\n 400g can black beans\n 400g kidney beans',
                 'toolsreq': 'Saucepan',
-                'method': 'Heat a wok on a high heat and add the sunflower oil. Add the spring onions, garlic, ginger and stir-fry for 1 minute, then reduce the heat. Take care to not brown the vegetables. /ES        Add the carrot, red pepper and baby sweetcorn and stir-fry for 2 minutes. Add the mince, courgette and sugar snap peas and stir-fry for a further 3 minutes. Toss the ingredients from the centre to the side of the wok using a wooden spatula. Do not overcrowd the wok and keep the ingredients moving. /ES Add 1 tablespoon water, hoisin and soy sauce and cook over a high heat for a further 2 minutes or until all the vegetables are cooked but not too soft. Serve with noodles or rice. /ES',
+                'method': 'Heat a wok on a high heat and add the sunflower oil. Add the spring onions, garlic, ginger and stir-fry for 1 minute, then reduce the heat. Take care to not brown the vegetables. \n Add the carrot, red pepper and baby sweetcorn and stir-fry for 2 minutes. Add the mince, courgette and sugar snap peas and stir-fry for a further 3 minutes. Toss the ingredients from the centre to the side of the wok using a wooden spatula. Do not overcrowd the wok and keep the ingredients moving. \n Add 1 tablespoon water, hoisin and soy sauce and cook over a high heat for a further 2 minutes or until all the vegetables are cooked but not too soft. Serve with noodles or rice. \n',
                 'difficulty': 1,
                 'cost': 2,
                 'diettype': 1,
@@ -74,9 +74,9 @@ def populate():
             },
         'Cheese Toastie':
             {
-                'ingredients':'Bread, Cheese',
-                'toolsreq': 'None',
-                'method': 'Slice cheese and put between two slices of bread. Toast for 5 minutes in grill.',
+                'ingredients':'Bread\n Cheese',
+                'toolsreq': 'Grill',
+                'method': 'Slice cheese and put between two slices of bread.\n Toast for 5 minutes in grill.',
                 'difficulty': 1,
                 'cost': 1,
                 'diettype': 2,
@@ -86,9 +86,9 @@ def populate():
             },
         'Scotch Broth':
             {
-                'ingredients': '250g carrots, 250g turnip, 2 onions, 1 celery stalk, 1 leek, 125g dried peas, 4 pints lamb stock, 85g kale, 100g pearl barley',
+                'ingredients': '250g carrots\n 250g turnip\n 2 onions\n 1 celery stalk\n 1 leek\n 125g dried peas\n 4 pints lamb stock\n 85g kale\n 100g pearl barley',
                 'toolsreq': 'Wok, Spatula',
-                'method': 'Heat all of the ingredients, except the kale, in a large saucepan until boiling /ES Reduce the heat and simmer gently for a 2-3 hours, or until the peas and pearl barley are soft. /ES Stir in the kale and cook for a further 10-12 minutes, or until the kale is tender. Season, to taste, with salt and freshly ground black pepper.',
+                'method': 'Heat all of the ingredients, except the kale, in a large saucepan until boiling \n Reduce the heat and simmer gently for a 2-3 hours, or until the peas and pearl barley are soft. \n Stir in the kale and cook for a further 10-12 minutes, or until the kale is tender. Season, to taste, with salt and freshly ground black pepper.',
                 'difficulty': 1,
                 'cost': 1,
                 'diettype': 3,
@@ -98,9 +98,9 @@ def populate():
             },
         'Millionaire Shortbread':
             {
-                'ingredients':'250g plain flour, 75g caster sugar, 300g butter, 100g muscovado sugar, 2x400g condensed milk, 200g milk chocolate.',
+                'ingredients':'250g plain flour\n 75g caster sugar\n 300g butter\n 100g muscovado sugar\n 2x400g condensed milk\n 200g milk chocolate.',
                 'toolsreq': 'Swiss Roll tin',
-                'method': 'Heat the oven to 180C/160C fan/gas 4. Lightly grease a 33 x 23cm Swiss roll tin with a lip of at least 3cm. /ES To make the shortbread, mix 250g plain flour and 75g caster sugar in a bowl. Rub in 175g softened butter until the mixture resembles fine breadcrumbs. /ES Knead the mixture together until it forms a dough, then press into the base of the prepared tin. /ES Prick the shortbread lightly with a fork and bake for 20 minutes or until firm to the touch and very lightly browned. Leave to cool in the tin. /ES To make the caramel, place 100g butter or margarine, 100g light muscovado sugar and two 397g cans condensed milk in a pan and heat gently until the sugar has dissolved. /ES To make the caramel, place 100g butter or margarine, 100g light muscovado sugar and two 397g cans condensed milk in a pan and heat gently until the sugar has dissolved. /ES Bring to the boil, stirring all the time, then reduce the heat and simmer very gently, stirring continuously, for about 5-10 minutes or until the mixture has thickened slightly. Pour over the shortbread and leave to cool. /ES For the topping, melt 200g plain or milk chocolate slowly in a bowl over a pan of hot water. Pour over the cold caramel and leave to set. Cut into squares or bars.  ',
+                'method': 'Heat the oven to 180C/160C fan/gas 4. Lightly grease a 33 x 23cm Swiss roll tin with a lip of at least 3cm. \n To make the shortbread, mix 250g plain flour and 75g caster sugar in a bowl. Rub in 175g softened butter until the mixture resembles fine breadcrumbs. \n Knead the mixture together until it forms a dough, then press into the base of the prepared tin. \n Prick the shortbread lightly with a fork and bake for 20 minutes or until firm to the touch and very lightly browned. Leave to cool in the tin. \n To make the caramel, place 100g butter or margarine, 100g light muscovado sugar and two 397g cans condensed milk in a pan and heat gently until the sugar has dissolved. \n To make the caramel, place 100g butter or margarine, 100g light muscovado sugar and two 397g cans condensed milk in a pan and heat gently until the sugar has dissolved. \n Bring to the boil, stirring all the time, then reduce the heat and simmer very gently, stirring continuously, for about 5-10 minutes or until the mixture has thickened slightly. Pour over the shortbread and leave to cool. \n For the topping, melt 200g plain or milk chocolate slowly in a bowl over a pan of hot water. Pour over the cold caramel and leave to set. Cut into squares or bars.  ',
                 'difficulty': 2,
                 'cost': 2,
                 'diettype': 3,
@@ -110,9 +110,9 @@ def populate():
             },
         'Vegetable Stir Fry':
             {
-                'ingredients': '2 tbsp sunflower oil, 4 spring onions, 1 garlic clove, piece fresh root ginger, 1 carrot, 1 red pepper, 100g/3oz baby sweetcorn, 1 courgette, 150g/5oz sugar-snap peas, 2 tbsp hoisin sauce, 2 tbsp low-salt soy sauce',
+                'ingredients': '2 tbsp sunflower oil\n 4 spring onions\n 1 garlic clove\n piece fresh root ginger\n 1 carrot\n 1 red pepper\n 100g/3oz baby sweetcorn\n 1 courgette\n 150g/5oz sugar-snap peas\n 2 tbsp hoisin sauce\n 2 tbsp low-salt soy sauce',
                 'toolsreq': 'Wok, Spatula',
-                'method': 'Heat a wok on a high heat and add the sunflower oil. Add the spring onions, garlic, ginger and stir-fry for 1 minute, then reduce the heat. Take care to not brown the vegetables. /ES        Add the carrot, red pepper and baby sweetcorn and stir-fry for 2 minutes. Add the courgette and sugar snap peas and stir-fry for a further 3 minutes. Toss the ingredients from the centre to the side of the wok using a wooden spatula. Do not overcrowd the wok and keep the ingredients moving. /ES Add 1 tablespoon water, hoisin and soy sauce and cook over a high heat for a further 2 minutes or until all the vegetables are cooked but not too soft. Serve with noodles or rice. /ES',
+                'method': 'Heat a wok on a high heat and add the sunflower oil. Add the spring onions, garlic, ginger and stir-fry for 1 minute, then reduce the heat. Take care to not brown the vegetables. \n Add the carrot, red pepper and baby sweetcorn and stir-fry for 2 minutes. Add the courgette and sugar snap peas and stir-fry for a further 3 minutes. Toss the ingredients from the centre to the side of the wok using a wooden spatula. Do not overcrowd the wok and keep the ingredients moving. \n Add 1 tablespoon water, hoisin and soy sauce and cook over a high heat for a further 2 minutes or until all the vegetables are cooked but not too soft. Serve with noodles or rice. \n',
                 'difficulty': 1,
                 'cost': 1,
                 'diettype': 3,
@@ -122,7 +122,7 @@ def populate():
             },
         'American Style Burger':
         {
-            'ingredients': 'Mince, Herbs, Buns, Eggs, Seasioning, Cheese',
+            'ingredients': 'Mince\n Herbs\n Buns\n Eggs\n Seasioning\n Cheese',
             'toolsreq': 'Frying pan',
             'method': 'Fry burgers',
             'difficulty': 3,
@@ -170,20 +170,22 @@ def populate():
         
     vc = Recipe.objects.filter(name='Vegan Chilli')[0]
     ccc = Recipe.objects.filter(name='Chilli Con Carne')[0]    
-    vc = Recipe.objects.filter(name='Cheese Toastie')[0]
+    ct = Recipe.objects.filter(name='Cheese Toastie')[0]
     sb = Recipe.objects.filter(name='Scotch Broth')[0] 
     ms = Recipe.objects.filter(name='Millionaire Shortbread')[0] 
     
     recipeImages = [
-        {'image': 'userImage2.jpg' , 'belongsto': bob},
-        {'image': 'userImage1.jpg', 'belongsto': crazyman}, 
-        {'image': 'userImage2.jpg' , 'belongsto': bob},
-        {'image': 'userImage1.jpg', 'belongsto': crazyman},  
-        {'image': 'userImage2.jpg' , 'belongsto': bob},
-        {'image': 'userImage1.jpg', 'belongsto': crazyman}, 
-        {'image': 'userImage2.jpg' , 'belongsto': bob},
+        {'image': 'stir_fry_vegetables.jpg' , 'belongsto': vsf},
+        {'image': 'burger.jpg', 'belongsto': asb}, 
+        {'image': 'v_chilli.jpg' , 'belongsto': vc},
+        {'image': 'chilli.jpg', 'belongsto': ccc},  
+        {'image': 'cheese_toastie.jpg' , 'belongsto': ct},
+        {'image': 'scotch_broth.jpg', 'belongsto': sb}, 
+        {'image': 'millionaire_shortbread.jpg' , 'belongsto': ms},
     ]
-        
+    print("Adding Ratings")
+    for image in recipeImages:
+        add_recipe_images(image)    
     
 
 
