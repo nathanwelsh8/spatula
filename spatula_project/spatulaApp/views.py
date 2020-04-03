@@ -87,7 +87,7 @@ class Index(View):
             self.context_dict['runPreSearch'] = True
 
         self.fix_ratings() # multiply by 2 so they are mapped to a stars rating
-            
+        self.context_dict['recipe_images'] = RecipeImage.objects.all()   
         return render(request, 'spatula/index.html', self.context_dict)
 
     def post(self, request):
