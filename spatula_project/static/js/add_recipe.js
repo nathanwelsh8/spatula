@@ -1,3 +1,4 @@
+/* Since django generates HTML elements automatically js needed to add bootstrap form classes to form elements */
 function setClasses() {
 	var name = document.getElementById("id_name");
     var category = document.getElementById("id_category");
@@ -7,6 +8,7 @@ function setClasses() {
 	var difficulty = document.getElementById("id_difficulty");
 	var ingredients = document.getElementById("id_ingredients");
 	var method = document.getElementById("id_method");
+	
 	name.classList.add("form-control");
     category.classList.add("form-control");
     toolsreq.classList.add("form-control");

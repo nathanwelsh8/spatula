@@ -94,7 +94,7 @@ input{
     #sidebarcontainer {
         margin: 0px;
         float: left;
-        width: 100px;
+        width: 100%;
     }
 	
 	.newrecipe{

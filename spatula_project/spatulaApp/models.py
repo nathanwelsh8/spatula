@@ -108,7 +108,6 @@ class Recipe(models.Model):
 
 class Image(models.Model):
 
-    # this might work?
     def images_path():
         return os.path.join(settings.IMAGES_DIR, 'usruploads')
 

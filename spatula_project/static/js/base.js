@@ -5,8 +5,6 @@ $(document).ready(function(){
         if (e.which == 13 ||e.keyCode == 13) {
             text = getSearchText();
             if (text.length >0){
-                
-                //sendRequest(getSearchText());
                 console.log("base enter query sent");
                 window.location ='/?redirect_search_text='+text;
             }
@@ -14,13 +12,15 @@ $(document).ready(function(){
     });
 });
 
-
+/*Show signin container when button clicked */
 function showSignin(){
     var x = document.getElementById("container");
 	var y = document.querySelector('.sidenav p')
-    if(x.style.top == "-200px" & window.matchMedia('(max-device-width: 1024px)').matches){
+	var w = window.outerWidth;
+	/* Need two different logic statements for mobile and desktop view since headers are different sizes*/ 
+    if(x.style.top == "-200px" && (window.matchMedia('(max-device-width: 1024px)').matches || w < 1040)){
         x.style.top= "100px";
-    }else if(x.style.top == "-200px" & window.matchMedia('(min-device-width: 1024px)').matches){ 
+    }else if(x.style.top == "-200px" && (window.matchMedia('(min-device-width: 1024px)').matches && w > 1040)){ 
         x.style.top= "50px";
     }else{
 		x.style.top = "-200px";
@@ -34,6 +34,7 @@ function showSignin(){
 
 }
 
+/* Show filters on mobile view when button clicked */
 function showFilters(){
     var x = document.getElementById("sidebar");
     if(x.style.display=="block"){
@@ -43,6 +44,7 @@ function showFilters(){
     }
 }
 
+/* Show searchbar when button clicked on mobile view */
 function showSearch(){
     var x = document.getElementById("searchbar")
 	var y = document.getElementById("header")
@@ -55,10 +57,6 @@ function showSearch(){
 
     }
 }
-
-
-
-/* functions to be included in base.html file here */
 
 function sendRequest(text,sort,diet,categories){
 
@@ -116,9 +114,9 @@ function getCategories(){
     return categories;
 }
 
-
+/* Open sidenav on mobile view*/
 function openNav() {
-	var x = document.getElementById("mySidenav");
+	var x = document.getElementById("mobile_sidenav");
 	var y = document.getElementById("container");
 	var z = document.querySelector('.sidenav p')
 	if(x.style.width == "0px"){ 

@@ -41,7 +41,7 @@
 			<div class = "row" id = "header">
 				{% block header_block %}
 					<!-- A sidenav for mobile/tablet view for easier navigation on smaller devices -->
-					<div id="mySidenav" class="sidenav" style = "width:0px">
+					<div id="mobile_sidenav" class="sidenav" style = "width:0px">
 					{% if user.is_authenticated %}
 						<a href="{% url 'spatulaApp:show_profile' user.username %}">My Profile</a>
 						<a href="{% url 'spatulaApp:add_recipe' %}">Add Recipe</a>

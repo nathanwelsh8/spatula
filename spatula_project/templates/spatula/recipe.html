@@ -1,4 +1,4 @@
-{% extends 'spatula/base.html' %}
+ {% extends 'spatula/base.html' %}
 {% load staticfiles %}
 {% load spatulaApp_template_tags %} 
 
@@ -18,11 +18,7 @@
 	<script src="{% static 'js/recipe.js' %}"
 	type="text/javascript" charset="utf-8"></script>
 
-	<script>
-		$(':radio').change(function() {
-		  console.log('New star rating: ' + this.value);
-		});
-	</script>
+
 {% endblock %}
 
 {% block body_block %}
@@ -32,7 +28,7 @@
 	{% with images|getKeyImgList:recipe.name as image %}
 	{% if image %}
 	<!-- Bootstap image carousel (slideshow) with controls -->
-	<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+	<div id="sideshow" class="carousel slide" data-ride="carousel">
 		<div class="carousel-inner">
 			{% for i in image %}
 				<!-- Set the first image to active -->
@@ -49,11 +45,11 @@
 		</div>
 		
 		<!-- Carousel controls -->
-		<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+		<a class="carousel-control-prev" href="#sideshow" role="button" data-slide="prev">
 			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 			<span class="sr-only">Previous</span>
 	    </a>
-		<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+		<a class="carousel-control-next" href="#sideshow" role="button" data-slide="next">
 			<span class="carousel-control-next-icon" aria-hidden="true"></span>
 			<span class="sr-only">Next</span>
 		</a>
@@ -141,7 +137,7 @@
 					<!-- users have to be logged in to leave reviews -->
 					{% if user.is_authenticated %}
 					<h2>Add a Review</h2>
-					<!-- rating form -->
+					<!-- rating form - Site used for star ratings http://code.iamkate.com/html-and-css/star-rating-widget/ -->
 					<form id="comment_form" class = "rating" method="post" action=" {% url 'spatulaApp:show_recipe' recipe.slug %} ", enctype="multipart/form-data">
 					<span class="starRating">
 						<input id="rating5" type="radio" name="rating" value="5">

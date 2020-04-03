@@ -208,8 +208,8 @@ p.page_element{
 		display:none;
 	}
 }
-
-@media (max-width:1040px){
+/* Make sidebar appear under header when sreen is too small on desktop, conditional make sure mobile view is unaffected */
+@media screen and (min-device-width: 1024px) and (max-width:1040px){
 	#searchbar {
 		left:0;
 		display: block;
@@ -222,6 +222,9 @@ p.page_element{
 	#top{ 
 		padding-bottom: 50px;
 		height:100px;
+	}
+	#header{ 
+	height:100px;
 	}
 }
 
