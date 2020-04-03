@@ -126,7 +126,7 @@ input{
 	}
 }
 
-@media screen and (max-device-width: 1024px) and (orientation: portrait){
+@media screen and (max-device-width: 1024px){
 	.recipe {
 		float: left;
 		width: 100%;

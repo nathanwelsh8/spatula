@@ -230,7 +230,7 @@ p.page_element{
 
 
 /* Styling for mobile/tablet views */
-@media screen and (max-device-width: 1024px) and (orientation: portrait){
+@media screen and (max-device-width: 1024px){
     body {
         margin: 0px;
         overflow-y:scroll;
@@ -336,7 +336,7 @@ p.page_element{
 }
 
 /*sidenav css*/
-@media screen and (max-device-width: 1024px) and (orientation: portrait){
+@media screen and (max-device-width: 1024px){
 	.sidenav {
 	  display:block;
 	  height: 100%;
@@ -390,4 +390,5 @@ p.page_element{
 	  .sidenav a {font-size: 18px;}
 	}
 }
+
 

@@ -24,7 +24,7 @@
 }
 
 /** Styling for mobile and tablet view */
-@media screen and (max-device-width: 1024px) and (orientation: portrait){
+@media screen and (max-device-width: 1024px){
 
 	h2{
 		font-size: 4rem;

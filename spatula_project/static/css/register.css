@@ -3,7 +3,7 @@
 	Less styling needed for this page because bootstap forms 
 	were used for the whole page
 	*/
-@media screen and (max-device-width: 1024px) and (orientation: portrait){
+@media screen and (max-device-width: 1024px){
 	h1{
 		font-family:Calibri;
 		font-size:5.5rem;
