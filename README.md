@@ -5,13 +5,6 @@ WAD2 Recipie WebApp
 ## Visit our deployed project
 [Spatula](https://nathanwelsh8.pythonanywhere.com)
 
-## Migrating
-Whilst migrating a "No such table" error is raised, this error was found during final testing of the site. 
-The error was raised by line 109 in the views.py file of spatulaSearchAPI. 
-Comment this line when running the migration and population_script. 
-Uncomment when running the server.
-
-
 ## sources
 The following sources have been used to help piece this web app together
 - [tangowithdjango](https://www.tangowithdjango.com/book17/)
