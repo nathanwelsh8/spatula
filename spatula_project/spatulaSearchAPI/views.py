@@ -101,14 +101,20 @@ def search(request, user_filter=None, cache=None):
 def non_http_search(request, user_filter=None,cache=None):
     recipeName = request.get('search')
     return core(recipeName=recipeName)
+    
+try: 
+    cat_list = [str(x.name) for x in Category.objects.all()]
+except Exception:
+    cat_list = None
 
 def core(
     recipeName='',
     sortType='popularity',
     dietTypeList=[1,2,3],
-    categoryList=[str(x.name) for x in Category.objects.all()],
-     user_filter=None,
-      cache=None
+    categoryList=cat_list, 
+        
+    user_filter=None,
+    cache=None
       ):
     
     if cache:
