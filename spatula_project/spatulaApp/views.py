@@ -312,6 +312,7 @@ class ShowProfile(View):
             self.fix_ratings()
             return render(request, 'spatulaSearchAPI/results.html',self.context_dict)
 
+        self.context_dict['user_pic'] = UserImage.objects.all()
 
         return render(request, 'spatula/profile.html', context=self.context_dict)
 
