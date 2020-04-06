@@ -66,14 +66,17 @@
 			{% with recipe.category|cut:"Category object (" as cut_cat %}
 				<p id="recipecat" >{{cut_cat|cut:")"}}</p>
 			{% endwith %}
-			{% with user_images|getKeyImg:recipe.postedby as image %}
+			
+			<p id= "postedby"> <a href="{% url 'spatulaApp:show_profile' recipe.postedby %}" class="postedby_url">{{ recipe.postedby }}
+				{% with user_images|getKeyImg:recipe.postedby as image %}
 			{% if image %}
-				<img class = "profilePic"  style = "" src="../..{{MEDIA_URL}}{{image}}">
+				<img class = "profilePic"   src="../..{{MEDIA_URL}}{{image}}">
 			{% else %}
 				<img class = "profilePic" style = "border-radius:50%; height:30px; width:30px;  float:right; margin-left: 10px;" src="{% static 'images/profile.png' %}" alt="{{ profile.user }}'s profile pic'">
 			{% endif %}
 			{% endwith %}
-			<p id= "postedby"> <a href="{% url 'spatulaApp:show_profile' recipe.postedby %}" class="postedby_url">{{ recipe.postedby }}</a></p>
+
+			</a></p>
 		</div>
 		
 		<!-- Recipe stats include: Difficulty, cost and rating -->
@@ -123,9 +126,17 @@
 					<img src="{% static image_static %}" class="reciperating">
 					{%endwith%}{%endwith%}
 					{% if r.postedby == None %}
-						<p>By anonymous</p>
+						<p>By anonymous
 					{% else %}
-						<p>By {{r.postedby}}</p>
+						<p>By <a href="{% url 'spatulaApp:show_profile' r.postedby %}" class="postedby_url">{{ r.postedby }}</a></p></p>
+						{% with user_images|getKeyImg:r.postedby as image %}
+							{% if image %}
+								<img class = "profilePic"   src="../..{{MEDIA_URL}}{{image}}">
+							{% else %}
+								<img class = "profilePic" style = "border-radius:50%; height:30px; width:30px;  float:right; margin-left: 10px;" src="{% static 'images/profile.png' %}" alt="{{ profile.user }}'s profile pic'">
+							{% endif %}
+						{% endwith %}</p>
+
 					{% endif %}
 					<p>{{r.comment}}</p>
 				</div>

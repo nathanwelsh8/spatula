@@ -15,7 +15,7 @@ def getRating(recipe,cache=None):
             num +=1
     if num <= 0:
        num =1
-    #print(rating.recipe,num,total)
+    
     return round(total/num,1) 
     
 
@@ -38,10 +38,12 @@ def sortRating(recipes):
     
 
 def sortPopularity(recipes):
+    # popularity is determined by the number of recipies * the rating
     popularity_dict = {}
     rating_cache = Rating.objects.all()
     for recipe in recipes:
         num = rating_cache.filter(recipe=recipe.id).count()
+
         ratingVal = getRating(recipe, rating_cache) * num
         popularity_dict[recipe] = ratingVal 
 
@@ -89,13 +91,10 @@ def search(request, user_filter=None, cache=None):
     categoryList = request.GET.getlist('categories[]', [str(x.name) for x in Category.objects.all()]) # not many categorys so no need to cache
     
     # all vegan food is vegetarian so include both 
-    # vegetarian and vegan food when vegan selected
+    # vegetarian and vegan food when vegetarian selected
     
-    if dietTypeList == ['3']:
-        print(dietTypeList == ['3'])
+    if dietTypeList == ['2']:
         dietTypeList = [2,3]
-    print(dietTypeList)
-    
     return core(recipeName=recipeName,sortType=sortType,dietTypeList=dietTypeList,categoryList=categoryList,user_filter=user_filter,cache=cache)
 
 def non_http_search(request, user_filter=None,cache=None):
