@@ -67,11 +67,10 @@
 				</h2>
 				<p>User rating: {{ profile.user|getProfileRating }}/10.0<br/>
 				Number of recipes: {{ profile.user|getNumRecipies }}</p>
-				<!-- If users profile show chefs tip-->
 				{% if canEdit %}
-					<p><strong>Chefs tip</strong>: Your user rating is determined by your recipe ratings. 
-					Indepth recipes with clear pictures attract higher ratings
-					and will boost your profiles rating!</p>
+					<p><strong>Chefs tip</strong>: User ratings are determined by your recipe ratings. 
+					Indepth recipes with clear pictures attract more users who are likely to leave a positive rating!
+					</p>
 				{% endif %}
 			</div>	
 		</div>

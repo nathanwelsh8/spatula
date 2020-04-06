@@ -1,7 +1,7 @@
 from django import template 
 from spatulaApp.models import Category, Recipe, Rating, UserProfile
 from django.contrib.auth.models import User
-
+from math import sqrt, log
 register = template.Library() 
 
 @register.filter
@@ -74,8 +74,9 @@ def recipeNameLengthCheck(name):
 @register.filter
 def getProfileRating(username):
 
-    # Users rating is based an averge of all their recipies ratings
-    #
+    # Users rating is based an weighted averge of all their recipies ratings
+    # it is wighted such that the rating is biased agaisnt the number of reviews
+    # calculated using y=|ln(sqrt(Rn+1))*5| , y<R, R=avergae rating, n=no.ratings
 
     try:
         user = UserProfile.objects.get(user=User.objects.get(username=username))
@@ -89,7 +90,13 @@ def getProfileRating(username):
         if length==0:
             length = 1
 
-        return str(round((total/length)*2,0)/2) 
+        average = total/length
+
+        weightedAverage = log(abs(sqrt(average+1)))*5
+        if weightedAverage > average:
+            weightedAverage = average
+
+        return str(round(weightedAverage*2,0)/2)     
 
     except UserProfile.DoesNotExist:
         return str(0)
