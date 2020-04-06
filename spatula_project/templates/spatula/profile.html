@@ -25,9 +25,9 @@
 		<hr/>
 		<!--Display user profile picture if no profile picture found display temp image -->
 		{% if profile_pic %}
-			<img class = "profilePic" src="../..{{MEDIA_URL}}{{profile_pic.image}}">
+			<img class = "profilePic" style="border-radius: 50%;" src="../..{{MEDIA_URL}}{{profile_pic.image}}">
 		{% else %}
-			<img class = "profilePic" src="{% static 'images/profile.png' %}" alt="{{ profile.user }}'s profile pic'">	
+			<img class = "profilePic" style="border-radius: 50%;" src="{% static 'images/profile.png' %}" alt="{{ profile.user }}'s profile pic'">	
 		{% endif %}
 		{% if image_form %}
 			<form id="uploadImage" method="post" action=" {% url 'spatulaApp:show_profile' profile.slug %} " enctype="multipart/form-data">
