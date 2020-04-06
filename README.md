@@ -20,6 +20,6 @@ The following sources have been used to help piece this web app together
 ## Future Features
 We plan to add these features in the future, after the project is assessed.
 - [x] Weight users profile rating so it is not just their average recipe rating
-- [] Users who have a 10.0/10.0 rating get special privelages / rewards
-- [] Make the a reccomendations system for logged in users
-- [] Make user profile image circular
+- [ ] Users who have a 10.0/10.0 rating get special privelages / rewards
+- [ ] Make the a reccomendations system for logged in users
+- [ ] Make user profile image circular
