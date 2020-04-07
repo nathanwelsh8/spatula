@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import spatula_project.security_key as sk
 #import spatula_project.security_key as security_key
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,10 +21,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'jqgx(=a6iw+2hwtu4(!4yg!y=)3_x7=p@tp_y9=n%h8(o=bez-'
+SECRET_KEY = sk.getSecretKey() #'jqgx(=a6iw+2hwtu4(!4yg!y=)3_x7=p@tp_y9=n%h8(o=bez-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # Will need to remove http://127.0.0.1:8000/ before production, but necessary for testing
 ALLOWED_HOSTS = ['nathanwelsh8.pythonanywhere.com',
