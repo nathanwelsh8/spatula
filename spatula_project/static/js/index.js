@@ -1,10 +1,7 @@
 $(document).ready(function(){ 
     
-    console.log("Document ready");
     var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    console.log("is a mobile device:"+isMobile);
     $("#searchbar").keyup(function() {
-        console.log("search bar trigger");
         sendRequest(getSearchText(),getSortType(), getDietType(), getCategories());
         
     });
@@ -12,12 +9,10 @@ $(document).ready(function(){
     // add the filters now
 
     $('input[type="radio"]').click(function(){
-        console.log("radio trigger");
         sendRequest(getSearchText(),getSortType(), getDietType(), getCategories());
     });
 
     $('input[type="checkbox"]').click(function(){
-        console.log("checkbox trigger");
         sendRequest(getSearchText(),getSortType(), getDietType(), getCategories());
     });
 
@@ -40,7 +35,7 @@ $(document).ready(function(){
 var previous_size = 550;
 function resetCss(){
     var w = window.outerWidth;
-    console.log("current "+w+"| prev "+previous_size);
+   
     if(w >= 550 & previous_size <550){
         var search_bar = document.getElementById("searchbar");
         var side_bar = document.getElementById("sidebar");
@@ -48,7 +43,7 @@ function resetCss(){
 		search_bar.removeAttribute("style");
         side_bar.removeAttribute("style");
         header.removeAttribute("style");
-        console.log("css reset");
+        
     }
     previous_size = w;
 

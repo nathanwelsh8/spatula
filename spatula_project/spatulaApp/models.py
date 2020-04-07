@@ -1,4 +1,5 @@
 from django.db import models
+from spatulaApp.submodels.dynamic_models import *
 from django.template.defaultfilters import slugify
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -166,8 +167,6 @@ def auto_delete_file_on_delete(sender, instance, **kwargs):
     Deletes file from filesystem
     when corresponding `Image` object is deleted.
     """
-    print(instance.image)
     if instance.image:
         if os.path.isfile(instance.image.path):
-            print("deleting")
             os.remove(instance.image.path)

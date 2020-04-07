@@ -16,7 +16,6 @@ function update_bio(){
 
     var csrf = $('input:hidden[name=csrfmiddlewaretoken]').val();
     var v = $('#edit_bio').val();
-    console.log(v+csrf);
     $.post(window.location.href,
         {
             'csrfmiddlewaretoken': csrf,
@@ -68,18 +67,44 @@ function deleteProfile(params){
 }
 
 function tempDisplayMessage(id,content="", contentAfter="",time=2000, remainVisible){
-    console.log(remainVisible);
     if (id){
         $("#"+id).html(content);
             document.getElementById(id).style.visibility = 'visible';
 
             setTimeout(function(){
                 if (remainVisible == false){
-                    console.log("hide after 2secs");
                     document.getElementById(id).style.visibility = 'hidden';
                 }
                 $("#"+id).html(contentAfter);
             }, time);
 
+    }
+}
+
+var del_recipe_counter = 0;
+var del_recipe_click = 3;
+var prev_id = null;
+function deleteRecipe(id){
+    if (del_recipe_counter>=del_recipe_click & id==prev_id){
+
+        $.post(window.location.href,
+            {
+                'delete_recipe':id,
+                'csrfmiddlewaretoken':$('input:hidden[name=csrfmiddlewaretoken]').val()
+            },
+            function(data){
+                return getUserData();
+            }
+        );
+
+        del_recipe_counter = 0;
+    }else{
+        prev_id = id;
+        
+        tempDisplayMessage(id=id,
+                            content="Click "+(del_recipe_click-del_recipe_counter)+" more times",
+                            contentAfter="Delete",time=5000,remainVisible=true);
+        del_recipe_counter ++;
+        
     }
 }

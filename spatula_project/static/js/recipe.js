@@ -11,9 +11,6 @@ function update_recipe(){
     // this is not the correct way to find the diet choice but using it to bug fix
     var diet = $('#edit_category option:selected').val();
     var category = $('#edit_category option:selected').val();
-    
-    
-    console.log("java detected post");
     $.post(window.location.href,
         {
             'csrfmiddlewaretoken': csrf,

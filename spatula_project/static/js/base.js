@@ -5,7 +5,6 @@ $(document).ready(function(){
         if (e.which == 13 ||e.keyCode == 13) {
             text = getSearchText();
             if (text.length >0){
-                console.log("base enter query sent");
                 window.location ='/?redirect_search_text='+text;
             }
         }
@@ -129,3 +128,5 @@ function openNav() {
 		x.style.width = "0px"; 
 	}
 }
+
+

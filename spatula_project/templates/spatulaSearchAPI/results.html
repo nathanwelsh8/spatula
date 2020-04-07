@@ -27,12 +27,14 @@
 					{% endwith %}{% endwith %}
 					</div>
 				</a>
+				{{canEdit}}
+				{% if canEdit %}{% csrf_token %}<div style="margin:4px; clear: left;"><button class="btn btn-danger" id="delete_recipe{{recipe.id}}" onclick="deleteRecipe(id='{{recipe.id}}');">Delete</button></div>{% endif %}
 			</div>
         {% endfor %}
     {% else %}
 		<!-- if no recipes found display hyerlink to add recipe page or login page -->
         <p class="page_element">Hmm theres nothing to show. <br/>
-        Why not{% if not user.is_authenticated %} login to add {% else %} <a href="{% url 'spatulaApp:add_recipe' %}">add</a> {% endif %}a recipie!</p>
+        Why not{% if not user.is_authenticated %} login to add {% else %} <a href="{% url 'spatulaApp:add_recipe' %}"><strong>add</strong></a> {% endif %}a recipe!</p>
     {% endif %}
        
 {% endblock %}

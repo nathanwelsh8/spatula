@@ -88,7 +88,6 @@ class Index(View):
         self.fix_ratings() # multiply by 2 so they are mapped to a stars rating
         self.context_dict['recipe_images'] = RecipeImage.objects.all()  
         self.context_dict['user_pic'] = UserImage.objects.filter(belongsto=request.user.id) 
-        print(request.user.id)
         return render(request, 'spatula/index.html', self.context_dict)
 
     def post(self, request):
@@ -154,12 +153,9 @@ class Register(View):
                 login(request, user)
                 
             return redirect(reverse('spatulaApp:index'))
-        else:
-            # Invalid form or forms - mistakes or something else?
-            # Print problems to the terminal.
-            print(user_form.errors)
+        
 
-            return self.get(request,context={'registered':registered})
+        return self.get(request,context={'registered':registered})
     
         # Not a HTTP POST, so we render our form using two ModelForm instances.
         # These forms will be blank, ready for user input.
@@ -216,11 +212,10 @@ def add_recipe(request):
 
                 success = False
                 for form in formset.cleaned_data:
-                    print("form:",form)
                     if form:
                         image = form['image']
                         if image:
-                            print("Image:",image)
+                            
                             photo = RecipeImage(belongsto=Recipe.objects.get(name=recipe.name, postedby=user), image=image)
                             photo.save()
                             success = True
@@ -232,8 +227,6 @@ def add_recipe(request):
                     context_dict['formset'] = ImageFormSet(queryset=RecipeImage.objects.none())
                     return render(request, 'spatula/add_recipe.html', context=context_dict)
 
-        else: 
-            print(form.errors, formset.errors)
     context_dict['form'] = form
     context_dict['formset'] = ImageFormSet(queryset=RecipeImage.objects.none())
     return render(request, 'spatula/add_recipe.html', context=context_dict)
@@ -356,38 +349,38 @@ class ShowProfile(View):
                     self.context_dict['profile_pic'] = photo 
 
         elif request.POST.get('delete_profile',None):
-            print("delete_profile")
             if self.context_dict['canEdit']: # stops javascript console injection
                 try:
-                    print("Deleting", self.user_cache)
                     #Get all recipes to delete
                     del_recipes = Recipe.objects.filter(postedby=self.user_cache.id)
                     
                     # delete all images linked to these recipes
                     for recipe in del_recipes:
-                        print(recipe)
                         images = RecipeImage.objects.filter(belongsto=recipe.id).delete()
-                        print("\tdeleted images")
                         #delete the recipe
                         recipe.delete()
-                        print("\tdeleted recipe")
                     #   Delete users profile pic
                     #   Use filter as it may be none
 
                     UserImage.objects.filter(belongsto=self.user_cache.id).delete()
-                    print("\tdeleted profile pic")
                     # Finally delete the user from db
                     UserProfile.objects.get(id=self.user_cache.id).delete()
-                    print("\deleted UserProfile")
                     User.objects.get(username=request.user).delete()
-                    print("DeletedUser")
                 except UserProfile.DoesNotExist:
-                    print("Profile not exist")
+                    print("Profile not exist") # log to error logs
                 except User.DoesNotExist:
                     print("User object not exist")
                 finally:
-                    print("redirecting..")
                     return redirect(reverse('spatulaApp:index'))
+
+        elif request.POST.get('delete_recipe',None):
+            if self.context_dict['canEdit']:
+                try:
+                    Recipe.objects.get(id=int(request.POST['delete_recipe'])).delete()
+                except Recipe.DoesNotExist:
+                    print("recipe DNE")
+                finally:
+                    return HttpResponse(request,"");
 
         return render(request, 'spatula/profile.html', context=self.context_dict)
 
@@ -485,11 +478,7 @@ class RecipePage(View):
         except Recipe.DoesNotExist:
             return redirect(reverse('spatulaApp:index'))
         
-
         if 'search' in request.GET:
-            print("search request recieved")
-            #self.context_dict['recipies'] = API_Search(request,user_filter=self.user_cache.id)
-            #self.fix_ratings()
             return redirect(reverse( 'spatulaApp:index'))
 
 
