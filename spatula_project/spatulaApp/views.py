@@ -30,7 +30,6 @@ def error_500(request, *args,**kwargs):
     return HttpResponse("spatula/500.html")
     # return redirect(reverse('spatulaApp:index'))
 
-
 class Index(View):
 
     recipe_cache = None
@@ -55,7 +54,7 @@ class Index(View):
         'categories':Category.getModelsAsList,
         'diet_choices':Recipe.getChoicesAsList,
         'recipe_images': RecipeImage.objects.all(),
-        'user_pic': UserImage.objects.all(),
+        'user_pic':None,
         'login_error_msg':None,
         'runPreSearch':True
         }
@@ -88,7 +87,8 @@ class Index(View):
 
         self.fix_ratings() # multiply by 2 so they are mapped to a stars rating
         self.context_dict['recipe_images'] = RecipeImage.objects.all()  
-        self.context_dict['user_pic'] = UserImage.objects.all() 
+        self.context_dict['user_pic'] = UserImage.objects.filter(belongsto=request.user.id) 
+        print(request.user.id)
         return render(request, 'spatula/index.html', self.context_dict)
 
     def post(self, request):
@@ -120,21 +120,11 @@ def user_logout(request):
     return redirect(reverse('spatulaApp:index'))
     
 
+class Register(View):
 
+    def post(self,request):
 
-def register(request):
-    # Using the same implementation as TWDjango
-
-    # A boolean value for telling the template
-    # whether the registration was successful.
-    # Set to False initially. Code changes value to
-    # True when registration succeeds.
-    registered = False
-
-    # If it's a HTTP POST, we're interested in processing form data.
-    if request.method == 'POST':
-        # Attempt to grab information from the raw form information.
-        # Note that we make use of both UserForm and UserProfileForm.
+        registered = False
         user_form = UserForm(request.POST)
         profile_form = UserProfileForm(request.POST)
 
@@ -168,17 +158,27 @@ def register(request):
             # Invalid form or forms - mistakes or something else?
             # Print problems to the terminal.
             print(user_form.errors)
-    else:
+
+            return self.get(request,context={'registered':registered})
+    
         # Not a HTTP POST, so we render our form using two ModelForm instances.
         # These forms will be blank, ready for user input.
+    
+
+    def get(self,request, context=None):
+
+        if not context:
+            context = {}
         user_form = UserForm()
         profile_form = UserProfileForm()
+        
+        context['user_form'] = user_form
+        context['profile_form'] = profile_form
+        
+        return render(request, 'spatula/register.html',
+                  context=context)  
 
-    # Render the template depending on the context.
-    return render(request, 'spatula/register.html',
-                  context={'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
-    
-    
+  
 @login_required(login_url="spatulaApp:index")
 def add_recipe(request): 
     form = RecipeForm()
