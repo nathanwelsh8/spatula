@@ -18,13 +18,10 @@ class UserProfile(models.Model):
     # Default usermodel has name, username, and password 
     # fields. We can just use what we need. 
 
-    
     user      = models.OneToOneField(User, on_delete=models.CASCADE)
     
     bio  = models.TextField(blank=True)   
     slug            = models.SlugField(unique=True, blank=True)
-
-    # profile_pic = models.OneToOneField(Image)
 
     # users rating is calculated live when userinfo requested.
     # no user rating to be stored
@@ -106,7 +103,6 @@ class Recipe(models.Model):
         self.slug = slugify(str(self.name)+str(self.postedby))
         super(Recipe,self).save(*args, **kwargs)
 
-
 class Image(models.Model):
 
     def images_path():
@@ -144,11 +140,8 @@ class Image(models.Model):
 class UserImage(Image):
     belongsto = models.ForeignKey(UserProfile,  on_delete=models.CASCADE)
 
-    
-
 class RecipeImage(Image):
     belongsto = models.ForeignKey(Recipe,  on_delete=models.CASCADE)
-
     
 class Rating(models.Model):
 
@@ -159,7 +152,6 @@ class Rating(models.Model):
     rating     = models.DecimalField(decimal_places=2, max_digits=3, default=0)
     # comments are optional
     comment    = models.TextField(max_length=MAX_TEXT_LENGTH, blank=True)
-
 
 @receiver(models.signals.post_delete, sender=Image)
 def auto_delete_file_on_delete(sender, instance, **kwargs):

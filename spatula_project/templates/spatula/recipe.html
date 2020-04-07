@@ -126,19 +126,19 @@
 					<img src="{% static image_static %}" class="reciperating">
 					{%endwith%}{%endwith%}
 					{% if r.postedby == None %}
-						<p>By anonymous
+						<p>By anonymous </p>
 					{% else %}
-						<p>By <a href="{% url 'spatulaApp:show_profile' r.postedby %}" class="postedby_url">{{ r.postedby }}</a></p></p>
+						<p><span style="float:left;padding-right: 2px; padding-top: 4px;">By </span> <a href="{% url 'spatulaApp:show_profile' r.postedby %}" style="float:left;" class="postedby_url"> {{ r.postedby }}
 						{% with user_images|getKeyImg:r.postedby as image %}
 							{% if image %}
-								<img class = "profilePic"   src="../..{{MEDIA_URL}}{{image}}">
+								<img class = "profilePic" src="../..{{MEDIA_URL}}{{image}}">
 							{% else %}
-								<img class = "profilePic" style = "border-radius:50%; height:30px; width:30px;  float:right; margin-left: 10px;" src="{% static 'images/profile.png' %}" alt="{{ profile.user }}'s profile pic'">
+								<img class = "profilePic" src="{% static 'images/profile.png' %}" alt="{{ profile.user }}'s profile pic">
 							{% endif %}
-						{% endwith %}</p>
+						{% endwith %}</a></p>
 
 					{% endif %}
-					<p>{{r.comment}}</p>
+					<p style="clear: left;">{{r.comment}}</p>
 				</div>
 				<hr/>
 				{% endfor %}
@@ -176,7 +176,6 @@
 						<hr/>
 					{% endif %}
 				</div>
-
 			</div>
 		</div>
 	{% endif %}

@@ -1,27 +1,24 @@
 {% extends 'spatula/base.html' %}
 {% load staticfiles %}
 {% load spatulaApp_template_tags %} 
-
 {% block title_block %}
 	Spatula! User - {{ profile.user }}
 {% endblock %}
-
 {% block css_block %}
 	<!-- Main stylesheet for profile page -->
 	<link rel="stylesheet" href="{% static 'css/profile.css' %}">
 	<!--Used for recipe layout-->
 	<link rel="stylesheet" href="{% static 'css/index.css' %}"> 
 {% endblock %}
-
 {% block js_block %}
 	<!--Main js for profile page -->
     <script src="{% static 'js/profile.js' %}"
 	type="text/javascript" charset="utf-8"></script>
 {% endblock %}
-
 {% block body_block %}		
 	<div class = "col-12 col-lg-8">
 		<h1 id="page_title">{{ profile.user }}</h1>
+		{% if canEdit %}<p class="text-center">{{profile.user.email}}</p>{% endif %}
 		<hr/>
 		<!--Display user profile picture if no profile picture found display temp image -->
 		{% if profile_pic %}
@@ -41,7 +38,7 @@
 		<hr/>
 		<div class="row">
 			<div class="col-12 col-lg-6">
-				<div class="row"><h2 style="padding-left: 4px;" class="page_element">Bio</h2></div>
+				<div class="row"><h2 style="padding-left: 14px;" class="page_element">Bio</h2></div>
 				<!-- if user is on their own profile show editable bio, else show normal page -->
 				{% if canEdit %}
 					{% csrf_token %}
@@ -85,8 +82,7 @@
 		<!--Display the users submitted recipes -->
 		<div id="recipies"><!-- id recipies has deliberate spelling mistake-->
 			{% include 'spatulaSearchAPI/results.html' %}
-		</div>
-			
+		</div>		
 	</div>
 {% endblock %}
 

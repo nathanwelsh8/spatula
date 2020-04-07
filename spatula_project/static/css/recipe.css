@@ -131,8 +131,10 @@ body{
 	.profilePic{
 		border-radius:50%; 
 		height:30px;
-		width:30px;
-		float:right;
+		/*width:30px;*/
+		width:30px;  
+		margin-left: 4px;
+		
 	}
 
 	#recipecat{

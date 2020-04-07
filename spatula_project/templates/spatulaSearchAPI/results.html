@@ -27,7 +27,6 @@
 					{% endwith %}{% endwith %}
 					</div>
 				</a>
-				{{canEdit}}
 				{% if canEdit %}{% csrf_token %}<div style="margin:4px; clear: left;"><button class="btn btn-danger" id="delete_recipe{{recipe.id}}" onclick="deleteRecipe(id='{{recipe.id}}');">Delete</button></div>{% endif %}
 			</div>
         {% endfor %}

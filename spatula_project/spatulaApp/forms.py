@@ -51,10 +51,11 @@ class UserForm(forms.ModelForm):
                                label='')
     password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password', 'id': 'register_password','class':'form-control'}),
                                label='')
+    email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder':'i-love-cooking@gmail.com','id':'register_email','class':'form-control'}), label='')
 
     class Meta:
         model = User
-        fields = ('username', 'password',)
+        fields = ('username', 'password','email',)
 
 
 class UserProfileForm(forms.ModelForm):

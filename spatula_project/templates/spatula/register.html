@@ -31,6 +31,13 @@
 						</div>
 						{{ user_form.username }}
 					</div>
+					{{user_form.email.errors}}
+					<div class="input-group mb-3 flex-nowrap">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="basic-addon4">Email</span>
+						</div>
+						{{ user_form.email }}
+					</div>
 					{{user_form.password.errors}}
 					<div class="input-group flex-nowrap">
 						<div class="input-group-prepend">

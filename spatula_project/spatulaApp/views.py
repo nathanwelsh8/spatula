@@ -28,7 +28,6 @@ def error_404(request, *args, **kwargs):
 # is not possible so display static html
 def error_500(request, *args,**kwargs):
     return HttpResponse("spatula/500.html")
-    # return redirect(reverse('spatulaApp:index'))
 
 class Index(View):
 
