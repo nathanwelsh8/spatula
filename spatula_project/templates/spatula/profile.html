@@ -21,8 +21,8 @@
 		{% if canEdit %}<p class="text-center">{{profile.user.email}}</p>{% endif %}
 		<hr/>
 		<!--Display user profile picture if no profile picture found display temp image -->
-		{% if profile_pic %}
-			<img class = "profilePic" style="border-radius: 50%;" src="../..{{MEDIA_URL}}{{profile_pic.image}}">
+		{% if user_pic %}
+			<img class = "profilePic" style="border-radius: 50%;" src="../..{{MEDIA_URL}}{{ user_pic|getKeyImg:request.user.username}}">
 		{% else %}
 			<img class = "profilePic" style="border-radius: 50%;" src="{% static 'images/profile.png' %}" alt="{{ profile.user }}'s profile pic'">	
 		{% endif %}

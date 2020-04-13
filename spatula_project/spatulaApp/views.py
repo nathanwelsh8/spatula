@@ -248,7 +248,7 @@ class ShowProfile(View):
                 r.rating = str(0)
 
     context_dict = {
-            'user_pic': UserImage.objects.all(),
+            'user_pic': None, #UserImage.objects.all(),
     }
     user_cache = None
 
@@ -311,7 +311,7 @@ class ShowProfile(View):
             return render(request, 'spatulaSearchAPI/results.html',self.context_dict)
 
         self.context_dict['user_pic'] = UserImage.objects.filter(belongsto=self.user_cache.id)
-
+        #print("pic",self.context_dict['user_pic'])
         return render(request, 'spatula/profile.html', context=self.context_dict)
 
 
@@ -393,16 +393,14 @@ class ShowProfile(View):
                 if new_pass and old_pass: 
                     user = User.objects.filter(id=request.user.id)[0]
                     if user:
-                        print(user)
                         if user.check_password(old_pass):
                             user.set_password(new_pass)
                             user.save()
-                            print("password updated")
                             return HttpResponse("Password successfully updated")
                         else:
                             return HttpResponse("Incorrect password for "+str(request.user.username))
         
-
+        self.context_dict['user_pic'] = UserImage.objects.filter(belongsto=self.user_cache.id)
         return render(request, 'spatula/profile.html', context=self.context_dict)
 
 
