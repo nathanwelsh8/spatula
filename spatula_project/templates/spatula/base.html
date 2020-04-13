@@ -5,8 +5,10 @@
 <html>
     <head lang="en">
 		<!--Import jquery-->
-		<script src = "{% static 'js/jquery-1.11.1.min.js' %}"
-        type = "text/javascript" charset = "utf-8"></script>
+		<!--<script src = "{% static 'js/jquery-1.11.1.min.js' %}"
+		type = "text/javascript" charset = "utf-8"></script> -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 		<!-- Import bootstrap css libary - used for grid system, image carousels and forms-->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 		<!-- Sytle sheet for base elements -->
@@ -15,7 +17,10 @@
 		<script src="{% static 'js/base.js' %}"
          type="text/javascript" charset="utf-8"></script>
 		<!-- Import bootstrap js libary - used for image carousel on recipe pages -->
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		
+		<!--Google ads-->
+		<script data-ad-client="ca-pub-5963374547440829" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
         {% block css_block %}
 		{% endblock %}

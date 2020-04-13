@@ -108,3 +108,30 @@ function deleteRecipe(id){
         
     }
 }
+
+function update_password(){
+    var new_pass = $('#new_password').val();
+    var conf_new_pass = $('#new_password_confirm').val();
+    
+    if (new_pass==conf_new_pass){
+        var paswd=  /^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{8,35}$/; // regex to match acceptable passwords
+        if(new_pass.match(paswd)){
+            $.post(window.location.href,
+                {'update_password':true,
+                'old_password':$('#old_password').val(),
+                'new_password':new_pass,
+                'csrfmiddlewaretoken':$('input:hidden[name=csrfmiddlewaretoken]').val()
+                },
+                function(data){
+                    tempDisplayMessage(id="password_errors",data,'',10000,false)
+                }
+                );
+        }else{
+            tempDisplayMessage(id='password_errors','password must be 8-35 charcters with at least one uppercase and a number',
+            "",10000,false);
+        }
+        
+    }else{
+        tempDisplayMessage(id="password_errors","Passwords do not match!",'',10000,false);
+    }
+}

@@ -391,4 +391,8 @@ p.page_element{
 	}
 }
 
+.clear-left{
+    clear: left;
+}
+
 

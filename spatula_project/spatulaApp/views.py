@@ -86,7 +86,11 @@ class Index(View):
 
         self.fix_ratings() # multiply by 2 so they are mapped to a stars rating
         self.context_dict['recipe_images'] = RecipeImage.objects.all()  
-        self.context_dict['user_pic'] = UserImage.objects.filter(belongsto=request.user.id) 
+
+        if request.user.is_authenticated:
+            _user_id = UserProfile.objects.get(user=request.user.id)
+            self.context_dict['user_pic'] = UserImage.objects.filter(belongsto=_user_id.id)
+        
         return render(request, 'spatula/index.html', self.context_dict)
 
     def post(self, request):
@@ -278,7 +282,9 @@ class ShowProfile(View):
             if self.context_dict['canEdit']:
                 self.context_dict['image_form'] = ProfileImageUploadForm()
             
-            self.context_dict['profile_pic'] = UserImage.objects.get(belongsto=self.user_cache.id) # try to retrieve users profile pic
+            
+            _user_id = UserProfile.objects.get(user=request.user.id)
+            self.context_dict['user_pic'] = UserImage.objects.filter(belongsto=_user_id.id)
 
         except User.DoesNotExist:
             return redirect(reverse('spatulaApp:index'))
@@ -304,7 +310,7 @@ class ShowProfile(View):
             self.fix_ratings()
             return render(request, 'spatulaSearchAPI/results.html',self.context_dict)
 
-        self.context_dict['user_pic'] = UserImage.objects.all()
+        self.context_dict['user_pic'] = UserImage.objects.filter(belongsto=self.user_cache.id)
 
         return render(request, 'spatula/profile.html', context=self.context_dict)
 
@@ -380,6 +386,22 @@ class ShowProfile(View):
                     print("recipe DNE")
                 finally:
                     return HttpResponse(request,"");
+        elif request.POST.get('update_password',None):
+            if self.context_dict.get('canEdit'):
+                old_pass = request.POST.get('old_password',None)
+                new_pass = request.POST.get('new_password',None)
+                if new_pass and old_pass: 
+                    user = User.objects.filter(id=request.user.id)[0]
+                    if user:
+                        print(user)
+                        if user.check_password(old_pass):
+                            user.set_password(new_pass)
+                            user.save()
+                            print("password updated")
+                            return HttpResponse("Password successfully updated")
+                        else:
+                            return HttpResponse("Incorrect password for "+str(request.user.username))
+        
 
         return render(request, 'spatula/profile.html', context=self.context_dict)
 

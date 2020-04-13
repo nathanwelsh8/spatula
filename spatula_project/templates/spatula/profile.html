@@ -30,31 +30,49 @@
 			<form id="uploadImage" method="post" action=" {% url 'spatulaApp:show_profile' profile.slug %} " enctype="multipart/form-data">
 				{% csrf_token %}
 				<div class="row">
-					<div class="col-10 col-lg-4">{{ image_form.image }}</div>
-					<div class="col-2 col-lg-2"><input class="btn btn-primary float-right" type="submit" name="update_profile_pic" value="Update" /></div>
+					<div class="col-12 col-lg-6">
+						<div class="row">
+							<div class="col-12 col-lg-8">
+								{{ image_form.image }}
+							</div>
+							<div class="col-12 col-lg-4">
+								<input class="btn btn-primary" type="submit" name="update_profile_pic" value="Update" />
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-lg-6"></div>
 				</div>
 			</form>
 		{% endif %}
-		<hr/>
+		
 		<div class="row">
 			<div class="col-12 col-lg-6">
-				<div class="row"><h2 style="padding-left: 14px;" class="page_element">Bio</h2></div>
+				<hr/>
+				<div class="row">
+					<div class="col-12">
+						<h2 class="page_element">Bio</h2>
+					</div>
+				</div>
 				<!-- if user is on their own profile show editable bio, else show normal page -->
 				{% if canEdit %}
 					{% csrf_token %}
 					<div class="row">
-						<textarea id="edit_bio" form="user_form" class="page_element">{{ profile.bio }}</textarea>
-						<button name='Update' value="Update" onclick="update_bio();" class="page_element btn btn-primary">Update Bio</button>
+						<div class="col-12 col-lg-6">
+							<textarea id="edit_bio" form="user_form" class="page_element">{{ profile.bio }}</textarea>
+							<p class="page_element" id="bio_success_msg"></p>
+						</div>
+						<div class="col-12 col-lg-6">
+							<div class="row"><button name='Update' value="Update" onclick="update_bio();" class="btn btn-primary">Update Bio</button></div>
+						</div>
 					</div>
-					<br/>
-					<div class="row"><button class ="page_element btn btn-danger" id="delete_button" onclick="deleteProfile();">Delete Account</button></div>
-					<p class="page_element" id="bio_success_msg"></p>
+					
 				{% else %}
 					<p class="page_element">{{profile.bio}}</p>
 				{% endif %}
 			</div>
 			<!-- Display the users stats: Number of recipes and average rating-->
 			<div class="col-12 col-lg-6">
+				<hr/>
 				<h2>
 					{% if canEdit %}
 						Your stats
@@ -71,6 +89,54 @@
 				{% endif %}
 			</div>	
 		</div>
+		{% if canEdit %}
+			<button type="button"  class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;" data-target="#change_pass_row">Settings</button>
+			<div class="row collapse"  id="change_pass_row">
+				
+				<div class="col-12 col-lg-6">
+					<hr />
+					<div class=row>
+						<label class="col-sm-10" id="password_errors"></label>
+					</div>
+					<div class="row">
+						<label for = "old_password" class="col-sm-2 control-label">Old password</label>
+						<div class="col-sm-10">
+							<input class="form-control" id="old_password"type="password" id="old_password"/>
+						</div>
+					</div>
+					<div class="row">
+						<label for = "new_password" class="col-sm-2 control-label">New password</label>
+						<div class="col-sm-10">
+							<input class="form-control" type="password" id="new_password"/>
+						</div>
+					</div>
+					<div class="row">
+						<label for = "new_password_confirm" class="col-sm-2 control-label">Confirm password</label>
+						<div class="col-sm-10">
+							<input class="form-control" type="password" id="new_password_confirm"/>
+						</div>
+					</div>
+				</div>
+				<div class="clear-left col-12 col-lg-6">
+					<hr />
+					<div class="row">
+						<div class="col-12 col-lg-6">		
+							<div class="row">
+								<button class ="clear-left page_element btn btn-primary" id="update_password_button" onclick="update_password();">Update Password</button>
+							</div>	
+							<div class="row" style="margin-top: 5px;">
+								<button class ="clear-left page_element btn btn-danger" id="delete_button" onclick="deleteProfile();">Delete Account</button>
+							</div>					
+						</div>
+						<div class="col-12 col-lg-6">					
+						</div>
+					</div>
+
+				</div>
+			</div>
+			
+			<div class="row"></div>
+		{% endif %}
 		<hr/>
 		<h2 class="page_element">
 			{% if not canEdit %}	
