@@ -18,10 +18,13 @@ The following sources have been used to help piece this web app together
 - [A scalable star rating widget using CSS](http://code.iamkate.com/html-and-css/star-rating-widget/)
 
 ## Future Features
-We plan to add these features in the future, after the project is assessed.
+We plan to add these features in the future, after the project is assessed. 
 - [x] Weight users profile rating so it is not just their average recipe rating
-- [ ] Users can change their passwords
-- [ ] Users can delete their recipes
-- [ ] Users who have a 10.0/10.0 rating get special privelages / rewards
-- [ ] Make the a reccomendations system for logged in users
-- [ ] Make user profile image circular
+- [x] Users can change their passwords 
+- [x] users can delete their recipes
+- [ ] forgot password recovery system
+- [ ] Popup alert to be displayed on homepage
+- [ ] Users who have a 10.0/10.0 rating get special privelages / rewards - flag bad posts for review 
+- [ ] Can follow other users/ get updates when they post new content
+- [ ] Make a reccomendations system for logged in users
+- [x] Make user profile image circular
