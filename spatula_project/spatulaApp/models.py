@@ -34,6 +34,9 @@ class UserProfile(models.Model):
         self.slug = slugify(str(self.__str__()))
         super(UserProfile,self).save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        return '/account/'+str(self.slug)+"/"
+
 class Category(models.Model):
     
     # In a 1:N with Recipe. Recipe table points to here.
@@ -102,6 +105,9 @@ class Recipe(models.Model):
     def save(self,*args, **kwargs):
         self.slug = slugify(str(self.name)+str(self.postedby))
         super(Recipe,self).save(*args, **kwargs)
+    
+    def get_absolute_url(self):
+        return "/"+str(self.slug)+"/"
 
 class Image(models.Model):
 

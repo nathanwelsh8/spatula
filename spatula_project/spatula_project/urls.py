@@ -23,10 +23,19 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from django.conf.urls import handler404, handler500
 
+from django.contrib.sitemaps.views import sitemap
+from sitemaps import UserProfileSitemap, RecipeSitemap
+
+sitemaps = {
+    'userprofiles': UserProfileSitemap,
+    'recipes': RecipeSitemap,
+}
+
 urlpatterns = [
     path(r'admin/', admin.site.urls),
     path('', include('spatulaApp.urls')), # try spatulaApp.urls if not work,
-    path('search/',include("spatulaSearchAPI.urls"))
+    path('search/',include("spatulaSearchAPI.urls")),
+    path('sitemap.xml', sitemap, {'sitemaps':sitemaps}, name='sitemap'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

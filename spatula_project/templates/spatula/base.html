@@ -21,20 +21,26 @@
 		
 		<!--Google ads-->
 		<script data-ad-client="ca-pub-5963374547440829" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-
+		
+		{% block meta_follow %}
+			<meta name="robots" content="index, follow" />
+		{% endblock %}
+		<meta charset="UTF-8">
         {% block css_block %}
 		{% endblock %}
 		
 		{% block js_block %}
 		{% endblock %}
+
+		{% block meta_block %}
+		{% endblock %}
 		
 		<!--Forgot to add the viewport meta tag at start of project so everything is scaled manually for responsive css -->
-        <meta charset="UTF-8" />
 		
 		<title>
             Spatula!
             {% block title_block %}
-            
+				
             {% endblock %}
 		</title>
 		
