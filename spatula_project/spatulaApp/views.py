@@ -27,7 +27,7 @@ def error_404(request, *args, **kwargs):
 # server error, loading a page which is dynamic
 # is not possible so display static html
 def error_500(request, *args,**kwargs):
-    return HttpResponse("spatula/500.html")
+    return  render(request,"spatula/500.html",{})
 
 class Index(View):
 
@@ -291,6 +291,7 @@ class ShowProfile(View):
         except UserProfile.DoesNotExist:
             return redirect(reverse('spatulaApp:index'))
         except UserImage.DoesNotExist:
+            print("user has no profile pic")
             self.context_dict['profile_pic'] = None # users has no profile pic so use default
 
 
@@ -311,7 +312,7 @@ class ShowProfile(View):
             return render(request, 'spatulaSearchAPI/results.html',self.context_dict)
 
         self.context_dict['user_pic'] = UserImage.objects.filter(belongsto=self.user_cache.id)
-        #print("pic",self.context_dict['user_pic'])
+        print("pic",self.context_dict['user_pic'])
         return render(request, 'spatula/profile.html', context=self.context_dict)
 
 
