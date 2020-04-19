@@ -92,6 +92,20 @@ p.page_element{
 
 /* Styling for desktop view */
 @media screen and (min-device-width: 1024px){
+
+    .newrecipe{
+		position: fixed;
+		height: 80px;
+		right: 10px;
+		bottom: 10px;
+		transition: 0.2s;
+	}
+	
+	.newrecipe:hover{
+		height: 100px;
+		filter:saturate(0.5) brightness(200%);
+	}
+
     body {
         margin: 0px;
         overflow-y:scroll;
@@ -272,6 +286,10 @@ p.page_element{
         background-color: #7e4940;
         cursor: pointer;
     }
+
+    .newrecipe{
+		display:none;
+	}
 	
 	#username, #password {
         margin: 8px;

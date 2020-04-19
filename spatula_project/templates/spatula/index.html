@@ -97,10 +97,7 @@
 			{% include 'spatulaSearchAPI/results.html' %}
 		</div>
 		
-		<!--Display add recipe hyperlink button if user logged in (desktop view only)-->
-		{% if user.is_authenticated %}
-			<a href="{% url 'spatulaApp:add_recipe' %}"><img src="{% static 'images/newrecipe.png' %}" class="newrecipe"></a>
-		{% endif %}
+		
 	</div>
 
 {% endblock %}

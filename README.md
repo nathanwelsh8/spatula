@@ -21,10 +21,11 @@ The following sources have been used to help piece this web app together
 We plan to add these features in the future, after the project is assessed. 
 - [x] Weight users profile rating so it is not just their average recipe rating
 - [x] Users can change their passwords 
-- [x] users can delete their recipes
+- [x] Users can delete their recipes
+- [x] Users can add a recipe from any page
 - [ ] forgot password recovery system
 - [ ] Popup alert to be displayed on homepage
-- [ ] Users who have a 10.0/10.0 rating get special privelages / rewards - flag bad posts for review 
+- [ ] Users who have a 9.0/10.0 rating, and above, get special privelages / rewards - flag bad posts for review 
 - [ ] Can follow other users/ get updates when they post new content
 - [ ] Make a reccomendations system for logged in users
 - [x] Make user profile image circular

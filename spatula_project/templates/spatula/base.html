@@ -40,7 +40,7 @@
 		<title>
             Spatula!
             {% block title_block %}
-				
+
             {% endblock %}
 		</title>
 		
@@ -114,7 +114,16 @@
 			{% block body_block %}
 				<!--Body overwritten here by each page -->
 			{% endblock %}
-			
+			<div class="row">
+				<div class="col-12 col-8"></div>
+				<div class="col-12 col-4">
+					{% if user.is_authenticated %}
+						<a href="{% url 'spatulaApp:add_recipe' %}">
+							<img src="{% static 'images/newrecipe.png' %}" class="newrecipe">
+						</a>
+					{% endif %}
+				</div>
+			</div>
 			{% block javascript %}
 			{% endblock %}
 		</div>

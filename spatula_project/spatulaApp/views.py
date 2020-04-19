@@ -404,7 +404,7 @@ class ShowProfile(View):
 class RecipePage(View):
 
     context_dict = {
-            'user_pic': UserImage.objects.all(),
+            'user_pic': None,
     }
     form = CommentForm()
     recipe_cache = None
@@ -515,6 +515,7 @@ class RecipePage(View):
         self.context_dict['categories'] = Category.getModelsAsList()
         diet_choices = [choice[1] for choice in Recipe.DIET_CHOICES]
         self.context_dict['diet_choices'] = diet_choices
+        self.context_dict['user_pic'] = UserImage.objects.filter(belongsto=profile.id)
 
         self.fix_ratings()
         return render(request, 'spatula/recipe.html', context = self.context_dict)
