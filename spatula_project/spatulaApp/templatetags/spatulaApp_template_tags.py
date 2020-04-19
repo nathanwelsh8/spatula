@@ -1,5 +1,5 @@
 from django import template 
-from spatulaApp.models import Category, Recipe, Rating, UserProfile
+from spatulaApp.models import Category, Recipe, Rating, UserProfile, UserImage
 from django.contrib.auth.models import User
 from math import sqrt, log
 register = template.Library() 
@@ -114,8 +114,20 @@ def getNumRecipies(username):
         
 
 
-
-
+@register.filter
+def getProfilePicture(user):
+    try:
+        #handle object requests
+        return UserImage.objects.filter(belongsto=user)[0].image
+    except ValueError:
+        #handle string requests
+        return UserImage.objects.filter(belongsto=UserProfile.objects.get(user=User.objects.get(username=user)))[0].image
+    except UserImage.DoesNotExist:
+        return None
+    except User.DoesNotExist:
+        return None
+    except UserProfile.DoesNotExist:
+        return None
 
 
 

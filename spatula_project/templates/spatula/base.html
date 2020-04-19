@@ -70,7 +70,7 @@
 						-->
 						{% if user.is_authenticated %}
 							<div id="logged_in">
-							{% with user_pic|getKeyImg:user.username as image %}
+							{% with user.username|getProfilePicture as image %}
                             {% if image %}
                                 <a href="{% url 'spatulaApp:show_profile' user.username %}">
 				                    <img id="profilepic" src="../..{{MEDIA_URL}}{{image}}">

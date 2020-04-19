@@ -52,13 +52,17 @@ class Index(View):
         'recipies':"",# ajax will get the recipies when document is ready.
         'categories':Category.getModelsAsList,
         'diet_choices':Recipe.getChoicesAsList,
-        'recipe_images': RecipeImage.objects.all(),
+        'recipe_images': None ,#RecipeImage.objects.all(),
         'user_pic':None,
         'login_error_msg':None,
         'runPreSearch':True
         }
 
     def get(self, request, **kwargs):
+
+        if not self.recipe_cache:
+                self.recipe_cache = Recipe.objects.all()
+
         if kwargs.get('login_error_msg'):
             self.context_dict['login_error_msg'] =  kwargs['login_error_msg']
         else:
@@ -66,8 +70,6 @@ class Index(View):
 
         if 'search' in request.GET:
             # get users live search criteria
-            if not self.recipe_cache:
-                self.recipe_cache = Recipe.objects.all()
 
             self.context_dict['recipies'] = self.search(request, cache=self.recipe_cache)
 
@@ -85,7 +87,7 @@ class Index(View):
             self.context_dict['runPreSearch'] = True
 
         self.fix_ratings() # multiply by 2 so they are mapped to a stars rating
-        self.context_dict['recipe_images'] = RecipeImage.objects.all()  
+        self.context_dict['recipe_images'] = RecipeImage.objects.filter(belongsto__in=[x.id for x in self.recipe_cache])  
 
         if request.user.is_authenticated:
             _user_id = UserProfile.objects.get(user=request.user.id)
@@ -182,7 +184,7 @@ class Register(View):
 def add_recipe(request): 
     form = RecipeForm()
     context_dict = {
-            'user_pic': UserImage.objects.all(),
+            'user_pic': None,#UserImage.objects.all(),
     }
     ImageFormSet = modelformset_factory(RecipeImage, form=RecipeImageUploadForm, extra=2, min_num=1, max_num=3) # extra =3 --> user can upload 3 images of recipe
 
@@ -232,6 +234,7 @@ def add_recipe(request):
 
     context_dict['form'] = form
     context_dict['formset'] = ImageFormSet(queryset=RecipeImage.objects.none())
+    context_dict['user_pic'] = UserImage.objects.filter(belongsto=UserImage.objects.get(user=User.objects.get(username=request.user.username)))
     return render(request, 'spatula/add_recipe.html', context=context_dict)
 
 
@@ -499,11 +502,12 @@ class RecipePage(View):
 
 
         self.context_dict['recipe'] = self.recipe_cache
-        self.context_dict['user_images'] = UserImage.objects.all();
+        rating_objects = Rating.objects.filter(recipe=self.recipe_cache.id)
+        self.context_dict['user_images'] = UserImage.objects.filter(belongsto__in=[x.postedby for x in rating_objects]);
         # There may ve alot of comments and images so reduce load by 
         # only passing in images and comments relevent to this recipe
         self.context_dict['images'] = RecipeImage.objects.filter(belongsto=self.recipe_cache.id)
-        self.context_dict['reviews'] = Rating.objects.filter(recipe=self.recipe_cache.id)
+        self.context_dict['reviews'] = rating_objects
         self.context_dict['form'] = self.form
 
         # if there is a logged in user who 'owns' the recipe
