@@ -282,10 +282,7 @@ class ShowProfile(View):
             if self.context_dict['canEdit']:
                 self.context_dict['image_form'] = ProfileImageUploadForm()
             
-            
-            _user_id = UserProfile.objects.get(user=request.user.id)
-            self.context_dict['user_pic'] = UserImage.objects.filter(belongsto=_user_id.id)
-
+            #self.context_dict['user_pic'] = UserImage.objects.filter(belongsto=self.user_cache.id)
         except User.DoesNotExist:
             return redirect(reverse('spatulaApp:index'))
         except UserProfile.DoesNotExist:
@@ -312,7 +309,6 @@ class ShowProfile(View):
             return render(request, 'spatulaSearchAPI/results.html',self.context_dict)
 
         self.context_dict['user_pic'] = UserImage.objects.filter(belongsto=self.user_cache.id)
-        print("pic",self.context_dict['user_pic'])
         return render(request, 'spatula/profile.html', context=self.context_dict)
 
 
