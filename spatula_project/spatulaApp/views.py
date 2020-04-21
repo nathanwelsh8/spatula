@@ -521,6 +521,8 @@ class RecipePage(View):
         profile = recipe.postedby
 
         print(not self.context_dict.get('canEdit',False))
+
+        # allow for users who own pages to toggle between edit and normal view
         if not self.context_dict.get('canEdit',False) or request.user != profile.user:
             self.context_dict['canEdit'] = (request.user == profile.user) or request.user.is_superuser
 
@@ -531,7 +533,6 @@ class RecipePage(View):
 
         if 'toggle_edit_view' in request.GET:
             if request.user == profile.user:
-                self.context_dict['owns_page'] = True
                 self.context_dict['canEdit'] = not self.context_dict['canEdit']
 
         self.fix_ratings()

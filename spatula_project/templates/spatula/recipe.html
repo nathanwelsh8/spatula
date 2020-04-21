@@ -149,7 +149,7 @@
 				<hr/>
 				{% endfor %}
 				{% endwith %} 
-				{% if owns_page %}
+				{% if request.user.username|stringformat:'s' == recipe.postedby|stringformat:'s' %}
 					<div class="row">
 						<div class="col-12">
 							<input class="page_element btn btn-primary" type='submit' name='Update' value="Edit Recipe" onclick="toggle_edit_view('False');"/>

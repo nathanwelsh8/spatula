@@ -11,10 +11,14 @@ def getKeyImg(h,key):
         if type(h) == list:
             for i in h:
                 for j in i:
+                    if j is None:
+                        pass
                     if j.belongsto.__str__() == key.__str__():
                         return j.image
             
         for item in h:
+            if item is None:
+                pass 
             if item.belongsto.__str__() == key.__str__():
                 return item.image
     except AttributeError:
