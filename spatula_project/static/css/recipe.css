@@ -36,6 +36,10 @@ body{
 
 /**Desktop styling */
 @media screen and (min-device-width: 1024px){
+	.info_images{
+		width:24px;
+		height:24px;
+	}
 	.col-lg-8{
 		background-color: #FFFFFF;
 		position: relative;
@@ -252,6 +256,10 @@ body{
 	p{
 		font-size:2.2rem;
 	}
+	span{
+		font-size: 2.2rem;
+	}
+	
 	
 	hr{
 		margin-top: 3rem;
@@ -425,5 +433,11 @@ body{
 	#dietLabel{
 		margin-top:50px;
 	}
+
+	.info_images{
+		width:5rem;
+		height: 5rem;
+	}
+
 }
 

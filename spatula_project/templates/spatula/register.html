@@ -10,6 +10,11 @@
 	Register
 {% endblock %}
 
+{% block js_block %}
+	<script src="{% static 'js/register.js' %}"
+	type="text/javascript" charset="utf-8"></script>
+{% endblock %}
+
 {% block body_block %}
 	{% if not registered %}
 		<div class = "row">
@@ -18,7 +23,7 @@
 				<h1>Register for Spatula</h1>
 				<hr/>
 				<!--Register form styled using bootstrap -->
-				<form id="user_form" method="post" action="{% url 'spatulaApp:register' %}" enctype="multipart/form-data">
+				<form id="user_form" method="post" action="{% url 'spatulaApp:register' %}" enctype="multipart/form-data" autocomplete="off">
 					{% csrf_token %}
 
 					<!-- Display each form -->
@@ -53,13 +58,33 @@
 						</div>
 						{{ profile_form.bio}}
 					</div>
-
+					<div class="row">
+						<div class="col-4">
+							<button type="button"  class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;" data-target="#change_terms" >Terms and Conditions</button>
+						</div>
+						<div class="col-4">
+							<div class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input" id="terms_and_conditions" onclick="termsAccept(this);">
+								<label class="custom-control-label" for="terms_and_conditions">I agree to the terms and conditions</label>
+							</div>
+						</div>
+						<div class="col-4"></div>
+					</div>
 					<!-- Provide a button to click to submit the form. -->
-					<input class="form-control btn btn-primary" id = "button" type="submit" name="submit" value="Register" />
+					<input class="form-control btn btn-primary" id = "register_button" type="submit" name="submit" value="Register" onclick="disabledFeedback(this);" disabled/>
+					<label class="custom-control-input" id="button_feedback" for="terms_and_conditions"></label>
 				</form>
+				<div class = "row">
+					<div class="col">
+						<div class="row collapse"  id="change_terms">
+							{% include 'spatula/terms.html' %}
+						</div>
+					</div>
 			</div>
 			
 			<div class = "col-12 col-lg-4"></div>
+			
+			</div>
 		</div>
 	{% else %}
 		<strong>Thank you for registering!</strong>

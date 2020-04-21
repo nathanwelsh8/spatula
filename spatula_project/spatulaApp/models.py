@@ -20,8 +20,8 @@ class UserProfile(models.Model):
 
     user      = models.OneToOneField(User, on_delete=models.CASCADE)
     
-    bio  = models.TextField(blank=True)   
-    slug            = models.SlugField(unique=True, blank=True)
+    bio       = models.TextField(blank=True)   
+    slug      = models.SlugField(unique=True, blank=True)
 
     # users rating is calculated live when userinfo requested.
     # no user rating to be stored
@@ -64,6 +64,25 @@ class Recipe(models.Model):
                 (3,3),
     )
 
+    PORTION_SIZES = (
+        (1,1),
+        (2,2),
+        (3,3),
+        (4,4),
+        (5,'5+'),
+    )
+
+    COOKTIME_CHOICES = (
+        (5,"<15mins"),
+        (15,"15mins"),
+        (30,"30mins"),
+        (45,"45mins"),
+        (60,"1hr"),
+        (90,"1hr30mins"),
+        (120,"2hrs"),
+        (150,">2hrs"),
+    )
+
     name                   = models.CharField(max_length=NAME_MAX_LENGTH)
     ingredients            = models.TextField(max_length=MAX_TEXT_LENGTH)
     toolsreq               = models.TextField(max_length=MAX_TEXT_LENGTH)
@@ -75,7 +94,8 @@ class Recipe(models.Model):
     difficulty             = models.PositiveSmallIntegerField(choices=DIFFICULTY_CHOICES)
     cost                   = models.PositiveSmallIntegerField(choices=COST_CHOICES)
     diettype               = models.PositiveSmallIntegerField(choices=DIET_CHOICES)
-   
+    portionsize            = models.PositiveSmallIntegerField(choices=PORTION_SIZES, default=4)
+    cooktime               = models.PositiveSmallIntegerField(choices=COOKTIME_CHOICES, default=30)
     postedby               = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null = True)
 
     #  - Following fields are hidden when creating a new recipe
@@ -100,7 +120,17 @@ class Recipe(models.Model):
         recipe_query = Category.objects.values()
         repice_dict = {} 
    
-    
+    def getCooktimeAsList():
+        lst = []
+        for x in Recipe.COOKTIME_CHOICES:
+            lst.append([x[0],x[1]])
+        return lst
+
+    def getPortionsizeAsList():
+        lst = []
+        for x in Recipe.PORTION_SIZES:
+            lst.append([x[0],x[1]])
+        return lst
     # used for recipe mappings
     def save(self,*args, **kwargs):
         self.slug = slugify(str(self.name)+str(self.postedby))
@@ -108,6 +138,8 @@ class Recipe(models.Model):
     
     def get_absolute_url(self):
         return "/"+str(self.slug)+"/"
+    
+
 
 class Image(models.Model):
 

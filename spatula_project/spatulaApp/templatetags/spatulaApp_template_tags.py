@@ -118,18 +118,29 @@ def getNumRecipies(username):
 def getProfilePicture(user):
     try:
         #handle object requests
-        return UserImage.objects.filter(belongsto=user)[0].image
+        user_image = UserImage.objects.filter(belongsto=user)
+        if len(user_image) == 0:
+            raise IndexError("user does not have profile pic")
+        return user_image[0].image
+        
     except ValueError:
         #handle string requests
-        return UserImage.objects.filter(belongsto=UserProfile.objects.get(user=User.objects.get(username=user)))[0].image
+        user_image = UserImage.objects.filter(belongsto=UserProfile.objects.get(user=User.objects.get(username=user)))
+        if len(user_image) == 0:
+            return defaultImage()
+        return user_image[0].image
     except UserImage.DoesNotExist:
-        return None
+        return defaultImage()
     except User.DoesNotExist:
-        return None
+        return defaultImage()
     except UserProfile.DoesNotExist:
-        return None
+        return defaultImage()
+    except IndexError as err:
+        return defaultImage()
+    
 
-
+def defaultImage():
+    return UserImage.objects.get(belongsto=UserProfile.objects.get(user=User.objects.get(username="default_user"))).image
 
     
 

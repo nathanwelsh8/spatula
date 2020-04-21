@@ -30,3 +30,8 @@
 	}
 
 }
+
+#change_terms{
+	height: 25vh;
+	overflow-y: scroll;
+}

@@ -1,82 +1,132 @@
-<div id = "recipe_info_edit" class = "row" >
-	<h1 id="recipe_name" style = "float:none" class = "col-lg-12">{{ recipe.name }}</h1>
-	
-	<h2 class = "col-lg-12">Edit:</h2>
-	<!-- Display the category input -->
-	<div class = " col-4 col-lg-3">
-		<p class = "form-check-label">Category</p>
-		<select id= "edit_category" form="recipe_form">
-		{% for cat in categories %}
-			{% if cat == recipe.category|cut:"Category object ("|cut:")" %}
-				<option value= {{cat}} selected>{{cat}}</option>
-			{% else %}
-				<option value= {{cat}}>{{cat}}</option>
-			{% endif %}
-		{% endfor %}
-		</select>
-	</div>
-	<!-- Display the difficulty input-->
-	<div class = "col-8 col-lg-5">
-		<div id = "difficulty_input">
-			<p class = "form-check-label">Difficulty</p>
-			<select id= "edit_difficulty" form="recipe_form" class= "form-check-inline">
-				<option value = "1">Easy</option>
-				<option value = "2">Challenging</option>
-				<option value = "3">Difficult</option>
-			</select>
-		</div>
-		<!-- Display the cost input-->
-		<p class = "form-check-label">Cost</p>
-			<select id= "edit_cost" form="recipe_form" class= "form-check-inline" type="range" min="1" max="3">
-				<option value = "1">£</option>
-				<option value = "2">££</option>
-				<option value = "3">£££</option>
-			</select>
-	</div>
-	<!-- Display the diet choice input-->
-	<div class = "col-12 col-lg-4">
-		<p class = "form-check-label" id="dietLabel">Diet</p>
-		<div class="form-check form-check-inline">
-			<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="1" checked>
-			<label class="form-check-label" for="exampleRadios1">
-				Meat
-			</label>
-		</div>
-		<div class="form-check form-check-inline">
-			<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="2">
-			<label class="form-check-label" for="exampleRadios2">
-				Veg
-			</label>
-		</div>
-		<div class="form-check form-check-inline">
-			<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="3">
-			<label class="form-check-label" for="exampleRadios3">
-				Vegan
-			</label>
-		</div>
-	</div>
-</div>
-
 <div id = "document_container_main">
-	<hr/>
+	<div class="row">
+		<div class="col-12"><h1 class="text-center">Edit: {{ recipe.name }}</h1></div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<hr/>
+		</div>
+	</div>
+	<div class="row">
+		<!-- Display the category input -->
+		<div class = "col-4">
+			<p class = "form-check-label">Category</p>
+			<select id= "edit_category" form="recipe_form">
+			{% for cat in categories %}
+				{% if cat == recipe.category|cut:"Category object ("|cut:")" %}
+					<option value= {{cat}} selected>{{cat}}</option>
+				{% else %}
+					<option value= {{cat}}>{{cat}}</option>
+				{% endif %}
+			{% endfor %}
+			</select>
+		</div>
+			<!-- Display the difficulty input-->
+		<div class = "col-4">
+			<div id = "difficulty_input">
+				<p class = "form-check-label">Difficulty</p>
+				<select id= "edit_difficulty" form="recipe_form" class= "form-check-inline">
+					<option value = "1">Easy</option>
+					<option value = "2">Challenging</option>
+					<option value = "3">Difficult</option>
+				</select>
+			</div>
+		</div>
+		
+		<!-- Display the diet choice input-->
+		{% if diet_choices %}
+		<div class = "col-4" id="diet_input">
+			<p class = "form-check-label" id="dietLabel">Diet</p>
+			{% for diet in diet_choices %}
+			<div class="form-check form-check-inline">
+				{% if recipe.diettype == forloop.counter %}
+					<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="{{forloop.counter}}" checked>
+				{% else %}
+					<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="{{forloop.counter}}"  >
+				{% endif %}
+				
+				<label class="form-check-label" for="exampleRadios1">
+					{{diet}}
+				</label>
+			</div>
+			{% endfor %}
+		</div>
+		{% endif %}
+	</div>
+	<div class="row">
+		<!-- Display the cost input-->
+		<div id="cost_input" class="col-4">
+			<p class = "form-check-label">Cost</p>
+				<select id= "edit_cost" form="recipe_form" class= "form-check-inline" type="range" min="1" max="3">
+					<option value = "1">£</option>
+					<option value = "2">££</option>
+					<option value = "3">£££</option>
+				</select>
+		</div>
+		{% if cooktime_choices %}
+			<div class="col-4">
+				<p class = "form-check-label">Cooktime</p>
+				
+				<select id= "edit_cooktime" form="recipe_form" class= "form-check-inline" type="range" min="1" max="{{cooktime_choices|length}}">
+					{% for x in cooktime_choices %}
+						<option value="{{x.0}}">{{x.1}}</option>
+					{% endfor %}
+				</select>
+			</div>
+		{% endif %}
+		{% if portionsize_choices %}
+			<div class="col-4">
+				<p class = "form-check-label">Portion size</p>
+				<select id= "edit_portionsize" form="recipe_form" class= "form-check-inline" type="range" min="1" max="{{portionsize_choices|length}}">
+					{% for x in portionsize_choices %}
+						<option value="{{x.0}}">{{x.1}}</option>
+					{% endfor %}
+				</select>
+			</div>
+		{% endif %}
+	</div>
+	<div class="row"><div class="col-12"><hr/></div></div>
+	<div class="row">
+		<div class="col-12">
+			<!-- Display the tools required input-->
+			<h2>Tools Required</h2>
+				<textarea id="edit_tools" form="recipe_form">{{ recipe.toolsreq }}</textarea>
+			<hr/>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<!-- Display the ingredients input -->
+			<h2>Ingredients</h2>
+			<textarea id="edit_ingredients" form="recipe_form">{{ recipe.ingredients }}</textarea>
+			<hr/>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<!-- Display the method input -->
+			<h2>Method</h2>
+			<textarea id="edit_method" form="recipe_form" class="col-12" style="padding-left: 0%;">{{ recipe.method }}</textarea>
+		</div>
+	</div>
 	{% csrf_token %}
+	<div class="row">
+		<div class="col-12">
+			<hr/>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<!-- Display a submit button to save changes -->
+			<input class="page_element btn btn-primary" type='submit' name='Update' value="Save Changes" onclick="update_recipe();"/>
+			<p class="page_element" id="recipe_success_msg"></p>
+		</div>	
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<p></p>
+			<input class="page_element btn btn-primary" type='submit' name='Update' value="View Recipe" onclick="toggle_edit_view('True');"/>
+		</div>
 
-	<!-- Display the tools required input-->
-	<h2>Tools Required</h2>
-		<textarea id="edit_tools" form="recipe_form">{{ recipe.toolsreq }}</textarea>
-	<hr/>
-
-	<!-- Display the ingredients input -->
-	<h2>Ingredients</h2>
-		<textarea id="edit_ingredients" form="recipe_form">{{ recipe.ingredients }}</textarea>
-	<hr/>
-
-	<!-- Display the method input -->
-	<h2>Method</h2>
-		<textarea id="edit_method" form="recipe_form">{{ recipe.method }}</textarea>
-	<hr/>
-
-	<!-- Display a submit button to save changes -->
-	<input class="page_element btn btn-primary" type='submit' name='Update' value="Save Changes" onclick="update_recipe();"/>
-	<p class="page_element" id="recipe_success_msg"></p>
+	</div>
 </div>

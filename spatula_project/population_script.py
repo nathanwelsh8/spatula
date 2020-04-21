@@ -18,6 +18,7 @@ def populate():
     users = [
         {'username': 'bob777', 'password': 'b3B123456', 'bio': 'Hi Im bob and i like cooking'},
         {'username': 'crazyman4', 'password': 'b3B123456', 'bio': 'I like cooking and getting crazy'},
+        {'username': 'default_user', 'password': 'b3B123456', 'bio': 'None'},
     ]
 
     categories = [
@@ -47,6 +48,7 @@ def populate():
 
     bob = UserProfile.objects.get(user=User.objects.get(username='bob777'))
     crazyman = UserProfile.objects.get(user=User.objects.get(username='crazyman4'))
+    default_user = UserProfile.objects.get(user=User.objects.get(username='default_user'))
     recipies = {
         'Vegan Chilli':
         {
@@ -141,7 +143,8 @@ def populate():
     
     userImages = [
         {'image': 'userImage2.jpg' , 'belongsto': bob},
-        {'image': 'userImage1.jpg', 'belongsto': crazyman}
+        {'image': 'userImage1.jpg', 'belongsto': crazyman},
+        {'image':'profile.png','belongsto':default_user}
     ]
     print("Adding Profile Images:")
     for image in userImages:

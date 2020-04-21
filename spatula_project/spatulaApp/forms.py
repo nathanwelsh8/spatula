@@ -15,17 +15,18 @@ class RecipeForm(forms.ModelForm):
         super(RecipeForm, self).__init__(*args, **kwargs)
 
     #input fields for recipe form
-    method = forms.CharField(max_length=512, widget=forms.Textarea(attrs={'placeholder':'Method - Please Take a new line for each step.'}))
-    name = forms.CharField(max_length=128, widget=forms.TextInput(attrs={'placeholder':'Recipe Name'}))
-    ingredients = forms.CharField(max_length=512, widget=forms.Textarea(attrs={'placeholder':'Ingredients - Please take a new line for each ingredient.'}))
+    method = forms.CharField(max_length=512, widget=forms.Textarea(attrs={'placeholder':'Method - Please Take a new line for each step.','class':'form-control','autocomplete':'off'}))
+    name = forms.CharField(max_length=128, widget=forms.TextInput(attrs={'placeholder':'Recipe Name','class':'form-control','autocomplete':'off'}))
+    ingredients = forms.CharField(max_length=512, widget=forms.Textarea(attrs={'placeholder':'Ingredients - Please take a new line for each ingredient.','class':'form-control','autocomplete':'off'}))
 
     category = NameChoiceField(widget=forms.Select(), queryset =Category.objects.all(), initial = 0)
 
-    toolsreq = forms.CharField(max_length=512, widget=forms.TextInput(attrs={'placeholder':'Tools Required'}))
+    toolsreq = forms.CharField(max_length=512, widget=forms.TextInput(attrs={'placeholder':'Tools Required','autocomplete':'off'}))
     difficulty = forms.ChoiceField(choices = ((1,'Basic'), (2,'Challenging'), (3, 'Difficult')), help_text = 'Difficulty: ')
     cost = forms.ChoiceField(choices = ((1, '£'), (2, '££'), (3, '£££')), help_text = 'Cost: ')
     diettype = forms.IntegerField(widget=forms.RadioSelect(choices=DIET_CHOICES))
-
+    cooktime = forms.ChoiceField(choices=Recipe.COOKTIME_CHOICES, help_text="Time to cook:", widget=forms.Select(attrs={'class':'form-control'}))
+    portionsize = forms.ChoiceField(choices=Recipe.PORTION_SIZES, help_text="Portion size:", widget=forms.Select(attrs={'class':'form-control'}))
     # not required as its not stored in DB
     #description = forms.CharField(widget=forms.Textarea(attrs={'placeholder':'Description'}))
     
@@ -36,7 +37,7 @@ class RecipeForm(forms.ModelForm):
     postedby = forms.SlugField(widget=forms.HiddenInput(),required=False)
     
     #Order in which inputs get rendered
-    field_order = ['name', 'category', 'toolsreq', 'difficulty', 'cost', 'diettype', 'ingredients', 'method']
+    field_order = ['name', 'category', 'toolsreq', 'difficulty', 'cost', 'diettype', 'cooktime', 'portionsize' , 'ingredients', 'method']
    
     class Meta: 
         model = Recipe
@@ -47,11 +48,22 @@ class RecipeForm(forms.ModelForm):
 
 class UserForm(forms.ModelForm):
     username = forms.CharField(max_length=150,
-                               widget=forms.TextInput(attrs={'placeholder': 'Username', 'id': 'register_username', 'class':'form-control'}),
+                               widget=forms.TextInput(
+                                   attrs={'placeholder': 'Username',
+                                    'id': 'register_username',
+                                    'class':'form-control',
+                                    'autocomplete':'off',
+                                    }),
                                label='')
     password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password', 'id': 'register_password','class':'form-control'}),
                                label='')
-    email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder':'i-love-cooking@gmail.com','id':'register_email','class':'form-control'}), label='')
+    email = forms.EmailField(widget=forms.TextInput(
+        attrs={'placeholder':'i-love-cooking@gmail.com',
+        'id':'register_email',
+        'class':'form-control',
+        'autocomplete':'off',
+        }),
+         label='')
 
     class Meta:
         model = User
@@ -61,7 +73,12 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
   
     bio = forms.CharField(
-        widget=forms.Textarea(attrs={'placeholder': 'Your bio - tell others about yourself...', 'id': 'bio', 'class':'form-control rounded-0'}), label='')
+        widget=forms.Textarea(attrs={'placeholder': 'Your bio - tell others about yourself...',
+         'id': 'bio',
+         'class':'form-control rounded-0',
+         'autocomplete':'off',
+         'value':'&#8;'}),
+         label='')
 
     class Meta:
         model = UserProfile

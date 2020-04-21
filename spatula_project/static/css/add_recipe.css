@@ -31,6 +31,12 @@ input#id_difficulty{
 	font-size:18px;
 }
 
+input#id_cooktime{
+	font-size:18px;
+}
+input#id_portionsize{
+	font-size:18px;
+}
 #images{
 	padding-top:10px;
 }

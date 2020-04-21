@@ -130,3 +130,17 @@ function openNav() {
 }
 
 
+function tempDisplayMessage(id,content="", contentAfter="",time=2000, remainVisible){
+    if (id){
+        $("#"+id).html(content);
+            document.getElementById(id).style.visibility = 'visible';
+
+            setTimeout(function(){
+                if (remainVisible == false){
+                    document.getElementById(id).style.visibility = 'hidden';
+                }
+                $("#"+id).html(contentAfter);
+            }, time);
+
+    }
+}

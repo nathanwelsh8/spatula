@@ -234,7 +234,7 @@ def add_recipe(request):
 
     context_dict['form'] = form
     context_dict['formset'] = ImageFormSet(queryset=RecipeImage.objects.none())
-    context_dict['user_pic'] = UserImage.objects.filter(belongsto=UserImage.objects.get(user=User.objects.get(username=request.user.username)))
+    context_dict['user_pic'] = UserImage.objects.filter(belongsto=UserProfile.objects.get(user=User.objects.get(username=request.user.username)))
     return render(request, 'spatula/add_recipe.html', context=context_dict)
 
 
@@ -291,7 +291,6 @@ class ShowProfile(View):
         except UserProfile.DoesNotExist:
             return redirect(reverse('spatulaApp:index'))
         except UserImage.DoesNotExist:
-            print("user has no profile pic")
             self.context_dict['profile_pic'] = None # users has no profile pic so use default
 
 
@@ -372,9 +371,9 @@ class ShowProfile(View):
                     UserProfile.objects.get(id=self.user_cache.id).delete()
                     User.objects.get(username=request.user).delete()
                 except UserProfile.DoesNotExist:
-                    print("Profile not exist") # log to error logs
+                   pass # log to error logs
                 except User.DoesNotExist:
-                    print("User object not exist")
+                    pass
                 finally:
                     return redirect(reverse('spatulaApp:index'))
 
@@ -383,7 +382,7 @@ class ShowProfile(View):
                 try:
                     Recipe.objects.get(id=int(request.POST['delete_recipe'])).delete()
                 except Recipe.DoesNotExist:
-                    print("recipe DNE")
+                    pass
                 finally:
                     return HttpResponse(request,"");
         elif request.POST.get('update_password',None):
@@ -408,7 +407,11 @@ class RecipePage(View):
 
     context_dict = {
             'user_pic': None,
+            'diet_choices':Recipe.getChoicesAsList,
+            'cooktime_choices':Recipe.getCooktimeAsList,
+            'portionsize_choices':Recipe.getPortionsizeAsList,
     }
+
     form = CommentForm()
     recipe_cache = None
     user_cache = None
@@ -424,36 +427,38 @@ class RecipePage(View):
             self.context_dict['recipe'].rating = str(0)
     
     def post(self,request, recipe_slug_name):
+
+        if self.recipe_cache is None:
+            self.recipe_cache = Recipe.objects.get(slug = recipe_slug_name)
         
-        # deal with POST requests that want to
+        # deal with AJAX POST requests that want to
         # edit an existing recipe
         if request.POST.get('update_recipe', False):
-            recipe = Recipe.objects.get(slug=recipe_slug_name)
-            recipe.difficulty = request.POST['difficulty']
-            recipe.cost = request.POST['cost']
-            recipe.method = request.POST['method']
-            recipe.ingredients = request.POST['ingredients']
-            recipe.toolsreq = request.POST['tools']
-            recipe.category = Category.objects.get(name=request.POST['category'])
-            # recipe.diettype = request.POST['diet']
-            recipe.save()
-            return redirect(reverse('spatulaApp:index'))
+           
+            self.recipe_cache.difficulty = int(request.POST.get('difficulty',1))
+            self.recipe_cache.cost = int(request.POST.get('cost',1))
+            self.recipe_cache.method = request.POST.get('method',"")
+            self.recipe_cache.ingredients = request.POST.get('ingredients',"")
+            self.recipe_cache.toolsreq = request.POST.get('tools',"")
+            self.recipe_cache.category = Category.objects.get(name=request.POST.get('category','Italian'))
+            self.recipe_cache.diettype = int(request.POST.get('diet',1))
+            self.recipe_cache.cooktime = int(request.POST.get('cooktime',1))
+            self.recipe_cache.portionsize = int(request.POST.get('portionsize',1))
+            self.recipe_cache.save()
+            
+            self.context_dict['recipe'] = self.recipe_cache
+            return HttpResponse("")
 
 
         form = CommentForm(request.POST)
-        if self.recipe_cache is None:
-                    self.recipe_cache = Recipe.objects.get(slug = recipe_slug_name)
 
         if form.is_valid(): 
-
             comment = form.save(commit=False)
             existingComments = Rating.objects.filter(recipe=self.recipe_cache.id )
-            
             try:
                 if self.user_cache is None:
                     self.user_cache = UserProfile.objects.get(user=User.objects.get(username=request.user))
             except UserProfile.DoesNotExist:
-                print("Admin has not linked their user profile!")
                 return render(request, 'spatula/recipe.html')
 
             # existing reviews, was one posted by our user?
@@ -499,8 +504,7 @@ class RecipePage(View):
         
         if 'search' in request.GET:
             return redirect(reverse( 'spatulaApp:index'))
-
-
+        
         self.context_dict['recipe'] = self.recipe_cache
         rating_objects = Rating.objects.filter(recipe=self.recipe_cache.id)
         self.context_dict['user_images'] = UserImage.objects.filter(belongsto__in=[x.postedby for x in rating_objects]);
@@ -515,11 +519,20 @@ class RecipePage(View):
         # let them make edits too ;)
         recipe = Recipe.objects.get(slug=recipe_slug_name)
         profile = recipe.postedby
-        self.context_dict['canEdit'] = (request.user == profile.user) or request.user.is_superuser
+
+        print(not self.context_dict.get('canEdit',False))
+        if not self.context_dict.get('canEdit',False) or request.user != profile.user:
+            self.context_dict['canEdit'] = (request.user == profile.user) or request.user.is_superuser
+
         self.context_dict['categories'] = Category.getModelsAsList()
         diet_choices = [choice[1] for choice in Recipe.DIET_CHOICES]
         self.context_dict['diet_choices'] = diet_choices
         self.context_dict['user_pic'] = UserImage.objects.filter(belongsto=profile.id)
+
+        if 'toggle_edit_view' in request.GET:
+            if request.user == profile.user:
+                self.context_dict['owns_page'] = True
+                self.context_dict['canEdit'] = not self.context_dict['canEdit']
 
         self.fix_ratings()
         return render(request, 'spatula/recipe.html', context = self.context_dict)

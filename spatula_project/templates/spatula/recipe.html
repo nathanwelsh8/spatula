@@ -92,6 +92,12 @@
 			<img src="{% static image_static %}" class="reciperating">
 			{%endwith%}{%endwith%}
 		</div>
+		<div class='row'>
+			<div class='col'><img class="info_images" src="{% static 'images/timer.svg' %}"  /><span>{% if recipe.cooktime == 5 %}under 15{% elif recipe.cooktime == 150 %}90+{% else %}{{recipe.cooktime}}{% endif %}mins</span></div>
+			<div class='col'><img class="info_images" src="{% static 'images/cutlery.svg' %}"/><span>{{recipe.portionsize}}</span></div>
+			<div class="col-10"></div>
+			
+		</div>
 		
 		<!-- Main body of recipe: Toolsreq, Ingredients and method -->
 		<div id = "document_container_main">
@@ -143,6 +149,13 @@
 				<hr/>
 				{% endfor %}
 				{% endwith %} 
+				{% if owns_page %}
+					<div class="row">
+						<div class="col-12">
+							<input class="page_element btn btn-primary" type='submit' name='Update' value="Edit Recipe" onclick="toggle_edit_view('False');"/>
+						</div>
+					</div>
+				{% endif %}
 				<div class = "addcomment">
 				
 					<!-- users have to be logged in to leave reviews -->

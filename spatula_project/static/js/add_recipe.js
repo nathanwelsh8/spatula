@@ -8,7 +8,12 @@ function setClasses() {
 	var difficulty = document.getElementById("id_difficulty");
 	var ingredients = document.getElementById("id_ingredients");
 	var method = document.getElementById("id_method");
-	
+	var id_form_0 = document.getElementById("id_form-0-image");
+	var id_form_1 = document.getElementById("id_form-1-image");
+	var id_form_2 = document.getElementById("id_form-2-image");
+
+
+
 	name.classList.add("form-control");
     category.classList.add("form-control");
     toolsreq.classList.add("form-control");
@@ -17,5 +22,8 @@ function setClasses() {
 	diettype.classList.add("form-control");
 	ingredients.classList.add("form-control");
 	method.classList.add("form-control");
+	id_form_0.classList.add("form-control-file")
+	id_form_1.classList.add("form-control-file")
+	id_form_2.classList.add("form-control-file")
 }
 window.onload=setClasses;

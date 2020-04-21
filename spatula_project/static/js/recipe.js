@@ -9,8 +9,13 @@ function update_recipe(){
     var method = $('#edit_method').val();
 
     // this is not the correct way to find the diet choice but using it to bug fix
-    var diet = $('#edit_category option:selected').val();
+    var diet =  $('input:radio[name=exampleRadios]:checked').val()
     var category = $('#edit_category option:selected').val();
+    var portion = $('#edit_portionsize option:selected').val();
+    var cooktime = $('#edit_cooktime option:selected').val();
+
+
+
     $.post(window.location.href,
         {
             'csrfmiddlewaretoken': csrf,
@@ -18,6 +23,8 @@ function update_recipe(){
             'difficulty': difficulty,
             'cost': cost,
             'diet': diet,
+            'portionsize':portion,
+            'cooktime':cooktime,
             'category': category,
             'tools': tools,
             'ingredients': ingredients,
@@ -35,4 +42,21 @@ function update_recipe(){
             }, 2000);
         } 
         );
+}
+
+function toggle_edit_view(bool){
+    $.get(window.location.href,
+        {
+            'toggle_edit_view':true,
+            'csrfmiddlewaretoken': $('input:hidden[name=csrfmiddlewaretoken]').val(),
+
+    },
+    function(htmldata){
+        window.location.href = window.location.href + "?toggle_edit_view="+bool;
+        if (bool =="False"){
+            window.location.href = window.location.href.replace(window.location.search,'');
+        }
+        
+    }
+    );
 }

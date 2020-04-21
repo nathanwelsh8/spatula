@@ -24,12 +24,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = SECRET_KEY.getKey() #'jqgx(=a6iw+2hwtu4(!4yg!y=)3_x7=p@tp_y9=n%h8(o=bez-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # Will need to remove http://127.0.0.1:8000/ before production, but necessary for testing
 ALLOWED_HOSTS = ['nathanwelsh8.pythonanywhere.com',
                  '127.0.0.1',
-                 'localhost']
+                 'localhost',
+                 '192.168.1.10']
 
 # DIRS
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
@@ -47,6 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
     'spatulaApp',
 ]
 
@@ -156,3 +159,6 @@ MEDIA_URL = '/media/'
 
 IMAGES_DIR = os.path.join(MEDIA_URL,"images")
 
+# if SiteID DNE
+#need to add a site object via shell
+SITE_ID = 2

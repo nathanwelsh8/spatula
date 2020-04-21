@@ -23,8 +23,10 @@ We plan to add these features in the future, after the project is assessed.
 - [x] Users can change their passwords 
 - [x] Users can delete their recipes
 - [x] Users can add a recipe from any page
+- [x] Time taken to cook
+- [x] Portion sizes
 - [ ] forgot password recovery system
-- [ ] Popup alert to be displayed on homepage
+- [ ] Popup alert to be displayed on homepage(each page, cookies to do this)
 - [ ] Users who have a 9.0/10.0 rating, and above, get special privelages / rewards - flag bad posts for review 
 - [ ] Can follow other users/ get updates when they post new content
 - [ ] Make a reccomendations system for logged in users

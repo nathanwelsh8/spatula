@@ -23,7 +23,7 @@
 {% block body_block %}
 	<div class = "recipe_form">
 		<!-- add_recipe form -->
-		<form id="recipe_form" method="post" action=" {% url 'spatulaApp:add_recipe' %} ", enctype="multipart/form-data">
+		<form id="recipe_form" method="post" action=" {% url 'spatulaApp:add_recipe' %} " enctype="multipart/form-data">
 			{% csrf_token %}
 			{% for field in form.visible_fields %} 
 				<!-- Display recipe stat fields inline using bootstap grids-->
@@ -71,6 +71,25 @@
 							</div>
 						</div>
 					</div>
+				{% elif field.name == "cooktime" %}
+				</div>	
+				
+				<div class="row">
+					<div class = "col-6 col-lg">
+						<div id = "{{ field.name }}">
+							{{ field.errors }}
+							{{ field.help_text }} 
+							{{ field }}
+						</div>
+					</div>
+					{% elif field.name == "portionsize" %}
+					<div class = "col-6 col-lg">
+						<div id = "{{ field.name }}">
+							{{ field.errors }}
+							{{ field.help_text }} 
+							{{ field }}
+						</div>
+					</div>
 				</div>
 				{%else%}
 					<div id = "{{ field.name }}">
@@ -86,13 +105,12 @@
 			<div class = "row" id="images"> 
 			{% for form in formset %}
 				<div class = "col">
-					{{ form }}
+						{{ form }}
 				</div>
 			{% endfor %}
 			</div>
 			<input type="submit" name="submit" id="submit" value="Submit Recipe" />
 		</form>
-
 	</div>
 {% endblock %}
 	

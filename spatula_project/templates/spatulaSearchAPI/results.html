@@ -32,8 +32,13 @@
         {% endfor %}
     {% else %}
 		<!-- if no recipes found display hyerlink to add recipe page or login page -->
-        <p class="page_element">Hmm theres nothing to show. <br/>
-        Why not{% if not user.is_authenticated %} login to add {% else %} <a href="{% url 'spatulaApp:add_recipe' %}"><strong>add</strong></a> {% endif %}a recipe!</p>
+		<p class="page_element">Hmm theres nothing to show. <br/>
+			{% if user.is_authenticated %}
+				Why not<a href="{% url 'spatulaApp:add_recipe' %}"><strong> add </strong></a>a recipe!
+			{% else %}
+				Why not login or <a href="{% url 'spatulaApp:register' %}"><strong>register</strong></a> to post a recipe!
+			{% endif %}
+		</p>
     {% endif %}
        
 {% endblock %}
