@@ -13,6 +13,20 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
+
+{% block meta_block %}
+	<meta name="keywords" content="recipe, cooking, social, spatula, spatu-la,recipes, spatula!,{{recipe.name}},{{recipe.postedby}}">
+    <meta name="description" content="Learn how to make {{recipe.postedby}}'s recipe {{recipe.name}} on Spatula!">
+	<meta property="og:title" content="Learn how to make {{recipe.name}}" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="{% url 'spatulaApp:register' %}" />
+	<meta property="og:image" content="{% static 'images/spatula.png' %}" />
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="@nathanwelsh8">
+	<meta name="twitter:title" content="Learn how to make {{recipe.name}}}">
+	<meta name="twitter:description" content="{{recipe.postedby}}'s recipe looks pretty good. Check it out:'">	
+{% endblock %}
+
 {% block js_block %}
 	<!-- JS for recipe page -->
 	<script src="{% static 'js/recipe.js' %}"
@@ -20,6 +34,8 @@
 
 
 {% endblock %}
+
+
 
 {% block body_block %}
 

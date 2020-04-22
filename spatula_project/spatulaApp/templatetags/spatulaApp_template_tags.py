@@ -7,6 +7,8 @@ register = template.Library()
 @register.filter
 def getKeyImg(h,key):
     "Gets the image for display recipe on index page"
+    if h is None:
+        return defaultImage()
     try:
         if type(h) == list:
             for i in h:
@@ -15,14 +17,14 @@ def getKeyImg(h,key):
                         pass
                     if j.belongsto.__str__() == key.__str__():
                         return j.image
-            
+        
         for item in h:
             if item is None:
                 pass 
             if item.belongsto.__str__() == key.__str__():
                 return item.image
     except AttributeError:
-        return None
+        return defaultImage()
 
         
 @register.filter

@@ -24,12 +24,20 @@
 {% endblock %}
 
 {% block meta_block %}
-    <meta name="keywords" content="Recipe, cooking, social, Spatula, spatu-la, ">
-    <meta name='description' content="A social platform to learn new cooking recipes and share your own.">
+    <meta name="keywords" content="recipe, cooking, social, spatula, spatu-la,recipes, spatula!">
+    <meta name="description" content="Learn new cooking recipes and share your own food ideas with others.">
+    <meta property="og:title" content="Browse recipes on Spatula!" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="{% url 'spatulaApp:register' %}" />
+	<meta property="og:image" content="{% static 'images/spatula.png' %}" />
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="@nathanwelsh8">
+	<meta name="twitter:title" content="Browse food creations and recipes on Spatula!">
+	<meta name="twitter:description" content="Browse and learn new cooking recipes; Share your own food ideas with others">	
+
 {% endblock %}
 
 {% block title_block %}
-    Index
 {% endblock %}
 
 {% block body_block %}

@@ -7,9 +7,21 @@
 {% endblock %}
 
 {% block title_block %}
-	Register
+	Create an account to interact with other users
 {% endblock %}
+{% block meta_block %}
+	<meta name="keywords" content="sign up,register,member,create,food,share">
+	<meta name="description" content="Sign up to Spatula! and become a registered member who can share their food creations with others around the world!">
 
+	<meta property="og:title" content="Create a Spatula! account" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="{% url 'spatulaApp:register' %}" />
+	<meta property="og:image" content="{% static 'images/spatula.png' %}" />
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="@nathanwelsh8">
+	<meta name="twitter:title" content="Join Spatula!">
+	<meta name="twitter:description" content="Get started on Spatula! by creating an account">	
+{% endblock %}
 {% block js_block %}
 	<script src="{% static 'js/register.js' %}"
 	type="text/javascript" charset="utf-8"></script>
@@ -20,7 +32,7 @@
 		<div class = "row">
 			<div class = "col-12 col-lg-4"></div>
 			<div class = "col-12 col-lg-4">
-				<h1>Register for Spatula</h1>
+				<h1>Create a Spatula! account</h1>
 				<hr/>
 				<!--Register form styled using bootstrap -->
 				<form id="user_form" method="post" action="{% url 'spatulaApp:register' %}" enctype="multipart/form-data" autocomplete="off">
