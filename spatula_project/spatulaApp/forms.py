@@ -15,17 +15,18 @@ class RecipeForm(forms.ModelForm):
         super(RecipeForm, self).__init__(*args, **kwargs)
 
     #input fields for recipe form
-    method = forms.CharField(max_length=512, widget=forms.Textarea(attrs={'placeholder':'Method - Please Take a new line for each step.','class':'form-control','autocomplete':'off'}))
-    name = forms.CharField(max_length=128, widget=forms.TextInput(attrs={'placeholder':'Recipe Name','class':'form-control','autocomplete':'off'}))
-    ingredients = forms.CharField(max_length=512, widget=forms.Textarea(attrs={'placeholder':'Ingredients - Please take a new line for each ingredient.','class':'form-control','autocomplete':'off'}))
+    method = forms.CharField(max_length=2**13, widget=forms.Textarea(attrs={'placeholder':'Method - Please Take a new line for each step. Other users are morelikely to read your recipe this way.','class':'form-control','autocomplete':'off'}))
+    name = forms.CharField(max_length=128, widget=forms.TextInput(attrs={'placeholder':'Something delicious, that will grab users attention','class':'form-control','autocomplete':'off'}))
+    ingredients = forms.CharField(max_length=512, widget=forms.Textarea(attrs={'placeholder':'Ingredients - Please take a new line for each ingredient. Users will find it easier to read.',
+        'class':'form-control','autocomplete':'off'}))
 
     category = NameChoiceField(widget=forms.Select(), queryset =Category.objects.all(), initial = 0)
 
     toolsreq = forms.CharField(max_length=512, widget=forms.TextInput(attrs={'placeholder':'Tools Required','autocomplete':'off'}))
-    difficulty = forms.ChoiceField(choices = ((1,'Basic'), (2,'Challenging'), (3, 'Difficult')), help_text = 'Difficulty: ')
+    difficulty = forms.ChoiceField(choices = ((1,'Easy'), (2,'Challenging'), (3, 'Technical')), help_text = 'Difficulty: ')
     cost = forms.ChoiceField(choices = ((1, '£'), (2, '££'), (3, '£££')), help_text = 'Cost: ')
     diettype = forms.IntegerField(widget=forms.RadioSelect(choices=DIET_CHOICES))
-    cooktime = forms.ChoiceField(choices=Recipe.COOKTIME_CHOICES, help_text="Time to cook:", widget=forms.Select(attrs={'class':'form-control'}))
+    cooktime = forms.ChoiceField(choices=Recipe.COOKTIME_CHOICES, help_text="Time to cook (Approx):", widget=forms.Select(attrs={'class':'form-control'}))
     portionsize = forms.ChoiceField(choices=Recipe.PORTION_SIZES, help_text="Portion size:", widget=forms.Select(attrs={'class':'form-control'}))
     # not required as its not stored in DB
     #description = forms.CharField(widget=forms.Textarea(attrs={'placeholder':'Description'}))

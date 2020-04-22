@@ -86,7 +86,7 @@ class Recipe(models.Model):
     name                   = models.CharField(max_length=NAME_MAX_LENGTH)
     ingredients            = models.TextField(max_length=MAX_TEXT_LENGTH)
     toolsreq               = models.TextField(max_length=MAX_TEXT_LENGTH)
-    method                 = models.TextField()
+    method                 = models.TextField(max_length=2**13)
 
     # make sure the form views for difficulty, 
     # cost and diettype datatypes restrict the 
@@ -148,7 +148,7 @@ class Image(models.Model):
 
     
     def resize(self):
-        im = PIL.Image.open(self.image.path) # use path for pythonanywhere
+        im = PIL.Image.open(self.image.path) # use path
 
         new_width,new_height=(600,600)
         width, height = im.size   # Get dimensions
@@ -160,12 +160,18 @@ class Image(models.Model):
 
         # Crop the center of the image if the image is big,
         # keeps images high def where possible at 600x600px
+        print(im.size)
         if width >= new_width and height >= new_height:
+
+            im.thumbnail((1088,612)) #aspect ratio 16:9 for apple and most samsung phones on default setting
             out = im.crop((left, top, right, bottom))
         else:
             # if image is smaller than 600x600 then
             # resize up to 600x600
             out = im.resize( (new_width,new_height) )
+        
+        if width>height:
+                out = im.rotate(-90)
 
         out.save(self.image.path) # usepath for python anywhere
 

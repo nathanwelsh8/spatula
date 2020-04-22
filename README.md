@@ -25,6 +25,8 @@ We plan to add these features in the future, after the project is assessed.
 - [x] Users can add a recipe from any page
 - [x] Time taken to cook
 - [x] Portion sizes
+- [x] Site description for pages
+- [ ] Redesign results display to include new fields (complete overhaul likely)
 - [ ] forgot password recovery system
 - [ ] Popup alert to be displayed on homepage(each page, cookies to do this)
 - [ ] Users who have a 9.0/10.0 rating, and above, get special privelages / rewards - flag bad posts for review 

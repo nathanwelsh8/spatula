@@ -124,7 +124,7 @@
 			<h2>Ingredients</h2>
 			<p>{{ recipe.ingredients|linebreaks }}</p>
 			<hr/>
-			<h2>Method</h2>
+			<h2>Cooking process</h2>
 			<p>{{ recipe.method|linebreaks }}</p>
 			<hr/>
 			
@@ -142,7 +142,7 @@
 				--> 
 				{% with reviews|getReviews:recipe.name as review %}
 				{% for r in review %}
-				<div class = "newreview">
+				<div class = "newreview row">
 					{% with r.rating as userRating %}
 					{% with 'images/stars/'|add:userRating|add:'.png' as image_static %}
 					<img src="{% static image_static %}" class="reciperating">
@@ -176,7 +176,9 @@
 				
 					<!-- users have to be logged in to leave reviews -->
 					{% if user.is_authenticated %}
-					<h2>Add a Review</h2>
+					<div class="row"><div class="col-12"><h2>Add a Review</h2></div></div>
+					<div class="row"><div class="col-12">
+					
 					<!-- rating form - Site used for star ratings http://code.iamkate.com/html-and-css/star-rating-widget/ -->
 					<form id="comment_form" class = "rating" method="post" action=" {% url 'spatulaApp:show_recipe' recipe.slug %} ", enctype="multipart/form-data">
 					<span class="starRating">
@@ -191,6 +193,7 @@
 						<input id="rating1" type="radio" name="rating" value="1">
 						<label for="rating1">1</label>
 					</span>
+					
 					{% csrf_token %}
 					{% for field in form.visible_fields %} 
 						{{ field.errors }}
@@ -199,6 +202,7 @@
 					{% endfor %}
 					<input class="btn btn-default" id="submit" type="submit" name="submit" value="submit comment" />
 					</form>
+					</div></div>
 					{% else %}
 						<p>Login to add a review</p>
 						<br/>

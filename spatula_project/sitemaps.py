@@ -20,8 +20,8 @@ class RecipeSitemap(Sitemap):
 
 class StandardPageSitemap(Sitemap):
     """Reverse 'static' views for XML sitemap."""
-    changefreq = "daily"
-    priority = 0.5
+    changefreq = "monthly"
+    priority = 0.9
 
     def items(self):
         # Return list of url names for views to include in sitemap
