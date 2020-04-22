@@ -24,11 +24,12 @@ from django.conf import settings
 from django.conf.urls import handler404, handler500
 
 from django.contrib.sitemaps.views import sitemap
-from sitemaps import UserProfileSitemap, RecipeSitemap
+from sitemaps import UserProfileSitemap, RecipeSitemap, StandardPageSitemap
 
 sitemaps = {
     'userprofiles': UserProfileSitemap,
     'recipes': RecipeSitemap,
+    'standard_pages': StandardPageSitemap,
 }
 
 urlpatterns = [
