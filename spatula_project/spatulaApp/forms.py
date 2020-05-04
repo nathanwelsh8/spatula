@@ -16,7 +16,7 @@ class RecipeForm(forms.ModelForm):
 
     #input fields for recipe form
     method = forms.CharField(max_length=2**13, widget=forms.Textarea(attrs={'placeholder':'Method - Please Take a new line for each step. Other users are morelikely to read your recipe this way.','class':'form-control','autocomplete':'off'}))
-    name = forms.CharField(max_length=128, widget=forms.TextInput(attrs={'placeholder':'Something delicious, that will grab users attention','class':'form-control','autocomplete':'off'}))
+    name = forms.CharField(max_length=64, widget=forms.TextInput(attrs={'placeholder':'Something delicious, that will grab users attention','class':'form-control','autocomplete':'off'}))
     ingredients = forms.CharField(max_length=512, widget=forms.Textarea(attrs={'placeholder':'Ingredients - Please take a new line for each ingredient. Users will find it easier to read.',
         'class':'form-control','autocomplete':'off'}))
 
@@ -29,7 +29,7 @@ class RecipeForm(forms.ModelForm):
     cooktime = forms.ChoiceField(choices=Recipe.COOKTIME_CHOICES, help_text="Time to cook (Approx):", widget=forms.Select(attrs={'class':'form-control'}))
     portionsize = forms.ChoiceField(choices=Recipe.PORTION_SIZES, help_text="Portion size:", widget=forms.Select(attrs={'class':'form-control'}))
     # not required as its not stored in DB
-    #description = forms.CharField(widget=forms.Textarea(attrs={'placeholder':'Description'}))
+    description = forms.CharField(max_length=64,widget=forms.Textarea(attrs={'placeholder':'A short description to summarise your recipe','autocomplete':'off','class':'form-control'}))
     
     
     #hidden fields

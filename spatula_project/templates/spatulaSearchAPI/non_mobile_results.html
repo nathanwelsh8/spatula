@@ -1,0 +1,54 @@
+{% load staticfiles %}
+{% load spatulaApp_template_tags %} 
+
+<div class="recipe2">
+    <a href="{% url 'spatulaApp:show_recipe' recipe.slug %}" style="display: block">
+        <div class="row">
+            <div class="col-12">
+                {% with recipe_images|getKeyImg:recipe.name as image %}
+                    <img src="../..{{MEDIA_URL}}{{image}}" class="recipeimg">
+                {% endwith %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 recipe2-element recipe2-title">
+                <h6>{{recipe.name}}</h6>
+            </div>
+        </div>
+        <div class="row restrict-height-28 no-bottom">
+            <div class="col-2 recipe2-element no-bottom"><p>serves:{{recipe.portionsize}}</p></div>
+            <div class="col-4 recipe2-element no-bottom"><p>ready in:{{recipe.cooktime}}</p></div>
+            <div class="col-5 recipe2-element no-bottom">
+                {% with recipe.id|getRating  as recipeRating %}
+                    {% with 'images/stars/'|add:recipeRating|add:'.png' as image_static %}
+                        <img src="{% static image_static %}" class="reciperating">
+                    {%endwith%}
+                {% endwith %}
+            </div>
+        </div>
+        <div class="row no-bottom no-top">
+            <div class="col-2 recipe2-element no-right no-top">
+                {% with recipe.category|cut:"Category object (" as cut_cat %}
+                    <p class="no-right no-top">{{cut_cat|cut:")"}}</p>
+                {% endwith %}
+            </div>
+            <div class="col-7 recipe2-element no-left no-right no-top"></div>
+            <div class="col-2 recipe2-element no-left no-top">
+                <img src="{{MEDIA_URL}}images/{{ recipe.diettype }}_diet.png " class="recipe2-dietimage no-left pos-right">
+            </div>
+        </div>
+        <div class="row no-bottom">
+            <div class="col-12 no-top"> 
+                <hr class="no-bottom no-top"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="row recipe2-element">
+                <div class="col-12">
+                    <p class="desc">{{recipe.description}}</p>
+                </div>
+            </div>
+        </div>
+    </a>
+    {% if canEdit %}{% csrf_token %}<div style="margin:4px; clear: left;"><button class="btn btn-danger" id="delete_recipe{{recipe.id}}" onclick="deleteRecipe(id='{{recipe.id}}');">Delete</button></div>{% endif %}
+</div>

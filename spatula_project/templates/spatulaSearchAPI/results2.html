@@ -1,0 +1,33 @@
+
+{% load staticfiles %}
+{% load spatulaApp_template_tags %} 
+<!--Display recipes that meet the search criteria -->
+{% block results %}
+	
+	{% if recipies %}
+		{% if is_mobile %}
+		<script>
+			$(document).ready(function(){
+			is_large_tablet_device();
+			});
+		</script>
+		{% endif %}
+		{% for recipe in recipies %}
+			{% if is_mobile %}
+				{% include 'spatulaSearchAPI/mobile_results.html' %}
+			{% else %}
+				{% include 'spatulaSearchAPI/non_mobile_results.html' %}
+			{% endif %}
+        {% endfor %}
+    {% else %}
+		<!-- if no recipes found display hyerlink to add recipe page or login page -->
+		<p class="page_element">Hmm theres nothing to show. <br/>
+			{% if user.is_authenticated %}
+				Why not<a href="{% url 'spatulaApp:add_recipe' %}"><strong> add </strong></a>a recipe!
+			{% else %}
+				Why not login or <a href="{% url 'spatulaApp:register' %}"><strong>register</strong></a> to post a recipe!
+			{% endif %}
+		</p>
+    {% endif %}
+       
+{% endblock %}

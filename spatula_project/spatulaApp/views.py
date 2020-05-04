@@ -3,12 +3,13 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from spatulaApp.forms import UserForm, UserProfileForm, UserProfileUpdateForm, RecipeForm, RecipeImageUploadForm,CommentForm,ProfileImageUploadForm
 from django.contrib.auth import authenticate, login, logout
-
-from spatulaSearchAPI.forms import SearchForm
-from spatulaApp.models import Recipe, Category, RecipeImage, UserProfile, Rating, UserImage
 from django.urls import reverse 
+
+from spatulaApp.forms import UserForm, UserProfileForm, UserProfileUpdateForm, RecipeForm, RecipeImageUploadForm,CommentForm,ProfileImageUploadForm
+from spatulaApp.models import Recipe, Category, RecipeImage, UserProfile, Rating, UserImage
+from spatulaApp.user_agents import is_mobile, screen_size
+from spatulaSearchAPI.forms import SearchForm
 from spatulaSearchAPI.views import search as API_Search
 from spatulaSearchAPI.views import non_http_search as non_http_API_search
 from django.views import View
@@ -55,11 +56,13 @@ class Index(View):
         'recipe_images': None ,#RecipeImage.objects.all(),
         'user_pic':None,
         'login_error_msg':None,
-        'runPreSearch':True
+        'runPreSearch':True,
+        
         }
 
     def get(self, request, **kwargs):
-
+        self.context_dict['is_mobile'] = is_mobile(request)
+        
         if not self.recipe_cache:
                 self.recipe_cache = Recipe.objects.all()
 
@@ -74,7 +77,7 @@ class Index(View):
             self.context_dict['recipies'] = self.search(request, cache=self.recipe_cache)
 
             self.fix_ratings()
-            return render(request, 'spatulaSearchAPI/results.html',self.context_dict)
+            return render(request, 'spatulaSearchAPI/results2.html',self.context_dict)
         
         elif 'redirect_search_text' in request.GET:
             self.context_dict['runPreSearch'] = False
@@ -83,8 +86,14 @@ class Index(View):
             json_req['search'] = request.GET['redirect_search_text']
             
             self.context_dict['recipies'] = non_http_API_search(json_req)
+        
+        elif 'large_tablet' in request.GET:
+            self.context_dict['is_mobile'] = False
+            print("here")
+
         else:
             self.context_dict['runPreSearch'] = True
+            
 
         self.fix_ratings() # multiply by 2 so they are mapped to a stars rating
         self.context_dict['recipe_images'] = RecipeImage.objects.filter(belongsto__in=[x.id for x in self.recipe_cache])  
@@ -93,6 +102,7 @@ class Index(View):
             _user_id = UserProfile.objects.get(user=request.user.id)
             self.context_dict['user_pic'] = UserImage.objects.filter(belongsto=_user_id.id)
         
+        print(self.context_dict['is_mobile'])
         return render(request, 'spatula/index.html', self.context_dict)
 
     def post(self, request):
@@ -513,14 +523,13 @@ class RecipePage(View):
         self.context_dict['images'] = RecipeImage.objects.filter(belongsto=self.recipe_cache.id)
         self.context_dict['reviews'] = rating_objects
         self.context_dict['form'] = self.form
-
         # if there is a logged in user who 'owns' the recipe
         # let them edit it. if there is a logged in user who is admin
         # let them make edits too ;)
         recipe = Recipe.objects.get(slug=recipe_slug_name)
         profile = recipe.postedby
 
-        print(not self.context_dict.get('canEdit',False))
+        
 
         # allow for users who own pages to toggle between edit and normal view
         if not self.context_dict.get('canEdit',False) or request.user != profile.user:
@@ -532,7 +541,9 @@ class RecipePage(View):
         self.context_dict['user_pic'] = UserImage.objects.filter(belongsto=profile.id)
 
         if 'toggle_edit_view' in request.GET:
-            if request.user == profile.user:
+            
+            if request.user == profile.user or request.user.is_superuser:
+                print(self.context_dict['canEdit'])
                 self.context_dict['canEdit'] = not self.context_dict['canEdit']
 
         self.fix_ratings()

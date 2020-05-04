@@ -9,6 +9,8 @@ $(document).ready(function(){
             }
         }
     });
+
+   
 });
 
 /*Show signin container when button clicked */
@@ -117,7 +119,7 @@ function getCategories(){
 function openNav() {
 	var x = document.getElementById("mobile_sidenav");
 	var y = document.getElementById("container");
-	var z = document.querySelector('.sidenav p')
+	var z = document.querySelector('.sidenav p');
 	if(x.style.width == "0px"){ 
 		x.style.width = "500px";
 	}else{
@@ -143,4 +145,15 @@ function tempDisplayMessage(id,content="", contentAfter="",time=2000, remainVisi
             }, time);
 
     }
+}
+
+function is_large_tablet_device(loc){
+    var w = window.outerWidth
+    
+    if (w >=1024){ // dealing with hd tablet
+    
+        window.location.href = "https://www.google.com"
+        
+    }
+    
 }

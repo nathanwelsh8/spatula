@@ -1,0 +1,59 @@
+{% load staticfiles %}
+{% load spatulaApp_template_tags %} 
+<div class="recipe2">
+    <a href="{% url 'spatulaApp:show_recipe' recipe.slug %}" style="display: block" class="no-decor-mob">
+        <div class="row">
+            <div class="col-6 col-6">{% with recipe_images|getKeyImg:recipe.name as image %}
+                <img src="../..{{MEDIA_URL}}{{image}}" class="recipeimg">
+            {% endwith %}</div>
+            <div class="col-6 col-6">
+                <div class="row">
+                    <div class="col-12">
+                        <h2>{{recipe.name}}</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 no-top no-bottom">
+                        <hr class="no-top"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5 no-right">
+                        {% with recipe.category|cut:"Category object (" as cut_cat %}
+                         <p class="no-right no-top mobilep">{{cut_cat|cut:")"}}</p>
+                         {% endwith %}
+                    </div>
+                    <div class="col-6 pos-right no-left no-right">
+                        {% with recipe.id|getRating  as recipeRating %}
+                            {% with 'images/stars/'|add:recipeRating|add:'.png' as image_static %}
+                                <img src="{% static image_static %}" class="reciperating">
+                            {%endwith%}
+                        {% endwith %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <div class="row">
+                            <div class="col-6 col-2 no-left" style="padding-left: 0px; padding-right: 0px; max-width: max-content;">
+                                <img class="info_images no-left" src="{% static 'images/timer.svg' %}"  />
+                            </div>
+                            <div class="col-6 col-4 no-left" style="padding-left: 0px; padding-right: 0px;">
+                                <span class="mobilep no-left">
+                                    {% if recipe.cooktime == 5 %}under 15{% elif recipe.cooktime == 150 %}90+{% else %}{{recipe.cooktime}}{% endif %}mins
+                                </span>
+                            </div>
+                        </div>
+                        
+                    </div> <!-- Cook time-->
+                    <div class="col-4"><img class="info_images" src="{% static 'images/cutlery.svg' %}"/><span class="mobilep">{{recipe.portionsize}}</span></div> <!-- Portion size-->
+                    <div class="col-3"><img src="{{MEDIA_URL}}images/{{ recipe.diettype }}_diet.png " class="recipe2-dietimage no-left pos-right"></div> <!-- Diet type-->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12" style="margin-left: 8px;">
+                <p class="mobilep no-bottom desc">{{recipe.description}}</p>
+            </div>
+        </div>
+    </a>
+</div>

@@ -62,7 +62,7 @@
 					{% endif %}
 					</div>
 					
-					<div id="top">
+					<div id="top"{% if is_large_tablet %}style="padding-bottom:0px;"{% endif %}>
 						<a href="{% url 'spatulaApp:index' %}"><img src="{% static 'images/spatula.png' %}" id="logo"></a>
 						<!--Display links to profile if user logged in, signin/register button if not 
 							Signin form is displayed as part of base.html not a seperate template 

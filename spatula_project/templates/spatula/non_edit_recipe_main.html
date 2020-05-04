@@ -1,0 +1,178 @@
+
+       {% load staticfiles %}
+       {% load spatulaApp_template_tags %} 
+       <!-- Recipe info include: Name, category and user who submitted recipe -->
+        <div id="recipe_info" class="row" style="height: max-content;">
+            <div class="col-12">
+                <h2>{{ recipe.name }}</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                {% with recipe.category|cut:"Category object (" as cut_cat %}
+                    <p id="recipecat">{{cut_cat|cut:")"}}</p>
+                {% endwith %}
+            </div>
+            <div class="col-6"></div>
+            <div class="col-4">
+                <p id= "postedby"> 
+                    <a href="{% url 'spatulaApp:show_profile' recipe.postedby %}" class="postedby_url">{{ recipe.postedby }}
+                        {% with recipe.postedby|getProfilePicture as image %}
+                            {% if image %}
+                                <img class = "profilePic"   src="../..{{MEDIA_URL}}{{image}}">
+                            {% else %}
+                                <img class = "profilePic" style = "border-radius:50%; height:30px; width:30px;  float:right; margin-left: 10px;" src="{% static 'images/profile.png' %}" alt="{{ profile.user }}'s profile pic'">
+                            {% endif %}
+                        {% endwith %}
+                    </a>
+                </p>
+            </div>
+        </div>
+		<div class="row">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-6">
+                                <p id = "label">Difficulty</p>
+                            </div>
+                            <div class="col-6">
+                                <img id ="recipemeter" src="{{MEDIA_URL}}images/{{ recipe.difficulty }}_meter.png ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-6">
+                                <p id = "label">Cost</p>
+                            </div>
+                            <div class="col-6">
+                                <img id ="recipemeter" src="{{MEDIA_URL}}images/{{ recipe.cost }}_meter.png ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-7">
+                        <img class="info_images" src="{% static 'images/timer.svg' %}"  /><span>{% if recipe.cooktime == 5 %}under 15{% elif recipe.cooktime == 150 %}90+{% else %}{{recipe.cooktime}}{% endif %}mins</span>
+                    </div>
+                    <div class="col-5">
+                        <img class="info_images" src="{% static 'images/cutlery.svg' %}"/><span>{{recipe.portionsize}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                {% with recipe.id|getRating  as recipeRating %}
+			        {% with 'images/stars/'|add:recipeRating|add:'.png' as image_static %}
+			            <img src="{% static image_static %}" class="reciperating pos-left" style="float:left;">
+                    {%endwith%}
+                {%endwith%}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <img id ="recipemeat" class="pos-left" style="float:left;" src="{{MEDIA_URL}}images/{{ recipe.diettype }}_diet.png ">
+            </div>
+        </div>
+		<!-- Main body of recipe: Toolsreq, Ingredients and method -->
+		<div id = "document_container_main">
+			<hr/>
+			<h2>Tool Required</h2>
+			<p>{{ recipe.toolsreq }}</p>
+			<hr/>
+			<h2>Ingredients</h2>
+			<p>{{ recipe.ingredients|linebreaks }}</p>
+			<hr/>
+			<h2>Cooking process</h2>
+			<p>{{ recipe.method|linebreaks }}</p>
+			<hr/>
+			
+			<!-- Comment section -->
+			<div id= "comments">
+				<h2>Reviews & Ratings</h2>
+				<p id = "label" style ="margin:0px">Average rating</p>
+				{% with recipe.id|getRating  as recipeRating %}
+				{% with 'images/stars/'|add:recipeRating|add:'.png' as image_static %}
+				<img src="{% static image_static %}" class="reciperating">
+				{%endwith%}{%endwith%}
+				<br/>
+				<hr/>
+				<!-- Display current reviews for the recipe
+				--> 
+				{% with reviews|getReviews:recipe.name as review %}
+				{% for r in review %}
+				<div class = "newreview row">
+					{% with r.rating as userRating %}
+					{% with 'images/stars/'|add:userRating|add:'.png' as image_static %}
+					<img src="{% static image_static %}" class="reciperating">
+					{%endwith%}{%endwith%}
+					{% if r.postedby == None %}
+						<p>By anonymous </p>
+					{% else %}
+						<p><span style="float:left;padding-right: 2px; padding-top: 4px;">By </span> <a href="{% url 'spatulaApp:show_profile' r.postedby %}" style="float:left;" class="postedby_url"> {{ r.postedby }}
+						{% with user_images|getKeyImg:r.postedby as image %}
+							{% if image %}
+								<img class = "profilePic" src="../..{{MEDIA_URL}}{{image}}">
+							{% else %}
+								<img class = "profilePic" src="{% static 'images/profile.png' %}" alt="{{ profile.user }}'s profile pic">
+							{% endif %}
+						{% endwith %}</a></p>
+
+					{% endif %}
+					<p style="clear: left;">{{r.comment}}</p>
+				</div>
+				<hr/>
+				{% endfor %}
+				{% endwith %} 
+				{% if request.user.username|stringformat:'s' == recipe.postedby|stringformat:'s' or request.user.is_superuser%}
+					<div class="row">
+						<div class="col-12">
+							<input class="page_element btn btn-primary" type='submit' name='Update' value="Edit Recipe" onclick="toggle_edit_view('False');"/>
+						</div>
+					</div>
+				{% endif %}
+				<div class = "addcomment">
+				
+					<!-- users have to be logged in to leave reviews -->
+					{% if user.is_authenticated %}
+					<div class="row"><div class="col-12"><h2>Add a Review</h2></div></div>
+					<div class="row"><div class="col-12">
+					
+					<!-- rating form - Site used for star ratings http://code.iamkate.com/html-and-css/star-rating-widget/ -->
+					<form id="comment_form" class = "rating" method="post" action=" {% url 'spatulaApp:show_recipe' recipe.slug %} ", enctype="multipart/form-data">
+					<span class="starRating">
+						<input id="rating5" type="radio" name="rating" value="5">
+						<label for="rating5">5</label>
+						<input id="rating4" type="radio" name="rating" value="4">
+						<label for="rating4">4</label>
+						<input id="rating3" type="radio" name="rating" value="3">
+						<label for="rating3">3</label>
+						<input id="rating2" type="radio" name="rating" value="2">
+						<label for="rating2">2</label>
+						<input id="rating1" type="radio" name="rating" value="1">
+						<label for="rating1">1</label>
+					</span>
+					
+					{% csrf_token %}
+					{% for field in form.visible_fields %} 
+						{{ field.errors }}
+						{{ field.help_text }} 
+						{{ field }}
+					{% endfor %}
+					<input class="btn btn-default" id="submit" type="submit" name="submit" value="submit comment" />
+					</form>
+					</div></div>
+					{% else %}
+						<p>Login to add a review</p>
+						<br/>
+						<hr/>
+					{% endif %}
+				</div>
+			</div>
+		</div>

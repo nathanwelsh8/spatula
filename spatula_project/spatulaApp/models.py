@@ -86,6 +86,7 @@ class Recipe(models.Model):
     name                   = models.CharField(max_length=NAME_MAX_LENGTH)
     ingredients            = models.TextField(max_length=MAX_TEXT_LENGTH)
     toolsreq               = models.TextField(max_length=MAX_TEXT_LENGTH)
+    description            = models.TextField(max_length=MAX_TEXT_LENGTH,default="It looks like the owner of this recipe forgot to leave a description!")
     method                 = models.TextField(max_length=2**13)
 
     # make sure the form views for difficulty, 

@@ -126,6 +126,7 @@ input{
 	}
 }
 
+/* styling for mobile and tablet */
 @media screen and (max-device-width: 1024px){
 	.recipe {
 		float: left;
@@ -146,23 +147,6 @@ input{
 		padding: 0px;
 	}
 	
-	.recipeimg {
-		margin: 4px;
-		margin-bottom: 0px;
-		display: inline-block;
-		float: left;
-		height: 450px;
-		width: 450px;
-		clip: rect(0px,0px,282px,282px);
-	}
-	
-	.reciperating {
-		height: 60px;
-		/* float: right; */
-		margin-left: 10px;
-		display: inline-block;
-		margin-bottom: 30px;
-	}
 	
 	.recipemeat {
 		float: right;
