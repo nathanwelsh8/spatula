@@ -124,8 +124,10 @@ p.page_element{
 /* Styling for desktop view */
 @media screen and (min-device-width: 1024px){
 
+
     .expandable-desc{
         max-height: 38px;
+        padding-left: 4px;
         overflow-y: hidden;
         text-overflow: ellipsis;
     }
@@ -137,6 +139,7 @@ p.page_element{
     .recipe2{
         float: left;
         width: 290px;
+        min-height: 432.9px;
         margin: 5px;
         background-color: #ebd4c0;
         border-radius: 4px;
