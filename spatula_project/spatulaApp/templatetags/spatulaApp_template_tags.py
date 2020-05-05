@@ -150,3 +150,6 @@ def defaultImage():
 
     
 
+@register.filter
+def concat_string(string1,string2):
+    return str(string1)+str(string2)

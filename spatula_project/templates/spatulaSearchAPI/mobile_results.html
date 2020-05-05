@@ -45,8 +45,10 @@
                         </div>
                         
                     </div> <!-- Cook time-->
-                    <div class="col-4"><img class="info_images" src="{% static 'images/cutlery.svg' %}"/><span class="mobilep">{{recipe.portionsize}}</span></div> <!-- Portion size-->
-                    <div class="col-3"><img src="{{MEDIA_URL}}images/{{ recipe.diettype }}_diet.png " class="recipe2-dietimage no-left pos-right"></div> <!-- Diet type-->
+                    <div class="col-4" style="max-width: 140px;"><img class="info_images" src="{% static 'images/cutlery.svg' %}"/><span class="mobilep">{{recipe.portionsize}}</span></div> <!-- Portion size-->
+                    {% with 'images/diettypes/'|concat_string:recipe.diettype|concat_string:'_diet.png' as image %}
+                    <div class="col-3"><img src="{% static image %}" class="recipe2-dietimage no-left pos-right"></div> <!-- Diet type-->
+                    {% endwith %}
                 </div>
             </div>
         </div>

@@ -34,7 +34,9 @@
             </div>
             <div class="col-7 recipe2-element no-left no-right no-top"></div>
             <div class="col-2 recipe2-element no-left no-top">
-                <img src="{{MEDIA_URL}}images/{{ recipe.diettype }}_diet.png " class="recipe2-dietimage no-left pos-right">
+                {% with 'images/diettypes/'|concat_string:recipe.diettype|concat_string:'_diet.png' as image %}
+                <img src="{% static image %}" class="recipe2-dietimage no-left pos-right">
+                {% endwith %}
             </div>
         </div>
         <div class="row no-bottom">
