@@ -123,6 +123,17 @@ p.page_element{
 
 /* Styling for desktop view */
 @media screen and (min-device-width: 1024px){
+
+    .expandable-desc{
+        max-height: 38px;
+        overflow-y: hidden;
+        text-overflow: ellipsis;
+    }
+    .expandable-desc:hover{
+        overflow-y: auto;
+        
+    }
+
     .recipe2{
         float: left;
         width: 290px;
