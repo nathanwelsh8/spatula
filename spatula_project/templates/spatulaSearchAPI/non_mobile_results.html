@@ -42,13 +42,13 @@
                 <hr class="no-bottom no-top"/>
             </div>
         </div>
-        <div class="row">
-            <div class="row recipe2-element" style="overflow-y: scroll;">
-                <div class="col-12">
-                    <p class="desc">{{recipe.description}}</p>
-                </div>
+        
+        <div class="row" style="overflow-y: auto;">
+            <div class="col-12">
+                <p class="desc no-bottom">{{recipe.description}}</p>
             </div>
         </div>
+        
     </a>
     {% if canEdit %}{% csrf_token %}<div style="margin:4px; clear: left;"><button class="btn btn-danger" id="delete_recipe{{recipe.id}}" onclick="deleteRecipe(id='{{recipe.id}}');">Delete</button></div>{% endif %}
 </div>
