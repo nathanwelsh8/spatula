@@ -3,7 +3,7 @@
 WAD2 Recipie WebApp
 
 ## Visit our deployed project
-[Spatula](https://nathanwelsh8.pythonanywhere.com)
+[Spatula](https://spatu-la.com)
 
 ## sources
 The following sources have been used to help piece this web app together
